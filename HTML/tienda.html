@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../CSS/tienda.css">
+    <title>Tienda | EmprendeUY</title>
+</head>
+<body>
+
+    <header class="header">
+        <h1>EmprendeUY</h1>
+
+        <div class="header-acciones">
+            <a class="btn-carrito" href="carrito.html">Ver carrito</a>
+            <a class="btn-salir" href="../PHP/logout.php">Cerrar sesión</a>
+        </div>
+    </header>
+
+    <div class="tienda-intro">
+        <h2>Descubrí productos de emprendedores uruguayos</h2>
+        <p>Cada compra apoya directamente a un pequeño negocio local.</p>
+    </div>
+
+    <main>
+        <div id="productos"></div>
+    </main>
+
+    <!-- tienda.js llama a Swal.fire(), asi que esta libreria tiene que estar cargada antes -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../JS/tienda.js"></script>
+</body>
+</html>
+
+//filtervar

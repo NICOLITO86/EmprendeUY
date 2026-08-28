@@ -1,0 +1,141 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url(../Imagenes/FondoRegisYiniciar..png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0;
+
+    font-family: Arial, sans-serif;
+   
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas: "h h"
+                         "f m";
+}
+
+.contenedor {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    grid-area: f ;
+    background-color: rgba(100, 98, 240, 0.76);
+
+    border-radius: 12px;
+    box-shadow: 0 2px 10px #f3f2f2;
+}
+
+.main{
+    grid-area: f;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+}
+
+.mensaje{
+    color: #ccc;
+
+    grid-area: m;
+}
+
+.barra-superior {
+ grid-area: h;
+    background-color: #6381e6c4;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 50px;
+    box-sizing: border-box;
+
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.logo {
+    font-size: 30px;
+    font-weight: bold;
+    color: #17245c;
+
+     grid-area: h ;
+}
+
+.logo span {
+    color: #f7f9fa;
+}
+
+.barra-superior nav {
+    display: flex;
+    gap: 15px;
+
+     grid-area: h ;
+}
+
+.barra-superior nav a {
+    text-decoration: none;
+    background-color: #3b2a9b;
+    color: white;
+    padding: 12px 22px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.barra-superior nav a:hover {
+    background-color: #126f96;
+}
+
+
+
+h1 {
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 25px;
+}
+
+.formulario{
+    width: 90%;
+}
+
+label {
+    display: block;
+    margin-top: 12px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+input,select{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 12px;
+    background-color: #071e46;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #1e3c72;
+}

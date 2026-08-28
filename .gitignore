@@ -1,0 +1,29 @@
+# Credenciales de base de datos
+PHP/conexionBD.php
+
+# Archivos de XAMPP/entorno local
+*.log
+error_log
+access_log
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Archivos de editores/IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Backups de base de datos
+*.sql.bak
+*.sql~
+
+# Imágenes subidas por usuarios en runtime (no assets del proyecto)
+Imagenes/subidas/
+
+# Archivos temporales de PHP
+*.tmp
+*.cache

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Panel Administrador</title>
+    <link rel="stylesheet" href="../CSS/Paneladm.css">
+</head>
+
+<body>
+<div class="admin">
+<h1>Bienvenido Administrador</h1>
+
+<h3>Borrar Usuario</h3>
+<form id="from_borrar">
+<label> Cedula </label>
+<input type="text" name= "cedula">
+<input type="submit">
+</form>
+<div id="admin"></div>
+<div id="div"></div>
+
+<h3>Borrar Emprendimiento</h3>
+<form id="from_borrar1">
+<label> ID del Emprendimiento </label>
+<input type="text" name= "ID">
+<input type="submit">
+</form>
+<div id="admin1"></div>
+<div id="div1"></div>
+
+<h3>Buscar usuario</h3>
+<form id="from_buscar">
+<label> cedula </label>
+<input type="text" name= "cedula">
+<input type="submit">
+</form>
+<div id="div_buscar"></div>
+
+<h3>Buscar emprendimiento</h3>
+<form id="from_buscar1">
+<label> ID del Emprendimiento </label>
+<input type="text" name= "ID">
+<input type="submit">
+</form>
+<div id="div_buscar1"></div>
+
+<h3>Mostrar todo</h3>
+<form id="from_buscar2">
+<input type="submit">
+</form>
+<div id="lista"></div>
+
+
+<a href="../PHP/logout.php">Cerrar sesion</a>
+</div>
+<script src="../JS/admin.js"></script>
+</body>
+
+</html>
