@@ -59,7 +59,7 @@ include "conexionBD.php";
         case 'emprendedor': if($emprendimiento){
             echo json_encode([
                 "success" => true,
-                "redirect" => "../HTML/creadorpublicaciones.html"
+                "redirect" => "../HTML/mis_publicaciones.html"
                 
             ]);
             }else{

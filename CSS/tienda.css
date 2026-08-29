@@ -106,6 +106,39 @@ body {
     margin: 0;
 }
 
+/* ---------- Barra de busqueda y filtro ---------- */
+
+.tienda-filtros {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    max-width: 1180px;
+    margin: 32px auto 0;
+    padding: 0 32px;
+}
+
+.tienda-filtros input,
+.tienda-filtros select {
+    font-family: var(--fuente-cuerpo);
+    font-size: 0.92rem;
+    padding: 10px 16px;
+    border: 1px solid var(--linea);
+    border-radius: 999px;
+    background: var(--crema-carta);
+    color: var(--tinta);
+}
+
+.tienda-filtros input {
+    flex: 1;
+    min-width: 220px;
+}
+
+.tienda-filtros input:focus,
+.tienda-filtros select:focus {
+    outline: none;
+    border-color: var(--terracota);
+}
+
 /* ---------- Grilla de publicaciones: 3 por fila ---------- */
 
 #productos {
@@ -266,4 +299,3 @@ body {
         transition: none !important;
     }
 }
-
