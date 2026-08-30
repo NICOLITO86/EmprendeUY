@@ -24,7 +24,7 @@ $idEmprendimiento = $emprendimiento['ID'];
 
 
 $res = $conexion->prepare(
-    "SELECT id, titulo, descripcion, precio, categoria, estado FROM publicaciones WHERE Id_emprendimiento = ? ORDER BY fecha_publicacion DESC"
+    "SELECT id, titulo, descripcion, precio, categoria, status AS estado FROM publicaciones WHERE Id_emprendimiento = ? ORDER BY fecha_publicacion DESC"
 );
 $res->execute([$idEmprendimiento]);
 $publicaciones = $res->fetchAll(PDO::FETCH_ASSOC);
