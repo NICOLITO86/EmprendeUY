@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-08-2026 a las 05:20:06
+-- Tiempo de generación: 30-08-2026 a las 05:12:53
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -32,8 +32,7 @@ CREATE TABLE `administrador` (
   `Nombre` varchar(60) NOT NULL,
   `Apellido` varchar(60) NOT NULL,
   `Correo` varchar(50) NOT NULL,
-  `Genero` enum('Masculino','Femenino','Otro') NOT NULL,
-  `Emprendimiento` varchar(20) NOT NULL
+  `Genero` enum('Masculino','Femenino','Otro') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -54,7 +53,7 @@ CREATE TABLE `carrito` (
 --
 
 INSERT INTO `carrito` (`id_carrito`, `ci`, `id`, `fecha_agregado`) VALUES
-(2, 1, 13, '2026-08-25 17:42:05');
+(3, 2, 17, '2026-08-27 12:39:20');
 
 -- --------------------------------------------------------
 
@@ -75,7 +74,8 @@ CREATE TABLE `cliente` (
 --
 
 INSERT INTO `cliente` (`Nombre`, `Apellido`, `Correo`, `Genero`, `Cedula`) VALUES
-('a', 's@s', '3', 'Masculino', 0);
+('2', '2@2', '2', 'Femenino', 2),
+('8', '8', '8@8.com', 'Masculino', 8);
 
 -- --------------------------------------------------------
 
@@ -109,7 +109,8 @@ CREATE TABLE `emprendedor` (
 --
 
 INSERT INTO `emprendedor` (`Cedula`, `Nombre`, `Apellido`, `Correo`, `Genero`) VALUES
-(0, 'as', 'a@d', '0', 'Femenino');
+(1, '1', '1@1', '1', 'Masculino'),
+(6, '6', '6', '6@6.com', 'Femenino');
 
 -- --------------------------------------------------------
 
@@ -130,7 +131,8 @@ CREATE TABLE `emprendimiento` (
 --
 
 INSERT INTO `emprendimiento` (`Nombre`, `Descripcion`, `Foto`, `ID`, `cedula`) VALUES
-('emprendimiento1', 'de algo', '?PNG\r\n\Z\n\0\0\0\rIHDR\0\0?\0\0\0,\0\0\0???\0\0\0sRGB\0???\0\0\0gAMA\0\0???a\0\0\0	pHYs\0\0?\0\0??o?d\0\0O?IDATx^??yXU??ǿ?yE@D?pJDS?5?*?e?)?m4?LM?Բ?1Ss6sR??)EgAD@d?????Z??9?M?w???????^k???\Zߵ???GG?????????????ӰP?????????????c??	??O???7>??%??A???ג0??1X?q?:??۷o??', 2, 1);
+('emprendimiento1', 'de algo', '3.png', 3, 1),
+('emprendimiento1', 'de algo', '4.png', 4, 6);
 
 -- --------------------------------------------------------
 
@@ -170,8 +172,11 @@ CREATE TABLE `publicaciones` (
 --
 
 INSERT INTO `publicaciones` (`id`, `Id_emprendimiento`, `status`, `titulo`, `descripcion`, `precio`, `fecha_publicacion`, `foto`, `categoria`) VALUES
-(12, 0, 'Activa', 'prueba', 'prueba', 122, '2026-08-25 17:19:25', '?PNG\r\n\Z\n\0\0\0\rIHDR\0\0/\0\0\0?\0\0\0?(ۡ\0\0\0sRGB\0???\0\0\0gAMA\0\0???a\0\0\0	pHYs\0\0?\0\0??o?d\0\0?IDATx^??wXTG?7?/M??DPD?\"J????kl??E?F?M???ޱ7TE??(?P)\"E??tv?~????????<???.??3????9eΙ9?DD??8??8????r????8??8????F???q?q?q\\??/?q?q?????q?q?q\\??/?q?', 'Ropa'),
-(13, 0, 'Activa', 'prueba', 'prueba', 122, '2026-08-25 17:19:27', '?PNG\r\n\Z\n\0\0\0\rIHDR\0\0/\0\0\0?\0\0\0?(ۡ\0\0\0sRGB\0???\0\0\0gAMA\0\0???a\0\0\0	pHYs\0\0?\0\0??o?d\0\0?IDATx^??wXTG?7?/M??DPD?\"J????kl??E?F?M???ޱ7TE??(?P)\"E??tv?~????????<???.??3????9eΙ9?DD??8??8????r????8??8????F???q?q?q\\??/?q?q?????q?q?q\\??/?q?', 'Ropa');
+(17, 3, 'Pausada', '1', '1', 1, '2026-08-26 00:37:01', '17.png', 'Ropa'),
+(18, 3, 'Activa', '1', '1', 1, '2026-08-29 18:30:04', '18.jpg', 'Tecnologia'),
+(19, 3, 'Activa', 'asd', '1', 1, '2026-08-29 18:30:26', '19.jpg', 'Tecnologia'),
+(20, 3, 'Activa', 'asd', '1', 1, '2026-08-29 18:30:27', '20.jpg', 'Tecnologia'),
+(21, 3, 'Pausada', 'asd', 'asd', 21, '2026-08-29 18:31:13', '21.jpg', 'Tecnologia');
 
 -- --------------------------------------------------------
 
@@ -201,11 +206,12 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`Cedula`, `Nombre`, `Apellido`, `Fecha_Nacimiento`, `Edad`, `Correo`, `Contraseña`, `Num_Telefono`, `Domicilio`, `Calle`, `Manzana`, `Solar`, `Genero`, `Rol`) VALUES
-(0, 'as', 'as', '2026-07-16', 0, 'a@d', '$2y$10$ykO1870g0dGJbSeP7GN9Y.Zxr58c8RHhu7odEtTkfqIAZId..FYHW', '82', '', '', '', '', 'Femenino', 'emprendedor'),
-(1, 'alvaro', 'Gonzalez', '2026-06-19', 0, 'a@a', '$2y$10$enZjMoiMyZRexJXW0arWEODGZe6ORIMinDyk8Q4MTtEXEQk1Xtv2W', '1', '', '', '', '', 'Femenino', 'emprendedor'),
-(2, 'asa', 'asa', '2026-07-09', 0, 'asa@as', '$2y$10$47Hlat7pStP21khbzqL7qeOE2qwpMgxrZLl515zwXCwtMstGIIuUS', '2', '', '', '', '', 'Masculino', 'cliente'),
-(3, 'pruebacliente', 'a', '2026-07-31', 0, 's@s', '$2y$10$ATva/Civj/4x8fO578gHYeuTAXOac5CMojFtc/WGM.Ud.NTFAZHWa', '3', '', '', '', '', 'Masculino', 'cliente'),
-(6, 'as', 'as', '2026-07-16', 0, 'a@i', '$2y$10$UHFHGfpuy0Bqy4w3oA7xCOvpwChpT1Or8qtBTkZvOp66WzrlKZIUW', '8', '', '', '', '', 'Femenino', 'administrador'),
+(1, '1', '1', '2026-07-27', 0, '1@1', '$2y$10$KqhnlryC.4IL6m29L2cKgOAe4m0e41l6i..AWOZOg8lKQ3iEVbwaK', '1', '', '', '', '', 'Masculino', 'emprendedor'),
+(2, '2', '2', '2026-07-29', 0, '2@2', '$2y$10$AB0mezcFWvCda20Gwrmp9.fxzOYOsoysZvRvNo/YEayG6WVwhHtCO', '2', '', '', '', '', 'Femenino', 'cliente'),
+(6, '6', '6', '2026-08-27', 0, '6@6.com', '$2y$10$5Q7wWw28KyrYxqv8vSBNT.68mWnJF1OsBGkjdtqumbSHurSK9/YWG', '6', '', '', '', '', 'Femenino', 'emprendedor'),
+(7, 'yy', 'y', '2026-08-20', 0, 'y@y.com', '$2y$10$kShz1ERZ8WMsMV8Oj9yNYOamBlVVqPIt4tRPCEjimGZUVEe1KKkSe', '7', '', '', '', '', 'Femenino', 'emprendedor'),
+(8, '8', '8', '2026-08-27', 0, '8@8.com', '$2y$10$lUkjjfCN3k2ZNNW6MzG12eiPTAFUX91D6yQPdGA3ueK30qOnnqJ0m', '8', '', '', '', '', 'Masculino', 'cliente'),
+(23, 'Emprendedor', '2', '2026-08-22', 0, '2@3', '$2y$10$WtvBea4muTVUBcUZvjMIPeqhkgyh5k0UIprbtytDkCOZe5nv36E9.', '23', '', '', '', '', 'Femenino', 'administrador'),
 (57683215, 'nicolas', 'calixto', '2026-06-19', 0, 'nicolito3215@gmail.com', '$2y$10$7B/yrGYGEYmGOW/ABrClbuiqXMhPOh.KxFwBCTRhbJCUNIt7SoqNC', '094197336', '', '', '', '', 'Masculino', 'administrador');
 
 --
@@ -282,7 +288,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `carrito`
 --
 ALTER TABLE `carrito`
-  MODIFY `id_carrito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_carrito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `compra`
@@ -294,7 +300,7 @@ ALTER TABLE `compra`
 -- AUTO_INCREMENT de la tabla `emprendimiento`
 --
 ALTER TABLE `emprendimiento`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
@@ -306,7 +312,7 @@ ALTER TABLE `producto`
 -- AUTO_INCREMENT de la tabla `publicaciones`
 --
 ALTER TABLE `publicaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- Restricciones para tablas volcadas
