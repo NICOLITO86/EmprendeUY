@@ -17,6 +17,10 @@ $Num_Telefono=filter_var($_POST['Num_Telefono'], FILTER_SANITIZE_NUMBER_INT);
 $genero=filter_var($_POST['genero'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 $rol = filter_var($_POST['Rol'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 $pass=$_POST['contraseña'];  
+$nacimiento = new DateTime($Fecha_Nacimiento);
+$hoy= new DateTime();
+$edad = $hoy->diff($nacimiento)->y;
+
 
 if ($correo === false || $cedula === false) {
     echo json_encode(["exito" => false, "mensaje" => "Correo o cédula inválidos"]);
@@ -25,14 +29,14 @@ if ($correo === false || $cedula === false) {
 
 $pass=password_hash($pass, PASSWORD_DEFAULT); 
 
-$sen= $conexion->prepare("INSERT INTO usuario(Nombre,Apellido,correo,Fecha_Nacimiento,Cedula,Num_Telefono,Genero,Contraseña,Rol)VALUES(?,?,?,?,?,?,?,?,?)");
-$sen->execute([$nombre,$apellido,$correo,$Fecha_Nacimiento,$cedula,$Num_Telefono,$genero,$pass,$rol]);
+$sen= $conexion->prepare("INSERT INTO usuario(Nombre,Apellido,correo,Fecha_Nacimiento,Edad,Cedula,Num_Telefono,Domicilio,Calle,Manzana,Solar,Genero,Contraseña,Rol)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+$sen->execute([$nombre,$apellido,$correo,$Fecha_Nacimiento,$edad,$cedula,$Num_Telefono,'','','','',$genero,$pass,$rol]);
 
 
 echo json_encode(["exito"=>true]);
 
 }catch(PDOException $e){
-    echo json_encode(["exito"=>false]);
+    echo json_encode(["exito"=>false, "error"=>$e->getMessage()]);
 }
 
 if($rol === "emprendedor"){
