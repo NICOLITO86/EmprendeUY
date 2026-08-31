@@ -27,3 +27,4 @@ Imagenes/subidas/
 # Archivos temporales de PHP
 *.tmp
 *.cache
+mklink /D C:\xampp\htdocs\emprendeuy "C:\Users\TuUsuario\Documents\EmprendeUY"
