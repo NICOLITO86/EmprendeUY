@@ -1,58 +1,59 @@
-const div=document.getElementById("div")
+const div = document.getElementById("div")
 const from_borrar = document.getElementById("from_borrar");
-from_borrar.addEventListener ("submit",(x)=> {
+from_borrar.addEventListener("submit", (x) => {
     x.preventDefault()
 
-let form=new FormData(from_borrar)
-    fetch("../PHP/borrar.php",
-    {method:"post",
-        body: form})
+    let form = new FormData(from_borrar)
+    form.append("accion", "borrar_usuario")
 
-    .then(res=> res.json())
-    .then(datos=>{ 
+    fetch("../PHP/admin.php", {
+        method: "post",
+        body: form
+    })
+    .then(res => res.json())
+    .then(datos => {
         console.log(datos)
-        if(datos.exito){
+        if (datos.exito) {
             div.innerHTML = '<h3> Borrado</h3>'
-        }else{
+        } else {
             div.innerHTML = '<h3> No se pudo borrar</h3>'
         }
-
     })
 })
 
-const div1=document.getElementById("div1")
+const div1 = document.getElementById("div1")
 const from_borrar1 = document.getElementById("from_borrar1");
-from_borrar1.addEventListener ("submit",(x)=> {
+from_borrar1.addEventListener("submit", (x) => {
     x.preventDefault()
 
-let form=new FormData(from_borrar1)
-    fetch("../PHP/borrar_Emprendimiento.php",
-    {method:"post",
-        body: form})
+    let form = new FormData(from_borrar1)
+    form.append("accion", "borrar_emprendimiento")
 
-    .then(res=> res.json())
-    .then(datos=>{ 
+    fetch("../PHP/admin.php", {
+        method: "post",
+        body: form
+    })
+    .then(res => res.json())
+    .then(datos => {
         console.log(datos)
-        // Antes escribia en "div" (el del formulario de Borrar Usuario, de mas arriba)
-        // en vez de "div1", que es el que corresponde a este formulario.
-        if(datos.exito){
+        if (datos.exito) {
             div1.innerHTML = '<h3> Borrado</h3>'
-        }else{
+        } else {
             div1.innerHTML = '<h3> No se pudo borrar</h3>'
         }
-
     })
 })
 
 const from_buscar2 = document.getElementById("from_buscar2");
 
 from_buscar2.addEventListener("submit", (e) => {
-const lista = document.getElementById("lista");
+    const lista = document.getElementById("lista");
     e.preventDefault();
 
     let form = new FormData(from_buscar2);
+    form.append("accion", "mostrar_todo")
 
-    fetch("../PHP/mostrartodo.php", {
+    fetch("../PHP/admin.php", {
         method: "POST",
         body: form
     })
@@ -61,7 +62,6 @@ const lista = document.getElementById("lista");
 
         console.log(datos);
 
-        // Limpia la lista antes de mostrar los datos
         lista.innerHTML = "";
 
         datos.forEach(a => {
@@ -99,8 +99,9 @@ from_buscar.addEventListener("submit", (e) => {
     e.preventDefault();
 
     let form = new FormData(from_buscar);
+    form.append("accion", "buscar_usuario")
 
-    fetch("../PHP/buscar.php", {
+    fetch("../PHP/admin.php", {
         method: "post",
         body: form
     })
@@ -131,18 +132,15 @@ from_buscar1.addEventListener("submit", (e) => {
 
     e.preventDefault();
 
-    // Crear el FormData del formulario
     let form = new FormData(from_buscar1);
+    form.append("accion", "buscar_emprendimiento")
 
     console.log("ID enviado:", form.get("ID"));
 
-    fetch("../PHP/buscar_Emprendimiento.php", {
+    fetch("../PHP/admin.php", {
         method: "POST",
         body: form
     })
-    // Antes se usaba res.text() + JSON.parse() a mano como parche porque
-    // el PHP devolvia una respuesta vacia (ver fix de buscar_Emprendimiento.php).
-    // Ya arreglado del lado del servidor, alcanza con res.json() directo.
     .then(res => res.json())
     .then(datos => {
 

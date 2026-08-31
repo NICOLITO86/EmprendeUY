@@ -1,14 +1,11 @@
 <?php
 
-session_start();
+require "auth.php";
+requireRole(['emprendedor']);
+
 include "conexionBD.php";
 
-$cedula = $_SESSION['Cedula'] ?? null;
-
-if (!$cedula) {
-    echo json_encode(["exito" => false, "mensaje" => "Sesión no iniciada."]);
-    exit;
-}
+$cedula = $_SESSION['Cedula'];
 
 $consulta = $conexion->prepare(
     "SELECT ID

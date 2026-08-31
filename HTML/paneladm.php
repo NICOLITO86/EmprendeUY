@@ -1,3 +1,7 @@
+<?php
+require "../PHP/auth.php";
+requireRole(['administrador']);
+?>
 <!DOCTYPE html>
 <html>
 <head>
