@@ -8,7 +8,7 @@ include "conexionBD.php";
 $cedula = $_SESSION['Cedula'];
 
 $id = filter_var($_POST['id'] ?? null, FILTER_VALIDATE_INT);
-$nuevoStatus = $_POST['status'] ?? '';
+$nuevoStatus = $_POST['estado'] ?? '';
 
 
 $estadosPermitidos = ['Activa', 'Pausada'];
