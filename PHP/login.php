@@ -45,7 +45,7 @@ include "conexionBD.php";
         case 'administrador':
             echo json_encode([
                 "success" => true,
-                "redirect" => "../HTML/paneladm.html"
+                "redirect" => "../HTML/paneladm.php"
             ]);
             break;
 
