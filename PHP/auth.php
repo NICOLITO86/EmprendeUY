@@ -1,49 +1,50 @@
 <?php
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
 
+session_start();
+require 'conexionBD.php'; 
+function requireRole(array $rolesPermitidos): void
+{
+    global $conexion;
 
-function requireLogin(): void {
-    if (!isset($_SESSION['Cedula'])) {
-        http_response_code(401);
-        if (esPeticionAjax()) {
-            echo json_encode(["exito" => false, "mensaje" => "Sesión no iniciada."]);
-        } else {
-            header("Location: ../HTML/iniciar_sesion.html");
-        }
-        exit;
-    }
-}
-
-
-function requireRole(array $rolesPermitidos): void {
-    requireLogin();
-
+    $cedula    = $_SESSION['Cedula'] ?? null;
     $rolActual = $_SESSION['Rol'] ?? null;
+    $ip        = $_SERVER['REMOTE_ADDR'] ?? 'desconocida';
+    $recurso   = $_SERVER['SCRIPT_NAME'] ?? 'desconocido';
 
-    if (!in_array($rolActual, $rolesPermitidos, true)) {
+    if (isset($_POST['accion'])) {
+        $recurso .= ':' . $_POST['accion'];
+    } elseif (isset($_GET['accion'])) {
+        $recurso .= ':' . $_GET['accion'];
+    }
+
+    if ($cedula === null) {
+        http_response_code(401);
+        header('Content-Type: application/json');
+        exit(json_encode(['success' => false, 'mensaje' => 'Debe iniciar sesión.']));
+    }
+
+    $permitido = in_array($rolActual, $rolesPermitidos, true);
+
+    $stmt = $conexion->prepare(
+        "INSERT INTO log_acceso_admin (Cedula, Recurso, Resultado, IP)
+         VALUES (:cedula, :recurso, :resultado, :ip)"
+    );
+    $stmt->execute([
+        'cedula'    => $cedula,
+        'recurso'   => $recurso,
+        'resultado' => $permitido ? 'permitido' : 'denegado',
+        'ip'        => $ip
+    ]);
+
+    if (!$permitido) {
         http_response_code(403);
-        if (esPeticionAjax()) {
-            echo json_encode(["exito" => false, "mensaje" => "No tenés permiso para realizar esta acción."]);
-        } else {
-            header("Location: ../HTML/acceso-denegado.html");
-        }
-        exit;
+        header('Content-Type: application/json');
+        exit(json_encode(['success' => false, 'mensaje' => 'Acceso denegado. No tiene permisos suficientes.']));
     }
 }
 
-
-function esPeticionAjax(): bool {
-    return (
-        !empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
-        strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest'
-    ) || (
-        !empty($_SERVER['CONTENT_TYPE']) &&
-        stripos($_SERVER['CONTENT_TYPE'], 'application/json') !== false
-    ) || (
-        !empty($_SERVER['HTTP_ACCEPT']) &&
-        stripos($_SERVER['HTTP_ACCEPT'], 'application/json') !== false
-    ) || php_sapi_name() !== 'cli' && !empty($_POST);
-} 
+function estaLogueado(): bool
+{
+    return isset($_SESSION['Cedula']);
+}
