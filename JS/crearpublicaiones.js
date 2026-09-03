@@ -11,7 +11,7 @@ formulario.addEventListener("submit", async (y) => {
         body: form})
 
 
-        .then(res=> res.text())
+        .then(res=> res.json())
     .then(publicacion=>{ 
         console.log(publicacion);
         if(publicacion.exito){

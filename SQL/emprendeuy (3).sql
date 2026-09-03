@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-09-2026 a las 01:47:55
+-- Tiempo de generación: 03-09-2026 a las 13:45:01
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -54,7 +54,8 @@ CREATE TABLE `bloqueo_temporal` (
 --
 
 INSERT INTO `bloqueo_temporal` (`idBloqueo`, `Cedula`, `IP`, `BloqueadoHasta`, `FechaCreacion`) VALUES
-(1, 5, '::1', '2026-09-02 20:38:17', '2026-09-02 20:28:17');
+(1, 5, '::1', '2026-09-02 20:38:17', '2026-09-02 20:28:17'),
+(2, 6, '::1', '2026-09-03 08:16:21', '2026-09-03 08:06:21');
 
 -- --------------------------------------------------------
 
@@ -180,7 +181,15 @@ INSERT INTO `intento_login` (`idIntento`, `Cedula`, `IP`, `Exitoso`, `FechaInten
 (2, 5, '::1', 0, '2026-09-02 20:28:12'),
 (3, 5, '::1', 0, '2026-09-02 20:28:14'),
 (4, 5, '::1', 0, '2026-09-02 20:28:16'),
-(5, 5, '::1', 0, '2026-09-02 20:28:17');
+(5, 5, '::1', 0, '2026-09-02 20:28:17'),
+(6, 6, '::1', 0, '2026-09-03 08:06:06'),
+(7, 6, '::1', 0, '2026-09-03 08:06:11'),
+(8, 6, '::1', 0, '2026-09-03 08:06:15'),
+(9, 6, '::1', 0, '2026-09-03 08:06:18'),
+(10, 6, '::1', 0, '2026-09-03 08:06:21'),
+(11, 1, '::1', 1, '2026-09-03 08:06:35'),
+(12, 2, '::1', 1, '2026-09-03 08:41:44'),
+(13, 57683215, '::1', 1, '2026-09-03 08:42:15');
 
 -- --------------------------------------------------------
 
@@ -196,6 +205,16 @@ CREATE TABLE `log_acceso_admin` (
   `IP` varchar(45) NOT NULL,
   `FechaAcceso` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `log_acceso_admin`
+--
+
+INSERT INTO `log_acceso_admin` (`idLog`, `Cedula`, `Recurso`, `Resultado`, `IP`, `FechaAcceso`) VALUES
+(1, 1, '/EmprendeUY/PHP/crear_publicaciones.php', 'permitido', '::1', '2026-09-03 08:13:00'),
+(2, 1, '/EmprendeUY/PHP/crear_publicaciones.php', 'permitido', '::1', '2026-09-03 08:33:41'),
+(3, 1, '/EmprendeUY/PHP/crear_publicaciones.php', 'permitido', '::1', '2026-09-03 08:39:22'),
+(4, 57683215, '/EmprendeUY/HTML/paneladm.php', 'permitido', '::1', '2026-09-03 08:42:15');
 
 -- --------------------------------------------------------
 
@@ -221,7 +240,7 @@ CREATE TABLE `producto` (
 CREATE TABLE `publicaciones` (
   `id` int(11) NOT NULL,
   `Id_emprendimiento` int(110) NOT NULL,
-  `status` enum('Pausada','Bloqueada','Activa') NOT NULL DEFAULT 'Activa',
+  `status` enum('Pausada','Bloqueada','Activa') NOT NULL DEFAULT 'Pausada',
   `titulo` varchar(100) NOT NULL,
   `descripcion` text NOT NULL,
   `precio` decimal(20,0) NOT NULL,
@@ -239,7 +258,9 @@ INSERT INTO `publicaciones` (`id`, `Id_emprendimiento`, `status`, `titulo`, `des
 (18, 3, 'Activa', '1', '1', 1, '2026-08-29 18:30:04', '18.jpg', 'Tecnologia'),
 (19, 3, 'Activa', 'asd', '1', 1, '2026-08-29 18:30:26', '19.jpg', 'Tecnologia'),
 (20, 3, 'Activa', 'asd', '1', 1, '2026-08-29 18:30:27', '20.jpg', 'Tecnologia'),
-(21, 3, 'Pausada', 'asd', 'asd', 21, '2026-08-29 18:31:13', '21.jpg', 'Tecnologia');
+(21, 3, 'Pausada', 'asd', 'asd', 21, '2026-08-29 18:31:13', '21.jpg', 'Tecnologia'),
+(22, 3, 'Activa', 'prueba2', '1', 111, '2026-09-03 08:13:00', '22.png', ''),
+(23, 3, 'Pausada', 'we', 'we', 32, '2026-09-03 08:39:22', '23.png', 'Hogar');
 
 -- --------------------------------------------------------
 
@@ -373,7 +394,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `bloqueo_temporal`
 --
 ALTER TABLE `bloqueo_temporal`
-  MODIFY `idBloqueo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idBloqueo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `carrito`
@@ -397,13 +418,13 @@ ALTER TABLE `emprendimiento`
 -- AUTO_INCREMENT de la tabla `intento_login`
 --
 ALTER TABLE `intento_login`
-  MODIFY `idIntento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idIntento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `log_acceso_admin`
 --
 ALTER TABLE `log_acceso_admin`
-  MODIFY `idLog` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idLog` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
@@ -415,7 +436,7 @@ ALTER TABLE `producto`
 -- AUTO_INCREMENT de la tabla `publicaciones`
 --
 ALTER TABLE `publicaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- Restricciones para tablas volcadas
