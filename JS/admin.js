@@ -1,3 +1,21 @@
+document.addEventListener("DomContentLoaded",()=>{
+
+    fetch("auth.php")
+    then(res=> res.json)
+    then(datos =>{
+
+        if(datos.rol)
+            if(rol)
+    })
+})
+
+
+
+
+
+
+
+
 const div = document.getElementById("div")
 const from_borrar = document.getElementById("from_borrar");
 from_borrar.addEventListener("submit", (x) => {
