@@ -11,6 +11,7 @@ let form=new FormData(formulario2)
 })
 .then(res => res.json())
 .then(datos => {
+    console.log(datos)
     if(datos.success){
         window.location.href = datos.redirect;
     }else{

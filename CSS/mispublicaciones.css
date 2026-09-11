@@ -1,18 +1,16 @@
 :root {
-    --crema: #faf3e6;
-    --crema-carta: #fffdf8;
-    --tinta: #2c231b;
-    --tinta-suave: #6b5d4f;
-    --linea: #e7dbc7;
+    --blanco: #ffffff;
+    --crema-carta: #c5cfeec4;
+    --tinta: #17245c;
+    --tinta-negra: #000000;
+    --linea:#17245c;
 
-    --terracota: #b6512e;
-    --terracota-oscuro: #8f3d22;
-    --mostaza: #e0a72e;
     --salvia: #62795f;
+    --celeste-pastel: #6381e6c4;
+    --azul-oscuro: #17245c;
     --rojo: #b23a3a;
 
-    --sombra-carta: 0 1px 2px rgba(44, 35, 27, 0.06), 0 10px 24px -14px rgba(44, 35, 27, 0.28);
-    --radio: 14px;
+    
 
     --fuente-titulo: "Fraunces", Georgia, serif;
     --fuente-cuerpo: "Inter", system-ui, sans-serif;
@@ -20,7 +18,7 @@
 
 body {
     margin: 0;
-    background: var(--crema);
+    background: var(--blanco);
     color: var(--tinta);
     font-family: var(--fuente-cuerpo);
     -webkit-font-smoothing: antialiased;
@@ -55,7 +53,7 @@ body {
     align-items: center;
     padding: 10px 20px;
     border-radius: 999px;
-    background: var(--terracota);
+    background: var(--celeste-pastel);
     color: var(--crema-carta);
     text-decoration: none;
     font-weight: 600;
@@ -63,12 +61,12 @@ body {
 }
 
 .btn-nueva:hover {
-    background: var(--terracota-oscuro);
+    background: var(--azul-oscuro);
 }
 
 .btn-salir {
     text-decoration: none;
-    color: var(--tinta-suave);
+    color: var(--tinta-negra);
     font-size: 0.88rem;
     font-weight: 600;
 }
@@ -108,7 +106,7 @@ body {
 .publicacion p {
     margin: 6px 18px 0;
     font-size: 0.88rem;
-    color: var(--tinta-suave);
+    color: var(--tinta-negra);
 }
 
 .estado {
@@ -129,12 +127,12 @@ body {
 }
 
 .estado-pausada {
-    background: rgba(224, 167, 46, 0.2);
-    color: #8a6416;
+    background: rgba(46, 159, 224, 0.2);
+    color: #10033d;
 }
 
 .estado-bloqueada {
-    background: rgba(178, 58, 58, 0.15);
+    background: rgba(46, 159, 224, 0.2);
     color: var(--rojo);
 }
 
