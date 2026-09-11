@@ -91,7 +91,7 @@ $_SESSION['Rol']    = $usuario['Rol'];
 
 switch ($usuario['Rol']) {
     case 'administrador':
-        $redirect = '../HTML/paneladm.php';
+        $redirect = '../HTML/paneladm.html';
         break;
     case 'emprendedor':
         $redirect = '../HTML/mis_publicaciones.html';
@@ -99,9 +99,7 @@ switch ($usuario['Rol']) {
     case 'cliente':
         $redirect = '../HTML/tienda.html';
         break;
-    case 'usuario':
-        $redirect = '../HTML/tienda.html';
-        break;
+    
     default:
         $redirect = '../HTML/EmprendeUY.html';
         break;

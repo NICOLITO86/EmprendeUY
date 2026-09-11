@@ -1,20 +1,21 @@
-document.addEventListener("DomContentLoaded",()=>{
+document.addEventListener("DOMContentLoaded", () => {
 
-    fetch("auth.php")
-    then(res=> res.json)
-    then(datos =>{
+    fetch("../PHP/auth.php")
+        .then(res => res.json())
+        .then(datos => {
+            if (!datos.autenticado || datos.rol !== "administrador") {
+                window.location.href = "iniciar_sesion.html";
+                return;
+            }
+            // Acceso permitido, se puede mostrar el panel
+            document.body.style.display = "block";
+        })
+        .catch(error => {
+            console.error("Error al verificar acceso:", error);
+            window.location.href = "iniciar_sesion.html";
+        });
 
-        if(datos.rol)
-            if(rol)
-    })
-})
-
-
-
-
-
-
-
+});
 
 const div = document.getElementById("div")
 const from_borrar = document.getElementById("from_borrar");
