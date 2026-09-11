@@ -1,19 +1,16 @@
 
 :root {
-    --crema: #faf3e6;
-    --crema-carta: #fffdf8;
-    --tinta: #2c231b;
-    --tinta-suave: #6b5d4f;
-    --linea: #e7dbc7;
+    --blanco: #ffffff;
+    --crema-carta: #c5cfeec4;
+    --tinta: #17245c;
+    --tinta-negra: #000000;
+    --linea: #17245c;
 
-    --terracota: #b6512e;
-    --terracota-oscuro: #8f3d22;
-    --mostaza: #e0a72e;
-    --salvia: #62795f;
-    --rojo: #b23a3a;
-
-    --sombra-carta: 0 1px 2px rgba(44, 35, 27, 0.06), 0 10px 24px -14px rgba(44, 35, 27, 0.28);
-    --radio: 14px;
+    --celeste-pastel: #6381e6c4;
+    --azul-oscuro: #17245c;
+    --rojo: #78d5e6;
+    
+    
 
     --fuente-titulo: "Fraunces", Georgia, serif;
     --fuente-cuerpo: "Inter", system-ui, sans-serif;
@@ -26,13 +23,12 @@
 }
 
 body {
-    background: var(--crema);
+    background: var(--blanco);
     color: var(--tinta);
     font-family: var(--fuente-cuerpo);
     -webkit-font-smoothing: antialiased;
 }
 
-/* ===== HEADER ===== */
 .header {
     display: flex;
     align-items: center;
@@ -62,25 +58,25 @@ body {
     align-items: center;
     padding: 10px 20px;
     border-radius: 999px;
-    background: var(--terracota);
-    color: var(--crema-carta);
+    background: var(--celeste-pastel);
+    
     text-decoration: none;
     font-weight: 600;
     font-size: 0.9rem;
 }
 
 .btn-nueva:hover {
-    background: var(--terracota-oscuro);
+    background: var(--azul-oscuro);
 }
 
 .btn-salir {
     text-decoration: none;
-    color: var(--tinta-suave);
+    color: var(--tinta-negra);
     font-size: 0.88rem;
     font-weight: 600;
 }
 
-/* ===== FORMULARIO ===== */
+/*FORMULARIO */
 .contenedor-centrado {
     display: flex;
     justify-content: center;
@@ -93,13 +89,13 @@ body {
     display: flex;
     align-items: center;
     flex-direction: column;
-    background: var(--crema-carta);
+    
     width: 420px;
     max-width: 100%;
     padding: 32px;
     border: 1px solid var(--linea);
     border-radius: var(--radio);
-    box-shadow: var(--sombra-carta);
+    
 }
 
 .creadorpublicaciones h1 {
@@ -119,7 +115,7 @@ body {
     font-family: var(--fuente-cuerpo);
     font-weight: 600;
     font-size: 0.88rem;
-    color: var(--tinta-suave);
+    color: var(--tinta-negra);
 }
 
 .creadorpublicaciones input,
@@ -131,7 +127,7 @@ body {
     border-radius: 8px;
     font-family: var(--fuente-cuerpo);
     font-size: 0.9rem;
-    background: var(--crema);
+    background: var(--blanco);
     color: var(--tinta);
 }
 
@@ -139,7 +135,7 @@ body {
 .creadorpublicaciones textarea:focus,
 .creadorpublicaciones select:focus {
     outline: none;
-    border-color: var(--terracota);
+    border-color: var(--celeste-pastel);
 }
 
 .creadorpublicaciones button {
@@ -148,8 +144,8 @@ body {
     padding: 12px 20px;
     border: none;
     border-radius: 999px;
-    background: var(--terracota);
-    color: var(--crema-carta);
+    background: var(--celeste-pastel);
+    
     font-family: var(--fuente-cuerpo);
     font-weight: 600;
     font-size: 0.95rem;
@@ -158,7 +154,7 @@ body {
 }
 
 .creadorpublicaciones button:hover {
-    background: var(--terracota-oscuro);
+    background: var(--azul-oscuro);
 }
 
 .boton-link {
@@ -170,7 +166,7 @@ body {
     margin-top: 20px;
     padding: 10px 20px;
     border-radius: 999px;
-    background: var(--terracota);
+    background: var(--celeste-pastel);
     color: var(--crema-carta);
     text-decoration: none;
     font-family: var(--fuente-cuerpo);
@@ -179,7 +175,7 @@ body {
 }
 
 .boton-link:hover {
-    background: var(--terracota-oscuro);
+    background: var(--azul-oscuro);
 }
 
 @media (max-width: 600px) {

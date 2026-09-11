@@ -1,17 +1,17 @@
-:root {
-    --crema: #faf3e6;
-    --crema-carta: #fffdf8;
-    --tinta: #2c231b;
-    --tinta-suave: #6b5d4f;
-    --linea: #e7dbc7;
+/*es como un body*/:root {
+    --blanco: #ffffff;
+    --crema-carta: #c5cfeec4;
+    --tinta: #17245c;
+    --tinta-negra: #030303;
+    --linea: #17245c;
 
-    --terracota: #b6512e;
-    --terracota-oscuro: #8f3d22;
-    --mostaza: #e0a72e;
+    --celeste-pastel: #6381e6c4;
+    --azul-oscuro: #17245c;
+    --azul: #0b0336;
     --salvia: #62795f;
 
-    --sombra-carta: 0 1px 2px rgba(44, 35, 27, 0.06), 0 10px 24px -14px rgba(44, 35, 27, 0.28);
-    --radio: 14px;
+   
+    
 
     --fuente-titulo: "Fraunces", Georgia, serif;
     --fuente-cuerpo: "Inter", system-ui, sans-serif;
@@ -19,7 +19,7 @@
 
 body {
     margin: 0;
-    background: var(--crema);
+    background: var(--blanco);
     color: var(--tinta);
     font-family: var(--fuente-cuerpo);
     -webkit-font-smoothing: antialiased;
@@ -29,7 +29,7 @@ body {
 
 
 
-/* ---------- Encabezado ---------- */
+/*Encabezado*/
 
 .header {
     display: flex;
@@ -70,23 +70,23 @@ body {
 }
 
 .btn-carrito:hover {
-    background: var(--terracota-oscuro);
+    background: var(--azul-oscuro);
     transform: translateY(-1px);
 }
 
 .btn-salir {
     text-decoration: none;
-    color: var(--tinta-suave);
+    color: var(--tinta-negra);
     font-size: 0.88rem;
     font-weight: 600;
 }
 
 .btn-salir:hover {
-    color: var(--terracota-oscuro);
+    color: var(--azul-oscuro);
     text-decoration: underline;
 }
 
-/* ---------- Portada ---------- */
+/*Portada*/
 
 .tienda-intro {
     max-width: 760px;
@@ -106,7 +106,7 @@ body {
     margin: 0;
 }
 
-/* ---------- Barra de busqueda y filtro ---------- */
+/*Barra de busqueda y filtro*/
 
 .tienda-filtros {
     display: flex;
@@ -136,7 +136,7 @@ body {
 .tienda-filtros input:focus,
 .tienda-filtros select:focus {
     outline: none;
-    border-color: var(--terracota);
+    border-color: var(--celeste-pastel);
 }
 
 /* ---------- Grilla de publicaciones: 3 por fila ---------- */
@@ -205,7 +205,7 @@ body {
 .productos p:nth-of-type(1) {
     order: 3;
     margin: 6px 18px 0;
-    color: var(--tinta-suave);
+    color: var(--tinta-negra);
     font-size: 0.88rem;
     line-height: 1.45;
 
@@ -222,7 +222,7 @@ body {
     top: 12px;
     right: -6px;
     margin: 0;
-    background: var(--mostaza);
+    background: var(--azul);
     padding: 5px 14px 6px 12px;
     border-radius: 6px 3px 3px 6px;
     box-shadow: 0 3px 6px rgba(44, 35, 27, 0.25);
@@ -247,7 +247,7 @@ body {
     padding: 10px 14px;
     border: none;
     border-radius: 10px;
-    background: var(--terracota);
+    background: var(--celeste-pastel);
     color: var(--crema-carta);
     font-family: var(--fuente-cuerpo);
     font-weight: 600;
@@ -263,14 +263,14 @@ body {
 }
 
 .productos button:hover {
-    background: var(--terracota-oscuro);
+    background: var(--azul-oscuro);
 }
 
 .productos button:active {
     transform: scale(0.98);
 }
 
-/* ---------- Responsive ---------- */
+/* Responsive*/
 
 @media (max-width: 900px) {
     #productos {

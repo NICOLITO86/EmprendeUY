@@ -94,7 +94,7 @@ switch ($usuario['Rol']) {
         $redirect = '../HTML/paneladm.php';
         break;
     case 'emprendedor':
-        $redirect = '../HTML/mis_publicaciones.html';
+        $redirect = '../HTML/crearemprendimiento.html';
         break;
     case 'cliente':
         $redirect = '../HTML/tienda.html';
