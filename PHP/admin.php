@@ -1,6 +1,8 @@
 <?php
 require "auth.php";
 requireRole(['administrador']);
+require_once __DIR__ . '/csrf.php';
+csrf_validar();
 
 include "conexionBD.php";
 
@@ -36,7 +38,11 @@ switch ($accion) {
             echo json_encode(["encontrado" => false, "mensaje" => "Cédula inválida."]);
             break;
         }
-        $res = $conexion->prepare("SELECT * FROM usuario WHERE cedula = ?");
+        $res = $conexion->prepare(
+            "SELECT Cedula, Nombre, Apellido, Fecha_Nacimiento, Edad, Correo,
+                    Num_Telefono, Domicilio, Calle, Manzana, Solar, Genero, Rol
+             FROM usuario WHERE cedula = ?"
+        );
         $res->execute([$cedula]);
         $pers = $res->fetch(PDO::FETCH_ASSOC);
         echo json_encode($pers ?: ["encontrado" => false]);
@@ -55,7 +61,11 @@ switch ($accion) {
         break;
 
     case 'mostrar_todo':
-        $res = $conexion->prepare("SELECT * FROM usuario");
+        $res = $conexion->prepare(
+            "SELECT Cedula, Nombre, Apellido, Fecha_Nacimiento, Edad, Correo,
+                    Num_Telefono, Domicilio, Calle, Manzana, Solar, Genero, Rol
+             FROM usuario"
+        );
         $res->execute();
         $pers = $res->fetchAll(PDO::FETCH_ASSOC);
         echo json_encode($pers);

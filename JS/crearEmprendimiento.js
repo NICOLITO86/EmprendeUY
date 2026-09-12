@@ -5,6 +5,11 @@ formulario.addEventListener("submit", async (y) => {
     y.preventDefault();
 
     let form=new FormData(formulario)
+
+    const tokenRes = await fetch("../PHP/csrf_token.php");
+    const tokenDatos = await tokenRes.json();
+    form.append("csrf_token", tokenDatos.token);
+
     fetch("../PHP/crear_Emprendimiento.php",
     {method:"post",
         body: form})

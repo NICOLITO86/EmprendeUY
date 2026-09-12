@@ -1,6 +1,6 @@
 <?php
 
-session_start();
+require_once __DIR__ . '/session_config.php';
 include "conexionBD.php";
 
 if (empty($_SESSION['Cedula'])) {

@@ -65,8 +65,15 @@ filtroCategoria.addEventListener("change", cargarProductos);
 cargarCategorias();
 cargarProductos();
 
-function agregarcarro(idp){
-   fetch("../PHP/Agregarcarro.php?idp="+idp)
+async function agregarcarro(idp){
+   const tokenRes = await fetch("../PHP/csrf_token.php");
+   const tokenDatos = await tokenRes.json();
+
+   fetch("../PHP/Agregarcarro.php", {
+       method: "POST",
+       headers: { "Content-Type": "application/x-www-form-urlencoded" },
+       body: `idp=${idp}&csrf_token=${encodeURIComponent(tokenDatos.token)}`
+   })
 .then(res => res.json())
 .then(datos => {
 

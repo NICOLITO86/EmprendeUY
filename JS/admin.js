@@ -1,3 +1,11 @@
+let csrfToken = null;
+
+function obtenerCsrfToken() {
+    return fetch("../PHP/csrf_token.php")
+        .then(res => res.json())
+        .then(datos => { csrfToken = datos.token; });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
 
     fetch("../PHP/auth.php")
@@ -9,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             // Acceso permitido, se puede mostrar el panel
             document.body.style.display = "block";
+            obtenerCsrfToken();
         })
         .catch(error => {
             console.error("Error al verificar acceso:", error);
@@ -24,6 +33,7 @@ from_borrar.addEventListener("submit", (x) => {
 
     let form = new FormData(from_borrar)
     form.append("accion", "borrar_usuario")
+    form.append("csrf_token", csrfToken)
 
     fetch("../PHP/admin.php", {
         method: "post",
@@ -47,6 +57,7 @@ from_borrar1.addEventListener("submit", (x) => {
 
     let form = new FormData(from_borrar1)
     form.append("accion", "borrar_emprendimiento")
+    form.append("csrf_token", csrfToken)
 
     fetch("../PHP/admin.php", {
         method: "post",
@@ -71,6 +82,7 @@ from_buscar2.addEventListener("submit", (e) => {
 
     let form = new FormData(from_buscar2);
     form.append("accion", "mostrar_todo")
+    form.append("csrf_token", csrfToken)
 
     fetch("../PHP/admin.php", {
         method: "POST",
@@ -119,6 +131,7 @@ from_buscar.addEventListener("submit", (e) => {
 
     let form = new FormData(from_buscar);
     form.append("accion", "buscar_usuario")
+    form.append("csrf_token", csrfToken)
 
     fetch("../PHP/admin.php", {
         method: "post",
@@ -153,6 +166,7 @@ from_buscar1.addEventListener("submit", (e) => {
 
     let form = new FormData(from_buscar1);
     form.append("accion", "buscar_emprendimiento")
+    form.append("csrf_token", csrfToken)
 
     console.log("ID enviado:", form.get("ID"));
 

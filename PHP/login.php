@@ -1,6 +1,6 @@
 <?php
 
-session_start();
+require_once __DIR__ . '/session_config.php';
 require 'conexionBD.php'; 
 header('Content-Type: application/json');
 
@@ -84,6 +84,8 @@ if (!$loginExitoso) {
     exit;
 }
 
+
+session_regenerate_id(true);
 
 $_SESSION['Cedula'] = $usuario['Cedula'];
 $_SESSION['Nombre'] = $usuario['Nombre'];

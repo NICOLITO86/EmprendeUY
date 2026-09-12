@@ -1,0 +1,4 @@
+# Esta carpeta solo debe servir imágenes; nunca ejecutar código.
+<FilesMatch "\.(php|phtml|php\d|pht|phar)$">
+    Require all denied
+</FilesMatch>

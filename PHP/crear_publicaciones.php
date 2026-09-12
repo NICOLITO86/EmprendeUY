@@ -2,6 +2,8 @@
 
 require "auth.php";
 requireRole(['emprendedor']);
+require_once __DIR__ . '/csrf.php';
+csrf_validar();
 
 include "conexionBD.php";
 
@@ -39,6 +41,12 @@ if (!isset($_FILES['foto']) || $_FILES['foto']['error'] !== UPLOAD_ERR_OK) {
 }
 
 // Validar que el archivo sea realmente una imagen (no confiar en el nombre/extensión que manda el navegador)
+const TAMANO_MAXIMO_IMAGEN = 5 * 1024 * 1024; // 5MB
+if ($_FILES['foto']['size'] > TAMANO_MAXIMO_IMAGEN) {
+    echo json_encode(["exito" => false, "mensaje" => "La imagen supera el tamaño máximo permitido (5MB)."]);
+    exit;
+}
+
 $infoImagen = getimagesize($_FILES['foto']['tmp_name']);
 if ($infoImagen === false) {
     echo json_encode(["exito" => false, "mensaje" => "El archivo subido no es una imagen válida."]);
