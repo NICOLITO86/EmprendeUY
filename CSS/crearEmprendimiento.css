@@ -1,17 +1,107 @@
-body{
-    display: flex;
-    justify-content: center;
-    align-items: center;;
+* {
+    box-sizing: border-box;
 }
 
-.creadoremprendimiento{
-    margin-top: auto;
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    gap: 16px;
+    font-family: Arial, sans-serif;
+    background-color: #fdfdfd;
+}
+
+.creadoremprendimiento {
+    display: flex;
+    align-items: stretch;
     flex-direction: column;
     background-color: rgba(16, 25, 91, 0.76);
     width: 400px;
+    max-width: 90vw;
     padding: 30px;
     border-radius: 12px;
-    box-shadow: 0 5px 15px #f3f2f2;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+}
+
+.creadoremprendimiento h1,
+.creadoremprendimiento h3 {
+    color: #ffffff;
+    text-align: center;
+    margin: 0 0 20px;
+}
+
+.formulario {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.formulario label {
+    color: #ffffff;
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+.formulario input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.formulario input[type="text"]:focus {
+    outline: none;
+    border-color: #6381e6;
+    box-shadow: 0 0 0 2px rgba(99, 129, 230, 0.4);
+}
+
+.formulario input[type="file"] {
+    color: #ffffff;
+    margin-bottom: 20px;
+    font-size: 13px;
+}
+
+.formulario button {
+    padding: 10px;
+    background-color: #041d36;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.formulario button:hover {
+    background-color: #0056b3;
+}
+
+a[href*="logout"] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    width: 400px;
+    max-width: 90vw;
+    margin: 0;
+    padding: 10px;
+    color: #ffffff;
+    background-color: #041d36;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: background-color 0.2s ease;
+}
+
+a[href*="logout"]:hover {
+    background-color: #0056b3;
 }
