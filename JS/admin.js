@@ -1,5 +1,12 @@
 let csrfToken = null;
 
+// SEC-04: evita insertar texto de usuario tal cual en innerHTML.
+function escapeHtml(texto) {
+    const div = document.createElement("div");
+    div.textContent = texto ?? "";
+    return div.innerHTML;
+}
+
 function obtenerCsrfToken() {
     return fetch("../PHP/csrf_token.php")
         .then(res => res.json())
@@ -99,15 +106,15 @@ from_buscar2.addEventListener("submit", (e) => {
 
             lista.innerHTML += `
                 <div>
-                    <p><strong>Cedula:</strong> ${a.Cedula}</p>
-                    <p><strong>Nombre:</strong> ${a.Nombre}</p>
-                    <p><strong>Apellido:</strong> ${a.Apellido}</p>
+                    <p><strong>Cedula:</strong> ${escapeHtml(a.Cedula)}</p>
+                    <p><strong>Nombre:</strong> ${escapeHtml(a.Nombre)}</p>
+                    <p><strong>Apellido:</strong> ${escapeHtml(a.Apellido)}</p>
                     <p><strong>Fecha de nacimiento:</strong> ${a.Fecha_Nacimiento}</p>
                     <p><strong>Edad:</strong> ${a.Edad}</p>
                     <p><strong>Gmail:</strong> ${a.Gmail}</p>
                     <p><strong>Telefono:</strong> ${a.Num_Telefono}</p>
-                    <p><strong>Domicilio:</strong> ${a.Domicilio}</p>
-                    <p><strong>Calle:</strong> ${a.Calle}</p>
+                    <p><strong>Domicilio:</strong> ${escapeHtml(a.Domicilio)}</p>
+                    <p><strong>Calle:</strong> ${escapeHtml(a.Calle)}</p>
                     <p><strong>Manzana:</strong> ${a.Manzana}</p>
                     <p><strong>Solar:</strong> ${a.Solar}</p>
                     <p><strong>Genero:</strong> ${a.Genero}</p>
@@ -145,7 +152,7 @@ from_buscar.addEventListener("submit", (e) => {
         if (datos.Nombre) {
 
             div_buscar.innerHTML = `
-                <h3>${datos.Nombre} ${datos.Apellido}</h3>
+                <h3>${escapeHtml(datos.Nombre)} ${escapeHtml(datos.Apellido)}</h3>
                 <p>Cedula: ${datos.Cedula}</p>
             `;
 
@@ -182,9 +189,9 @@ from_buscar1.addEventListener("submit", (e) => {
         if (datos.ID) {
 
             div_buscar1.innerHTML = `
-                <h3>${datos.Nombre}</h3>
+                <h3>${escapeHtml(datos.Nombre)}</h3>
                 <p>ID: ${datos.ID}</p>
-                <p>Descripción: ${datos.Descripcion}</p>
+                <p>Descripción: ${escapeHtml(datos.Descripcion)}</p>
             `;
 
         } else {

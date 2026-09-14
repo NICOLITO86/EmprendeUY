@@ -1,0 +1,31 @@
+<?php
+require_once __DIR__ . '/../PHP/session_config.php';
+require_once __DIR__ . '/../PHP/auth.php';
+requirePageRole(['emprendedor']);
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../CSS/mispublicaciones.css">
+    <title>Mis publicaciones | EmprendeUY</title>
+</head>
+<body>
+
+    <header class="header">
+        <h1>Mis publicaciones</h1>
+
+        <div class="header-acciones">
+            <a class="btn-nueva" href="creadorpublicaciones.php">+ Nueva publicación</a>
+            <a class="btn-salir" href="../PHP/logout.php">Cerrar sesión</a>
+        </div>
+    </header>
+
+    <main>
+        <div id="publicaciones"></div>
+    </main>
+
+    <script src="../JS/mispublicaciones.js"></script>
+</body>
+</html>

@@ -49,6 +49,22 @@ function estaLogueado(): bool
     return isset($_SESSION['Cedula']);
 }
 
+/**
+ * Protege una página HTML/PHP completa en el servidor (no solo con JS).
+ * A diferencia de requireRole(), si no hay permiso redirige a una página
+ * de error en vez de devolver JSON, porque esto se usa al principio de
+ * una página que el navegador carga directamente (GET normal).
+ */
+function requirePageRole(array $rolesPermitidos): void
+{
+    $rolActual = $_SESSION['Rol'] ?? null;
+
+    if ($rolActual === null || !in_array($rolActual, $rolesPermitidos, true)) {
+        header('Location: ../HTML/acceso-denegado.html');
+        exit;
+    }
+}
+
 // Si se llama directamente a auth.php (fetch desde el JS, no via require),
 // devuelve el estado de sesión en JSON.
 if (basename($_SERVER['SCRIPT_NAME']) === 'auth.php') {

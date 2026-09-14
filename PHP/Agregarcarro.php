@@ -21,16 +21,21 @@ if ($id === false) {
     exit;
 }
 
-$sen= $conexion->prepare ("INSERT INTO carrito (ci,id)VALUES (?, ?)");
-$sen->execute([$ci,$id]);
-
-
-if($sen->rowCount()>0){
-echo json_encode(["exito"=>true]);
-
-}else{
-     echo json_encode(["exito"=>false]);
-
+// CARR-02: el producto tiene que existir y estar activo antes de meterlo al carrito.
+$consulta = $conexion->prepare("SELECT id FROM publicaciones WHERE id = ? AND status = 'Activa'");
+$consulta->execute([$id]);
+if (!$consulta->fetch(PDO::FETCH_ASSOC)) {
+    echo json_encode(["exito" => false, "mensaje" => "El producto no existe o ya no está disponible."]);
+    exit;
 }
+
+// CARR-03: si ya está en el carrito se suma la cantidad en vez de duplicar la fila.
+$sen = $conexion->prepare(
+    "INSERT INTO carrito (ci, id, cantidad) VALUES (?, ?, 1)
+     ON DUPLICATE KEY UPDATE cantidad = cantidad + 1"
+);
+$sen->execute([$ci, $id]);
+
+echo json_encode(["exito" => true]);
 
  ?>

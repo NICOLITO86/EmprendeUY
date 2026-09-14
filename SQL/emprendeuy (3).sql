@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-09-2026 a las 13:45:01
+-- Tiempo de generación: 12-09-2026 a las 21:59:54
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -67,6 +67,7 @@ CREATE TABLE `carrito` (
   `id_carrito` int(11) NOT NULL,
   `ci` int(11) NOT NULL,
   `id` int(11) NOT NULL,
+  `cantidad` int(11) NOT NULL DEFAULT 1,
   `fecha_agregado` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -98,8 +99,7 @@ CREATE TABLE `cliente` (
 
 INSERT INTO `cliente` (`Nombre`, `Apellido`, `Correo`, `Genero`, `Cedula`) VALUES
 ('2', '2@2', '2', 'Femenino', 2),
-('ma', 'ma', 'ma@ma.com', 'Femenino', 5),
-('8', '8', '8@8.com', 'Masculino', 8);
+('asd', 'asd', 'asd@asd.com', 'Femenino', 56);
 
 -- --------------------------------------------------------
 
@@ -134,7 +134,8 @@ CREATE TABLE `emprendedor` (
 
 INSERT INTO `emprendedor` (`Cedula`, `Nombre`, `Apellido`, `Correo`, `Genero`) VALUES
 (1, '1', '1@1', '1', 'Masculino'),
-(6, '6', '6', '6@6.com', 'Femenino');
+(565, 'asd5', 'asd5', 'asd@asd5.com', 'Femenino'),
+(5655, 'asd56', 'asd56', 'asd@asd56.com', 'Femenino');
 
 -- --------------------------------------------------------
 
@@ -156,7 +157,9 @@ CREATE TABLE `emprendimiento` (
 
 INSERT INTO `emprendimiento` (`Nombre`, `Descripcion`, `Foto`, `ID`, `cedula`) VALUES
 ('emprendimiento1', 'de algo', '3.png', 3, 1),
-('emprendimiento1', 'de algo', '4.png', 4, 6);
+('emprendimiento1', 'de algo', '4.png', 4, 6),
+('87', '87', '5.png', 5, 565),
+('76', '76', '6.png', 6, 5655);
 
 -- --------------------------------------------------------
 
@@ -189,7 +192,32 @@ INSERT INTO `intento_login` (`idIntento`, `Cedula`, `IP`, `Exitoso`, `FechaInten
 (10, 6, '::1', 0, '2026-09-03 08:06:21'),
 (11, 1, '::1', 1, '2026-09-03 08:06:35'),
 (12, 2, '::1', 1, '2026-09-03 08:41:44'),
-(13, 57683215, '::1', 1, '2026-09-03 08:42:15');
+(13, 57683215, '::1', 1, '2026-09-03 08:42:15'),
+(14, 1, '::1', 1, '2026-09-03 11:05:47'),
+(15, 1, '::1', 1, '2026-09-03 11:39:12'),
+(16, 57683215, '::1', 1, '2026-09-03 11:40:51'),
+(17, 57683215, '::1', 1, '2026-09-10 12:28:53'),
+(18, 57683215, '::1', 1, '2026-09-10 12:33:42'),
+(19, 57683215, '::1', 1, '2026-09-10 12:42:51'),
+(20, 57683215, '::1', 1, '2026-09-10 12:59:36'),
+(21, 57683215, '::1', 1, '2026-09-10 13:01:01'),
+(22, 57683215, '::1', 1, '2026-09-10 13:01:41'),
+(23, 6, '::1', 1, '2026-09-10 13:08:02'),
+(24, 57683215, '::1', 1, '2026-09-10 13:11:04'),
+(25, 1, '::1', 1, '2026-09-11 08:34:48'),
+(26, 1, '::1', 1, '2026-09-11 08:34:56'),
+(27, 2, '::1', 1, '2026-09-11 08:35:06'),
+(28, 1, '::1', 1, '2026-09-11 08:55:36'),
+(29, 1, '::1', 1, '2026-09-11 09:02:17'),
+(30, 57683215, '::1', 1, '2026-09-11 09:02:36'),
+(31, 57683215, '::1', 0, '2026-09-11 09:07:01'),
+(32, 20, '::1', 1, '2026-09-11 09:10:37'),
+(33, 1, '::1', 1, '2026-09-11 09:13:10'),
+(34, 1, '::1', 1, '2026-09-11 09:13:22'),
+(35, 1, '::1', 1, '2026-09-11 09:13:43'),
+(36, 1, '::1', 1, '2026-09-11 19:57:53'),
+(37, 2, '::1', 1, '2026-09-11 19:58:31'),
+(38, 57683215, '::1', 1, '2026-09-11 19:58:47');
 
 -- --------------------------------------------------------
 
@@ -214,7 +242,20 @@ INSERT INTO `log_acceso_admin` (`idLog`, `Cedula`, `Recurso`, `Resultado`, `IP`,
 (1, 1, '/EmprendeUY/PHP/crear_publicaciones.php', 'permitido', '::1', '2026-09-03 08:13:00'),
 (2, 1, '/EmprendeUY/PHP/crear_publicaciones.php', 'permitido', '::1', '2026-09-03 08:33:41'),
 (3, 1, '/EmprendeUY/PHP/crear_publicaciones.php', 'permitido', '::1', '2026-09-03 08:39:22'),
-(4, 57683215, '/EmprendeUY/HTML/paneladm.php', 'permitido', '::1', '2026-09-03 08:42:15');
+(4, 57683215, '/EmprendeUY/HTML/paneladm.php', 'permitido', '::1', '2026-09-03 08:42:15'),
+(5, 1, '/EmprendeUY/HTML/paneladm.php', 'denegado', '::1', '2026-09-03 11:40:27'),
+(6, 57683215, '/EmprendeUY/HTML/paneladm.php', 'permitido', '::1', '2026-09-03 11:40:51'),
+(7, 1, '/EmprendeUY/PHP/crear_publicaciones.php', 'permitido', '::1', '2026-09-11 08:57:05'),
+(8, 1, '/EmprendeUY/PHP/crear_publicaciones.php', 'permitido', '::1', '2026-09-11 08:57:07'),
+(9, 1, '/EmprendeUY/PHP/crear_publicaciones.php', 'permitido', '::1', '2026-09-11 08:57:08'),
+(10, 1, '/EmprendeUY/PHP/crear_publicaciones.php', 'permitido', '::1', '2026-09-11 08:57:08'),
+(11, 1, '/EmprendeUY/PHP/crear_publicaciones.php', 'permitido', '::1', '2026-09-11 08:57:08'),
+(12, 57683215, '/EmprendeUY/PHP/admin.php:buscar_usuario', 'permitido', '::1', '2026-09-11 09:03:51'),
+(13, 57683215, '/EmprendeUY/PHP/admin.php:buscar_emprendimiento', 'permitido', '::1', '2026-09-11 09:04:00'),
+(14, 57683215, '/EmprendeUY/PHP/admin.php:mostrar_todo', 'permitido', '::1', '2026-09-11 09:04:02'),
+(15, 57683215, '/EmprendeUY/PHP/admin.php:buscar_emprendimiento', 'permitido', '::1', '2026-09-11 09:05:31'),
+(17, 565, '/EmprendeUY/PHP/crear_Emprendimiento.php', 'permitido', '::1', '2026-09-12 15:24:20'),
+(18, 5655, '/EmprendeUY/PHP/crear_Emprendimiento.php', 'permitido', '::1', '2026-09-12 15:36:21');
 
 -- --------------------------------------------------------
 
@@ -282,7 +323,8 @@ CREATE TABLE `usuario` (
   `Manzana` varchar(60) NOT NULL,
   `Solar` varchar(60) NOT NULL,
   `Genero` enum('Masculino','Femenino','Otro') NOT NULL,
-  `Rol` enum('administrador','cliente','emprendedor','usuario') NOT NULL DEFAULT 'usuario'
+  `Rol` enum('administrador','cliente','emprendedor','usuario') NOT NULL DEFAULT 'usuario',
+  `Activo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -292,11 +334,9 @@ CREATE TABLE `usuario` (
 INSERT INTO `usuario` (`Cedula`, `Nombre`, `Apellido`, `Fecha_Nacimiento`, `Edad`, `Correo`, `Contraseña`, `Num_Telefono`, `Domicilio`, `Calle`, `Manzana`, `Solar`, `Genero`, `Rol`) VALUES
 (1, '1', '1', '2026-07-27', 0, '1@1', '$2y$10$KqhnlryC.4IL6m29L2cKgOAe4m0e41l6i..AWOZOg8lKQ3iEVbwaK', '1', '', '', '', '', 'Masculino', 'emprendedor'),
 (2, '2', '2', '2026-07-29', 0, '2@2', '$2y$10$AB0mezcFWvCda20Gwrmp9.fxzOYOsoysZvRvNo/YEayG6WVwhHtCO', '2', '', '', '', '', 'Femenino', 'cliente'),
-(5, 'ma', 'ma', '2026-08-30', 0, 'ma@ma.com', '$2y$10$NDjjQSTJ564r3mI249fRs..qCurp2DFBQIcg1p9NlnAc2f/qYg4aq', '5', '', '', '', '', 'Femenino', 'cliente'),
-(6, '6', '6', '2026-08-27', 0, '6@6.com', '$2y$10$5Q7wWw28KyrYxqv8vSBNT.68mWnJF1OsBGkjdtqumbSHurSK9/YWG', '6', '', '', '', '', 'Femenino', 'emprendedor'),
-(7, 'yy', 'y', '2026-08-20', 0, 'y@y.com', '$2y$10$kShz1ERZ8WMsMV8Oj9yNYOamBlVVqPIt4tRPCEjimGZUVEe1KKkSe', '7', '', '', '', '', 'Femenino', 'emprendedor'),
-(8, '8', '8', '2026-08-27', 0, '8@8.com', '$2y$10$lUkjjfCN3k2ZNNW6MzG12eiPTAFUX91D6yQPdGA3ueK30qOnnqJ0m', '8', '', '', '', '', 'Masculino', 'cliente'),
-(23, 'Emprendedor', '2', '2026-08-22', 0, '2@3', '$2y$10$WtvBea4muTVUBcUZvjMIPeqhkgyh5k0UIprbtytDkCOZe5nv36E9.', '23', '', '', '', '', 'Femenino', 'administrador'),
+(56, 'asd', 'asd', '2026-09-18', 0, 'asd@asd.com', '$2y$10$N2ejuJKjMEvS4MwvoFJGO.i6SMUlkvWLh5EuBxB4GExOilOUuh6hK', '67', '', '', '', '', 'Femenino', 'cliente'),
+(565, 'asd5', 'asd5', '2026-09-18', 0, 'asd@asd5.com', '$2y$10$u47fhbhIxmdxCxUsHv7XpuStgFocbsBAP0j6PrOZ17FQuy4kwLbxq', '675', '', '', '', '', 'Femenino', 'emprendedor'),
+(5655, 'asd56', 'asd56', '2026-09-18', 0, 'asd@asd56.com', '$2y$10$uPFJ.z5HvAhEoP8kGKW4tesK0AYJ9D.vUbYqYk28E/m1Za6Wvkxm6', '6756', '', '', '', '', 'Femenino', 'emprendedor'),
 (57683215, 'nicolas', 'calixto', '2026-06-19', 0, 'nicolito3215@gmail.com', '$2y$10$7B/yrGYGEYmGOW/ABrClbuiqXMhPOh.KxFwBCTRhbJCUNIt7SoqNC', '094197336', '', '', '', '', 'Masculino', 'administrador');
 
 --
@@ -322,8 +362,7 @@ ALTER TABLE `bloqueo_temporal`
 --
 ALTER TABLE `carrito`
   ADD PRIMARY KEY (`id_carrito`),
-  ADD KEY `ci` (`ci`),
-  ADD KEY `id` (`id`);
+  ADD UNIQUE KEY `uniq_carrito_usuario_producto` (`ci`,`id`);
 
 --
 -- Indices de la tabla `cliente`
@@ -412,19 +451,19 @@ ALTER TABLE `compra`
 -- AUTO_INCREMENT de la tabla `emprendimiento`
 --
 ALTER TABLE `emprendimiento`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `intento_login`
 --
 ALTER TABLE `intento_login`
-  MODIFY `idIntento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `idIntento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT de la tabla `log_acceso_admin`
 --
 ALTER TABLE `log_acceso_admin`
-  MODIFY `idLog` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idLog` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`

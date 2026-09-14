@@ -16,9 +16,12 @@ formulario.addEventListener ("submit",(e)=> {
         if(datos.exito){
 
             Swal.fire({
-                title: "Agregado!",
+                title: "Registro exitoso!",
                 icon: "success",
-                draggable: true
+                timer: 1500,
+                showConfirmButton: false
+                }).then(() => {
+                    window.location.href = datos.redirect;
                 });
 
         }else{

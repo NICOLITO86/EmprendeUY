@@ -1,5 +1,12 @@
 const contenedor = document.getElementById("publicaciones");
 
+// SEC-04: evita insertar texto de usuario (título, descripción) tal cual en innerHTML.
+function escapeHtml(texto) {
+    const div = document.createElement("div");
+    div.textContent = texto ?? "";
+    return div.innerHTML;
+}
+
 function cargarMisPublicaciones() {
 
     fetch("../PHP/mostrar_mis_publicaciones.php")
@@ -34,9 +41,9 @@ function cargarMisPublicaciones() {
             contenedor.innerHTML += `
                 <div class="publicacion">
                     <img src="../PHP/mostrar_imagen.php?id=${p.id}">
-                    <h3>${p.titulo}</h3>
-                    <p>${p.descripcion}</p>
-                    <p><strong>$${p.precio}</strong> · ${p.categoria}</p>
+                    <h3>${escapeHtml(p.titulo)}</h3>
+                    <p>${escapeHtml(p.descripcion)}</p>
+                    <p><strong>$${p.precio}</strong> · ${escapeHtml(p.categoria)}</p>
                     <div class="estado estado-${p.estado.toLowerCase()}">${p.estado}</div>
                     ${controlEstado}
                 </div>

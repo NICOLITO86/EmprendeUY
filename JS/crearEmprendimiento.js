@@ -20,6 +20,14 @@ formulario.addEventListener("submit", async (y) => {
         console.log(emprendimiento);
         if(emprendimiento.exito){
             div.innerHTML = '<h3>Agregado</h3>';
+            Swal.fire({
+                title: "Emprendimiento creado!",
+                icon: "success",
+                timer: 1500,
+                showConfirmButton: false
+                }).then(() => {
+                    window.location.href = emprendimiento.redirect;
+                });
         }else{
             div.innerHTML = '<h3>Error</h3>';
         }

@@ -1,5 +1,13 @@
 const productos = document.getElementById("productos-carrito");
 
+// SEC-04: evita insertar texto de usuario (título, descripción, categoría) tal
+// cual dentro de innerHTML, para no quedar expuestos a XSS.
+function escapeHtml(texto) {
+    const div = document.createElement("div");
+    div.textContent = texto ?? "";
+    return div.innerHTML;
+}
+
 fetch("../PHP/mostrarcarrito.php")
     .then(res => res.json()) 
     .then(datos => {
@@ -18,10 +26,10 @@ fetch("../PHP/mostrarcarrito.php")
             productos.innerHTML += `
                 <div class="carrito-item">
                     <img src="../PHP/mostrar_imagen.php?id=${p.id}">
-                    <h3>${p.titulo}</h3>
-                    <p>${p.descripcion}</p>
-                    <p><strong>$${p.precio}</strong></p>
-                    <p>${p.categoria}</p>
+                    <h3>${escapeHtml(p.titulo)}</h3>
+                    <p>${escapeHtml(p.descripcion)}</p>
+                    <p><strong>$${p.precio}</strong> &times; ${p.cantidad}</p>
+                    <p>${escapeHtml(p.categoria)}</p>
                 </div>
             `;
         });

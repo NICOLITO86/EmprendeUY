@@ -24,13 +24,25 @@ if (!$emprendimiento) {
 
 $idEmprendimiento = $emprendimiento['ID'];
 
-$titulo = filter_var($_POST['titulo'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-$descripcion = filter_var($_POST['descripcion'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-$precio = filter_var($_POST['precio'], FILTER_VALIDATE_FLOAT);
-$categoria = filter_var($_POST['categoria'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+$categoriasPermitidas = ['Ropa', 'Hogar', 'Tecnologia', 'Carpinteria', 'Herreria', 'Higiene', 'Deportes'];
 
-if ($precio === false) {
-    echo json_encode(["exito" => false, "mensaje" => "Precio inválido."]);
+$titulo = trim(filter_var($_POST['titulo'] ?? '', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+$descripcion = trim(filter_var($_POST['descripcion'] ?? '', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+$precio = filter_var($_POST['precio'] ?? null, FILTER_VALIDATE_FLOAT);
+$categoria = filter_var($_POST['categoria'] ?? '', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+if ($titulo === '') {
+    echo json_encode(["exito" => false, "mensaje" => "El título es obligatorio."]);
+    exit;
+}
+
+if ($precio === false || $precio <= 0) {
+    echo json_encode(["exito" => false, "mensaje" => "El precio debe ser un número mayor que cero."]);
+    exit;
+}
+
+if (!in_array($categoria, $categoriasPermitidas, true)) {
+    echo json_encode(["exito" => false, "mensaje" => "Categoría inválida."]);
     exit;
 }
 

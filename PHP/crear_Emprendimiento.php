@@ -7,10 +7,14 @@ csrf_validar();
 
 include "conexionBD.php";
 
-$nombre = filter_var($_POST['nombre'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-$descripcion = filter_var($_POST['descripcion'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+$nombre = trim(filter_var($_POST['nombre'] ?? '', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+$descripcion = trim(filter_var($_POST['descripcion'] ?? '', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
 $cedula = $_SESSION['Cedula'];
 
+if ($nombre === '' || $descripcion === '') {
+    echo json_encode(["exito" => false, "mensaje" => "Nombre y descripción son obligatorios."]);
+    exit;
+}
 
 if (!isset($_FILES['foto']) || $_FILES['foto']['error'] !== UPLOAD_ERR_OK) {
     echo json_encode(["exito" => false, "mensaje" => "No se recibió ninguna imagen."]);
@@ -64,7 +68,7 @@ if ($sen->rowCount() > 0) {
         $update = $conexion->prepare("UPDATE emprendimiento SET Foto = ? WHERE ID = ?");
         $update->execute([$nombreArchivo, $idEmprendimiento]);
 
-        echo json_encode(["exito" => true]);
+        echo json_encode(["exito" => true, "redirect" => "../HTML/mis_publicaciones.php"]);
     } else {
         echo json_encode(["exito" => false, "mensaje" => "No se pudo guardar la imagen en el servidor."]);
     }

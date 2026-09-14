@@ -35,7 +35,7 @@ if ($bloqueo) {
 }
 
 
-$stmt = $conexion->prepare("SELECT * FROM usuario WHERE Cedula = :cedula LIMIT 1");
+$stmt = $conexion->prepare("SELECT * FROM usuario WHERE Cedula = :cedula AND Activo = 1 LIMIT 1");
 $stmt->execute(['cedula' => $cedula]);
 $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -93,10 +93,10 @@ $_SESSION['Rol']    = $usuario['Rol'];
 
 switch ($usuario['Rol']) {
     case 'administrador':
-        $redirect = '../HTML/paneladm.html';
+        $redirect = '../HTML/paneladm.php';
         break;
     case 'emprendedor':
-        $redirect = '../HTML/crearemprendimiento.html';
+        $redirect = '../HTML/crearemprendimiento.php';
         break;
     case 'cliente':
         $redirect = '../HTML/tienda.html';

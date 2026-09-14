@@ -16,8 +16,20 @@ switch ($accion) {
             echo json_encode(["exito" => false, "mensaje" => "Cédula inválida."]);
             break;
         }
-        $sen = $conexion->prepare("DELETE FROM usuario WHERE Cedula = ?");
+        // Borrado lógico: se conserva el historial y las relaciones (publicaciones,
+        // emprendimientos, carrito, log de accesos) en vez de un DELETE físico.
+        $sen = $conexion->prepare("UPDATE usuario SET Activo = 0 WHERE Cedula = ?");
         $sen->execute([$cedula]);
+
+        // Si era emprendedor, sus publicaciones dejan de mostrarse en la tienda.
+        $sen = $conexion->prepare(
+            "UPDATE publicaciones p
+             JOIN emprendimiento e ON e.ID = p.Id_emprendimiento
+             SET p.status = 'Pausada'
+             WHERE e.cedula = ? AND p.status = 'Activa'"
+        );
+        $sen->execute([$cedula]);
+
         echo json_encode(["exito" => true]);
         break;
 
@@ -40,8 +52,8 @@ switch ($accion) {
         }
         $res = $conexion->prepare(
             "SELECT Cedula, Nombre, Apellido, Fecha_Nacimiento, Edad, Correo,
-                    Num_Telefono, Domicilio, Calle, Manzana, Solar, Genero, Rol
-             FROM usuario WHERE cedula = ?"
+                    Num_Telefono, Domicilio, Calle, Manzana, Solar, Genero, Rol, Activo
+             FROM usuario WHERE cedula = ? AND Activo = 1"
         );
         $res->execute([$cedula]);
         $pers = $res->fetch(PDO::FETCH_ASSOC);
@@ -64,7 +76,7 @@ switch ($accion) {
         $res = $conexion->prepare(
             "SELECT Cedula, Nombre, Apellido, Fecha_Nacimiento, Edad, Correo,
                     Num_Telefono, Domicilio, Calle, Manzana, Solar, Genero, Rol
-             FROM usuario"
+             FROM usuario WHERE Activo = 1"
         );
         $res->execute();
         $pers = $res->fetchAll(PDO::FETCH_ASSOC);

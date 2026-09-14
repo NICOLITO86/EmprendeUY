@@ -1,3 +1,8 @@
+<?php
+require_once __DIR__ . '/../PHP/session_config.php';
+require_once __DIR__ . '/../PHP/auth.php';
+requirePageRole(['emprendedor']);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

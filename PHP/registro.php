@@ -3,7 +3,7 @@ ini_set('display_errors', 0);
 ini_set('display_startup_errors', 0);
 error_reporting(1);
 
-
+require_once __DIR__ . '/session_config.php';
 include "conexionBD.php";
 
 
@@ -25,37 +25,53 @@ $rol = in_array($rolSolicitado, $rolesPermitidos, true) ? $rolSolicitado : 'clie
 $pass=$_POST['contraseña'];  
 $nacimiento = new DateTime($Fecha_Nacimiento);
 $hoy= new DateTime();
-$edad = $hoy->diff($nacimiento)->y;
-
 
 if ($correo === false || $cedula === false) {
     echo json_encode(["exito" => false, "mensaje" => "Correo o cédula inválidos"]);
     exit;
 }
 
+if ($nacimiento > $hoy) {
+    echo json_encode(["exito" => false, "mensaje" => "La fecha de nacimiento no puede ser futura."]);
+    exit;
+}
+
+if (strlen($pass) < 8) {
+    echo json_encode(["exito" => false, "mensaje" => "La contraseña debe tener al menos 8 caracteres."]);
+    exit;
+}
+
+$edad = $hoy->diff($nacimiento)->y;
+
 $pass=password_hash($pass, PASSWORD_DEFAULT); 
 
 $sen= $conexion->prepare("INSERT INTO usuario(Nombre,Apellido,correo,Fecha_Nacimiento,Edad,Cedula,Num_Telefono,Domicilio,Calle,Manzana,Solar,Genero,Contraseña,Rol)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 $sen->execute([$nombre,$apellido,$correo,$Fecha_Nacimiento,$edad,$cedula,$Num_Telefono,'','','','',$genero,$pass,$rol]);
 
+if($rol === "emprendedor"){
+    $sen= $conexion->prepare("INSERT INTO emprendedor(Nombre,Apellido,Correo,Cedula,Genero)VALUES(?,?,?,?,?)");
+    $sen->execute([$nombre,$apellido,$correo,$cedula,$genero]);
+}else{
+    $sen= $conexion->prepare("INSERT INTO cliente(Cedula,Nombre,Apellido,Correo,Genero)VALUES(?,?,?,?,?)");
+    $sen->execute([$cedula,$nombre,$apellido,$correo,$genero]);
+}
 
-echo json_encode(["exito"=>true]);
+// Registro completo: dejamos al usuario logueado, igual que si hubiera
+// iniciado sesión manualmente, y le indicamos a dónde corresponde mandarlo
+// segun su rol (misma logica que login.php).
+session_regenerate_id(true);
+$_SESSION['Cedula'] = $cedula;
+$_SESSION['Nombre'] = $nombre;
+$_SESSION['Rol']    = $rol;
+
+$redirect = ($rol === "emprendedor")
+    ? '../HTML/crearemprendimiento.php'
+    : '../HTML/tienda.html';
+
+echo json_encode(["exito" => true, "rol" => $rol, "redirect" => $redirect]);
 
 }catch(PDOException $e){
     error_log("Error en registro.php: " . $e->getMessage());
     echo json_encode(["exito"=>false, "mensaje"=>"No se pudo completar el registro. Intente nuevamente."]);
     exit;
 }
-
-if($rol === "emprendedor"){
-    $sen= $conexion->prepare("INSERT INTO emprendedor(Nombre,Apellido,Correo,Cedula,Genero)VALUES(?,?,?,?,?)");
-    $sen->execute([$nombre,$apellido,$correo,$cedula,$genero,]);
-
-
-}else{
-    $sen= $conexion->prepare("INSERT INTO cliente(Cedula,Nombre,Apellido,Correo,Genero)VALUES(?,?,?,?,?)");
-    $sen->execute([$cedula,$nombre,$apellido,$correo,$genero]);
-
-}
-
-?>
