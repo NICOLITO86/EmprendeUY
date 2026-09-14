@@ -7,14 +7,33 @@ require_once __DIR__ . '/session_config.php';
 include "conexionBD.php";
 
 
+// Constante compartida con la validación del lado del cliente (JS/validaciones.js).
+const EDAD_MINIMA = 16;
+
 try {
 $nombre=filter_var($_POST['nombre'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 $apellido=filter_var($_POST['apellido'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 $correo=filter_var($_POST['correo'], FILTER_VALIDATE_EMAIL);
 $Fecha_Nacimiento=$_POST['Fecha_Nacimiento'];
-$cedula=filter_var($_POST['cedula'], FILTER_VALIDATE_INT);
-$Num_Telefono=filter_var($_POST['Num_Telefono'], FILTER_SANITIZE_NUMBER_INT);
+$cedulaCruda=trim($_POST['cedula'] ?? '');
+$telefonoCrudo=trim($_POST['Num_Telefono'] ?? '');
 $genero=filter_var($_POST['genero'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+// SEC: la cédula y el teléfono se validan de nuevo acá porque la validación
+// de JS/validaciones.js es solo para la experiencia del usuario, no es
+// segura por sí sola (se puede saltear con las devtools o Postman).
+if (!preg_match('/^\d{8}$/', $cedulaCruda)) {
+    echo json_encode(["exito" => false, "mensaje" => "La cédula debe tener exactamente 8 dígitos."]);
+    exit;
+}
+
+if (!preg_match('/^\d{9}$/', $telefonoCrudo)) {
+    echo json_encode(["exito" => false, "mensaje" => "El teléfono debe tener exactamente 9 dígitos."]);
+    exit;
+}
+
+$cedula=filter_var($cedulaCruda, FILTER_VALIDATE_INT);
+$Num_Telefono=$telefonoCrudo;
 
 // El registro público solo puede crear cuentas de 'cliente' o 'emprendedor'.
 // Los administradores se crean directamente en la base de datos, nunca desde este formulario.
@@ -43,6 +62,11 @@ if (strlen($pass) < 8) {
 
 $edad = $hoy->diff($nacimiento)->y;
 
+if ($edad < EDAD_MINIMA) {
+    echo json_encode(["exito" => false, "mensaje" => "Debés tener al menos " . EDAD_MINIMA . " años para registrarte."]);
+    exit;
+}
+
 $pass=password_hash($pass, PASSWORD_DEFAULT); 
 
 $sen= $conexion->prepare("INSERT INTO usuario(Nombre,Apellido,correo,Fecha_Nacimiento,Edad,Cedula,Num_Telefono,Domicilio,Calle,Manzana,Solar,Genero,Contraseña,Rol)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
@@ -65,7 +89,7 @@ $_SESSION['Nombre'] = $nombre;
 $_SESSION['Rol']    = $rol;
 
 $redirect = ($rol === "emprendedor")
-    ? '../HTML/crearemprendimiento.php'
+    ? '../HTML/crearemprendimiento.html'
     : '../HTML/tienda.html';
 
 echo json_encode(["exito" => true, "rol" => $rol, "redirect" => $redirect]);

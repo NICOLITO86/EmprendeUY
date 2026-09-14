@@ -4,6 +4,13 @@ const div=document.getElementById("contenedor")
 formulario2.addEventListener ("submit",(f)=> {
     f.preventDefault()
 
+    const cedula = document.getElementById("Cedula").value;
+
+    if (!validarCedula(cedula)) {
+        alert("La cédula debe tener exactamente 8 dígitos numéricos.");
+        return;
+    }
+
 let form=new FormData(formulario2)
   fetch("../PHP/login.php", {
     method: "POST",

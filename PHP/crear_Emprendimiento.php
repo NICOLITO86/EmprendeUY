@@ -68,7 +68,7 @@ if ($sen->rowCount() > 0) {
         $update = $conexion->prepare("UPDATE emprendimiento SET Foto = ? WHERE ID = ?");
         $update->execute([$nombreArchivo, $idEmprendimiento]);
 
-        echo json_encode(["exito" => true, "redirect" => "../HTML/mis_publicaciones.php"]);
+        echo json_encode(["exito" => true, "redirect" => "../HTML/mis_publicaciones.html"]);
     } else {
         echo json_encode(["exito" => false, "mensaje" => "No se pudo guardar la imagen en el servidor."]);
     }

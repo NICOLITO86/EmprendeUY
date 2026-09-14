@@ -45,10 +45,10 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.26.25/dist/sweetalert2.min.css
             <input type="date" id="Fecha_Nacimiento" name="Fecha_Nacimiento" required>
 
             <label for="cedula">Cédula</label>
-            <input type="text" id="cedula" name="cedula" required>
+            <input type="text" id="cedula" name="cedula" inputmode="numeric" maxlength="8" placeholder="8 dígitos, sin puntos ni guiones" required>
 
             <label for="Num_Telefono">Número de Teléfono</label>
-            <input type="tel" id="Num_Telefono" name="Num_Telefono" required>
+            <input type="tel" id="Num_Telefono" name="Num_Telefono" inputmode="numeric" maxlength="9" placeholder="9 dígitos" required>
 
             <label for="genero">Género</label>
             <select id="genero" name="genero" required>
@@ -91,6 +91,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.26.25/dist/sweetalert2.min.css
 https://cdn.jsdelivr.net/npm/sweetalert2@11.26.25/dist/sweetalert2.all.min.js
 "></script>
 
+<script src="../JS/validaciones.js"></script>
 <script src="../JS/registrarse.js"></script>
 
 </body>

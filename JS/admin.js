@@ -18,8 +18,12 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch("../PHP/auth.php")
         .then(res => res.json())
         .then(datos => {
-            if (!datos.autenticado || datos.rol !== "administrador") {
+            if (!datos.autenticado) {
                 window.location.href = "iniciar_sesion.html";
+                return;
+            }
+            if (datos.rol !== "administrador") {
+                window.location.href = "acceso-denegado.html";
                 return;
             }
             // Acceso permitido, se puede mostrar el panel
@@ -37,6 +41,11 @@ const div = document.getElementById("div")
 const from_borrar = document.getElementById("from_borrar");
 from_borrar.addEventListener("submit", (x) => {
     x.preventDefault()
+
+    if (!validarCedula(from_borrar.cedula.value)) {
+        div.innerHTML = "<h3>La cédula debe tener exactamente 8 dígitos.</h3>";
+        return;
+    }
 
     let form = new FormData(from_borrar)
     form.append("accion", "borrar_usuario")
@@ -135,6 +144,11 @@ const div_buscar = document.getElementById("div_buscar");
 from_buscar.addEventListener("submit", (e) => {
 
     e.preventDefault();
+
+    if (!validarCedula(from_buscar.cedula.value)) {
+        div_buscar.innerHTML = "<h3>La cédula debe tener exactamente 8 dígitos.</h3>";
+        return;
+    }
 
     let form = new FormData(from_buscar);
     form.append("accion", "buscar_usuario")

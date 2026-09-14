@@ -7,14 +7,14 @@
 </head>
 
 </body>
-<body>
+<body style="display:none">
 <div class="admin">
 <h1>Bienvenido Administrador</h1>
 
 <h3>Borrar Usuario</h3>
 <form id="from_borrar">
 <label> Cedula </label>
-<input type="text" name= "cedula">
+<input type="text" name= "cedula" inputmode="numeric" maxlength="8">
 <input type="submit">
 </form>
 <div id="admin"></div>
@@ -32,7 +32,7 @@
 <h3>Buscar usuario</h3>
 <form id="from_buscar">
 <label> cedula </label>
-<input type="text" name= "cedula">
+<input type="text" name= "cedula" inputmode="numeric" maxlength="8">
 <input type="submit">
 </form>
 <div id="div_buscar"></div>
@@ -54,6 +54,7 @@
 
 <a href="../PHP/logout.php">Cerrar sesion</a>
 </div>
+<script src="../JS/validaciones.js"></script>
 <script src="../JS/admin.js"></script>
 </body>
 
