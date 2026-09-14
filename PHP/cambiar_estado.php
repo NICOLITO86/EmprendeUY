@@ -2,6 +2,8 @@
 
 require "auth.php";
 requireRole(['emprendedor']);
+require_once __DIR__ . '/csrf.php';
+csrf_validar();
 
 include "conexionBD.php";
 

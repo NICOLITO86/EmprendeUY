@@ -54,16 +54,19 @@ function cargarMisPublicaciones() {
 
 }
 
-function cambiarEstado(evento) {
+async function cambiarEstado(evento) {
 
     const select = evento.target;
     const id = select.dataset.id;
     const nuevoEstado = select.value;
 
+    const tokenRes = await fetch("../PHP/csrf_token.php");
+    const tokenDatos = await tokenRes.json();
+
     fetch("../PHP/cambiar_estado.php", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: `id=${id}&estado=${encodeURIComponent(nuevoEstado)}`
+        body: `id=${id}&estado=${encodeURIComponent(nuevoEstado)}&csrf_token=${encodeURIComponent(tokenDatos.token)}`
     })
     .then(res => res.json())
     .then(datos => {

@@ -1,9 +1,20 @@
 <?php
+require_once __DIR__ . '/session_config.php';
+require_once __DIR__ . '/csrf.php';
 include "conexionBD.php";
 
-session_start();
-$id=filter_var($_GET["idp"], FILTER_VALIDATE_INT);
-$ci=$_SESSION['Cedula'];
+header('Content-Type: application/json');
+
+if (empty($_SESSION['Cedula'])) {
+    http_response_code(401);
+    echo json_encode(["exito" => false, "mensaje" => "Debe iniciar sesión."]);
+    exit;
+}
+
+csrf_validar();
+
+$id = filter_var($_POST["idp"] ?? null, FILTER_VALIDATE_INT);
+$ci = $_SESSION['Cedula'];
 
 if ($id === false) {
     echo json_encode(["exito" => false, "mensaje" => "ID inválido."]);

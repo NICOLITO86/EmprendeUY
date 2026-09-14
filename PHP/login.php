@@ -1,6 +1,6 @@
 <?php
 
-session_start();
+require_once __DIR__ . '/session_config.php';
 require 'conexionBD.php'; 
 header('Content-Type: application/json');
 
@@ -85,13 +85,15 @@ if (!$loginExitoso) {
 }
 
 
+session_regenerate_id(true);
+
 $_SESSION['Cedula'] = $usuario['Cedula'];
 $_SESSION['Nombre'] = $usuario['Nombre'];
 $_SESSION['Rol']    = $usuario['Rol'];
 
 switch ($usuario['Rol']) {
     case 'administrador':
-        $redirect = '../HTML/paneladm.php';
+        $redirect = '../HTML/paneladm.html';
         break;
     case 'emprendedor':
         $redirect = '../HTML/crearemprendimiento.html';
@@ -99,9 +101,7 @@ switch ($usuario['Rol']) {
     case 'cliente':
         $redirect = '../HTML/tienda.html';
         break;
-    case 'usuario':
-        $redirect = '../HTML/tienda.html';
-        break;
+    
     default:
         $redirect = '../HTML/EmprendeUY.html';
         break;

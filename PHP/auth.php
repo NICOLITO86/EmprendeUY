@@ -1,7 +1,7 @@
 <?php
 
 
-session_start();
+require_once __DIR__ . '/session_config.php';
 require 'conexionBD.php'; 
 function requireRole(array $rolesPermitidos): void
 {
@@ -47,4 +47,23 @@ function requireRole(array $rolesPermitidos): void
 function estaLogueado(): bool
 {
     return isset($_SESSION['Cedula']);
+}
+
+// Si se llama directamente a auth.php (fetch desde el JS, no via require),
+// devuelve el estado de sesión en JSON.
+if (basename($_SERVER['SCRIPT_NAME']) === 'auth.php') {
+    header("Content-Type: application/json");
+
+    if (!isset($_SESSION['Cedula'])) {
+        http_response_code(401);
+        echo json_encode(["autenticado" => false, "rol" => null]);
+        exit;
+    }
+
+    echo json_encode([
+        "autenticado" => true,
+        "rol" => $_SESSION['Rol'],
+        "usuario" => $_SESSION['Nombre'] ?? null
+    ]);
+    exit;
 }

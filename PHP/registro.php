@@ -15,7 +15,13 @@ $Fecha_Nacimiento=$_POST['Fecha_Nacimiento'];
 $cedula=filter_var($_POST['cedula'], FILTER_VALIDATE_INT);
 $Num_Telefono=filter_var($_POST['Num_Telefono'], FILTER_SANITIZE_NUMBER_INT);
 $genero=filter_var($_POST['genero'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-$rol = filter_var($_POST['Rol'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+// El registro público solo puede crear cuentas de 'cliente' o 'emprendedor'.
+// Los administradores se crean directamente en la base de datos, nunca desde este formulario.
+$rolesPermitidos = ['cliente', 'emprendedor'];
+$rolSolicitado = $_POST['Rol'] ?? '';
+$rol = in_array($rolSolicitado, $rolesPermitidos, true) ? $rolSolicitado : 'cliente';
+
 $pass=$_POST['contraseña'];  
 $nacimiento = new DateTime($Fecha_Nacimiento);
 $hoy= new DateTime();
@@ -36,7 +42,9 @@ $sen->execute([$nombre,$apellido,$correo,$Fecha_Nacimiento,$edad,$cedula,$Num_Te
 echo json_encode(["exito"=>true]);
 
 }catch(PDOException $e){
-    echo json_encode(["exito"=>false, "error"=>$e->getMessage()]);
+    error_log("Error en registro.php: " . $e->getMessage());
+    echo json_encode(["exito"=>false, "mensaje"=>"No se pudo completar el registro. Intente nuevamente."]);
+    exit;
 }
 
 if($rol === "emprendedor"){
