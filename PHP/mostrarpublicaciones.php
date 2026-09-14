@@ -9,8 +9,9 @@ $sql = "SELECT id, titulo, descripcion, precio, categoria FROM publicaciones WHE
 $params = [];
 
 if ($busqueda !== '') {
-    $sql .= " AND (titulo LIKE :busqueda OR descripcion LIKE :busqueda)";
-    $params[':busqueda'] = '%' . $busqueda . '%';
+    $sql .= " AND (titulo LIKE :busqueda1 OR descripcion LIKE :busqueda2)";
+    $params[':busqueda1'] = '%' . $busqueda . '%';
+    $params[':busqueda2'] = '%' . $busqueda . '%';
 }
 
 if ($categoria !== '' && $categoria !== 'todas') {
