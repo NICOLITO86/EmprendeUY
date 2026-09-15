@@ -95,13 +95,27 @@ switch ($usuario['Rol']) {
     case 'administrador':
         $redirect = '../HTML/paneladm.html';
         break;
+
     case 'emprendedor':
-        $redirect = '../HTML/crearemprendimiento.html';
+        try {
+            $stmt = $conexion->prepare("SELECT 1 FROM emprendimiento WHERE cedula = :cedula LIMIT 1");
+            $stmt->execute(['cedula' => $usuario['Cedula']]);
+            $tieneEmprendimiento = $stmt->fetch();
+
+            $redirect = $tieneEmprendimiento
+                ? '../HTML/mis_publicaciones.html'
+                : '../HTML/crearemprendimiento.html';
+        } catch (PDOException $e) {
+            error_log('Error verificando emprendimiento: ' . $e->getMessage());
+            echo json_encode(['success' => false, 'mensaje' => 'Error interno del servidor.']);
+            exit;
+        }
         break;
+
     case 'cliente':
         $redirect = '../HTML/tienda.html';
         break;
-    
+
     default:
         $redirect = '../HTML/EmprendeUY.html';
         break;
