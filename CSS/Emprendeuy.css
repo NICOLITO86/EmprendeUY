@@ -1,63 +1,109 @@
+* {
+    box-sizing: border-box;
+}
+ 
 body {
+    margin: 0;
+    min-height: 100vh;
     background-image: url(../Imagenes/f..png);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: 'Poppins', Arial, sans-serif;
 }
-
-.Menu {
-    display: flex;
-    font-family: Arial, sans-serif;
-    align-items: flex-start;
-    margin: 10%;
+ 
+/* Contenedor general en grid: header arriba, contenido centrado abajo */
+.page {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    min-height: 100vh;
 }
-
-
-.Afiche {
-    text-align: center; 
-    color: white;
-    width: 500px;
-    padding: 10px;
-    border-radius: 20px;
-    position: relative;
-    left: -80px;
-    border: 3px dotted rgba(27, 37, 175, 0.3); /*Borde punteado de color gris*/
-}
-
-
-.Afiche p {
-    font-size: 18px;
-    line-height: 1.6;
-}
-
-header{
-    display: flex;
+ 
+header {
+    display: grid;
+    grid-auto-flow: column;
     justify-content: center;
-    padding: 20px;
-    gap: 15px;
-    
+    align-items: center;
+    gap: 20px;
+    padding: 25px 20px;
 }
-
-.a1{
+ 
+.a1,
+.a2 {
     display: inline-block;
-    padding: 10px 20px;
-    border: 3px solid rgb(255, 255, 255);
-    border-radius: 5px;
-    background: rgb(31, 142, 185);
-    color: #f9f8fa;
+    padding: 12px 28px;
+    border-radius: 30px;
+    font-family: 'Poppins', Arial, sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.3px;
     text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    border: none;
 }
-
-.a2{
-    display: inline-block;
-    padding: 10px 20px;
-    border: 3px solid rgb(241, 241, 243);
-    border-radius: 5px;
-    background: white;
-    color: #000000;
-    text-decoration: none;
+ 
+.a1 {
+    background: linear-gradient(135deg, rgb(31, 142, 185), rgb(27, 37, 175));
+    color: #ffffff;
 }
-
-a:hover{
-    background-color: rgb(80, 80, 204);
+ 
+.a2 {
+    background: rgba(255, 255, 255, 0.92);
+    color: rgb(27, 37, 175);
+    border: 2px solid rgba(27, 37, 175, 0.5);
+}
+ 
+.a1:hover,
+.a2:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+}
+ 
+.a1:hover {
+    background: linear-gradient(135deg, rgb(27, 37, 175), rgb(31, 142, 185));
+}
+ 
+.a2:hover {
+    background: rgb(255, 255, 255);
+    color: rgb(20, 25, 130);
+}
+ 
+/* Área principal centrada en grid */
+.Menu {
+    display: grid;
+    place-items: center;
+    padding: 40px 20px;
+}
+ 
+.Afiche {
+    text-align: center;
+    color: white;
+    width: 100%;
+    max-width: 560px;
+    padding: 35px 30px;
+    border-radius: 20px;
+    background: rgba(20, 25, 60, 0.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.4);
+}
+ 
+.Afiche h1 {
+    font-family: 'Poppins', Arial, sans-serif;
+    font-weight: 700;
+    font-size: 32px;
+    margin: 0 0 15px 0;
+    background: linear-gradient(135deg, rgb(255, 255, 255), rgb(150, 200, 255));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+ 
+.Afiche p {
+    font-size: 17px;
+    line-height: 1.7;
+    margin: 0;
 }
