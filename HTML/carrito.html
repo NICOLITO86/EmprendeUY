@@ -7,13 +7,23 @@
     <link rel="stylesheet" href="../CSS/carrito.css">
 </head>
 <body>
-  
-        <h1>Carrito de compras</h1>
-        <div id="productos-carrito">
-        </div>
-    
 
+    <h1>Carrito de compras</h1>
+
+    <!-- Contenedor donde carrito.js inyecta un .carrito-item por cada producto de "datos" -->
+    <div id="productos-carrito">
+    </div>
+
+    <div id="carrito-vacio" class="carrito-vacio" hidden>
+        <p>No hay productos en el carrito</p>
+    </div>
+
+    <div id="carrito-resumen" class="carrito-resumen">
+        <button id="vaciar-carrito" class="btn-vaciar">Vaciar carrito</button>
+        <p class="carrito-total">Total: <span id="total-carrito">$0</span></p>
+    </div>
 
     <script src="../JS/carrito.js"></script>
+    
 </body>
 </html>

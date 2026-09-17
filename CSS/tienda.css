@@ -189,7 +189,7 @@ body {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.07em;
-    color: var(--salvia);
+    color: var(--azul-oscuro);
 }
 
 .productos h3 {
@@ -233,7 +233,7 @@ body {
     font-family: var(--fuente-titulo);
     font-weight: 700;
     font-size: 0.95rem;
-    color: var(--tinta);
+    color: var(--blanco);
 }
 
 .productos button {
@@ -248,7 +248,7 @@ body {
     border: none;
     border-radius: 10px;
     background: var(--celeste-pastel);
-    color: var(--crema-carta);
+    color: var(--azul);
     font-family: var(--fuente-cuerpo);
     font-weight: 600;
     font-size: 0.9rem;
