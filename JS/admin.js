@@ -217,3 +217,4 @@ from_buscar1.addEventListener("submit", (e) => {
     .catch(error => {
         console.error("Error:", error);
     })});
+    
