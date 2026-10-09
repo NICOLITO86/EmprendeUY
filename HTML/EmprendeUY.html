@@ -1,34 +1,239 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link rel="stylesheet" href="../CSS/Emprendeuy.css">
+    <meta name="description" content="EmprendeUY es la plataforma donde los pequeños emprendedores publican y venden sus productos y llegan a más clientes con publicidad personalizada.">
+    <meta name="theme-color" content="#1b25af">
+    <link rel="stylesheet" href="../CSS/Emprendeuy.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
-    <title>EmprendeUY</title>
+    <title>EmprendeUY - Vendé tus productos y llegá a más clientes</title>
 </head>
 
 <body>
 
-    <header>
-            <a class="a1"  href="iniciar_sesion.html"> Iniciar Sesion</a>
-            <a class="a2" href="Registrarse.html"> Registrarse</a> 
-        
+<header>
+    <a class="marca" href="EmprendeUY.html" aria-label="EmprendeUY, inicio">
+        <!-- Logo provisorio: reemplazalo por tu logo con <img src="../Imagenes/logo.png" alt="EmprendeUY"> -->
+        <svg viewBox="0 0 40 40" aria-hidden="true">
+            <defs>
+                <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#1f8eb9"/><stop offset="1" stop-color="#1b25af"/>
+                </linearGradient>
+            </defs>
+            <rect width="40" height="40" rx="11" fill="url(#g)"/>
+            <path d="M12 26l6-6 4 4 7-9" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M24 15h5v5" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>EmprendeUY</span>
+    </a>
+
+    <nav class="menu-principal" aria-label="Principal">
+        <a href="Tienda.html">Tienda</a>
+        <a href="#categorias">Categorías</a>
+        <a href="#como">Cómo funciona</a>
+        <a href="#publicidad">Publicidad</a>
+        <a href="#planes">Planes</a>
+    </nav>
+
+    <div class="acciones">
+        <a class="a1" href="iniciar_sesion.html">Iniciar sesión</a>
+        <a class="a2" href="Registrarse.html">Registrarse</a>
+    </div>
 </header>
-<div class="Menu">
-    <div class="Afiche">
-    <p>Somos una plataforma para que pequeños emprendedores tengan un lugar en donde publicitarse y vender sus productos.
-        El objetivo de esta plataforma es que los pequeños emprendedores puedan tener la posibilidad de crecer pudiendo llegar a más clientes
-        mediante publicidad personalizada a la cual pueden acceder pagando una mensualidad accediendo a distintos planes los cuales les 
-        otorgan distintos beneficios
-    </p>
-    
-    </div>
-    </div>
+
+<main>
+
+    <!-- ===== Portada ===== -->
+    <section class="portada">
+        <div>
+            <h1>Tu emprendimiento merece más clientes</h1>
+            <p class="bajada">
+                Publicá tus productos, mostrá lo que hacés y llegá a personas que están buscando justo lo que vendés.
+            </p>
+            <div class="botones">
+                <a class="btn" href="Tienda.html">Entrar a la tienda</a>
+                <a class="btn btn--borde" href="Registrarse.html">Quiero vender mi emprendimiento</a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===== Categorías (llevan a la tienda) ===== -->
+    <section class="categorias" id="categorias">
+        <h2>Explorá la tienda por categoría</h2>
+        <p class="intro">Podés mirar todos los productos sin registrarte. Para comprar, necesitás iniciar sesión.</p>
+        <div class="categorias__grilla">
+            <a class="cat" href="Tienda.html?categoria=ropa">
+                <div class="cat__img">
+                    <!-- FOTO: reemplazá el <svg> por <img src="../Imagenes/ropa.jpg" alt="Ropa"> -->
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3l-5 3 2 4 3-1v11h8V9l3 1 2-4-5-3a4 4 0 0 1-8 0z"/></svg>
+                </div>
+                <h3>Ropa</h3>
+            </a>
+            <a class="cat" href="Tienda.html?categoria=carpinteria">
+                <div class="cat__img">
+                    <!-- FOTO: reemplazá el <svg> por <img src="../Imagenes/carpinteria.jpg" alt="Carpintería"> -->
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4.5l5 5-2 2-5-5zM12 7L4 15l5 5 8-8"/></svg>
+                </div>
+                <h3>Carpintería</h3>
+            </a>
+            <a class="cat" href="Tienda.html?categoria=herreria">
+                <div class="cat__img">
+                    <!-- FOTO: reemplazá el <svg> por <img src="../Imagenes/herreria.jpg" alt="Herrería"> -->
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h13c0 3-2 5-5 5v3h3v3H8v-3h3v-3C7 13 4 11 4 8z"/></svg>
+                </div>
+                <h3>Herrería</h3>
+            </a>
+            <a class="cat" href="Tienda.html?categoria=higiene">
+                <div class="cat__img">
+                    <!-- FOTO: reemplazá el <svg> por <img src="../Imagenes/higiene.jpg" alt="Higiene"> -->
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.500 6-11 6-11z"/></svg>
+                </div>
+                <h3>Higiene</h3>
+            </a>
+            <a class="cat" href="Tienda.html?categoria=hogar">
+                <div class="cat__img">
+                    <!-- FOTO: reemplazá el <svg> por <img src="../Imagenes/hogar.jpg" alt="Hogar"> -->
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8M5 10v10h14V10M10 20v-6h4v6"/></svg>
+                </div>
+                <h3>Hogar</h3>
+            </a>
+            <a class="cat" href="Tienda.html?categoria=tecnologia">
+                <div class="cat__img">
+                    <!-- FOTO: reemplazá el <svg> por <img src="../Imagenes/tecnologia.jpg" alt="Tecnología"> -->
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3h8a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM11 18h2"/></svg>
+                </div>
+                <h3>Tecnología</h3>
+            </a>
+            <a class="cat" href="Tienda.html?categoria=deportes">
+                <div class="cat__img">
+                    <!-- FOTO: reemplazá el <svg> por <img src="../Imagenes/deportes.jpg" alt="Deportes"> -->
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>
+                </div>
+                <h3>Deportes</h3>
+            </a>
+        </div>
+    </section>
+
+    <!-- ===== Beneficios ===== -->
+    <section class="beneficio" id="como">
+        <div>
+            <h2>Un lugar para mostrar y vender lo que hacés</h2>
+            <p>Somos una plataforma pensada para pequeños emprendedores. Armá tu espacio, subí tus productos y que más gente los conozca.</p>
+            <a class="btn btn--suave" href="Registrarse.html">Crear mi espacio</a>
+        </div>
+        <div class="arte">
+            <!-- FOTO SUGERIDA: tus manos o tu mesa de trabajo (ej: ../Imagenes/emprendedor-trabajando.jpg)
+                 Para usarla, reemplazá el <svg> por: <img src="../Imagenes/emprendedor-trabajando.jpg" alt="Emprendedora preparando sus productos"> -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 9l1.5-5h15L21 9"/><path d="M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"/><path d="M5 12v8h14v-8"/><path d="M10 20v-5h4v5"/>
+            </svg>
+        </div>
+    </section>
+
+    <section class="beneficio" id="publicidad">
+        <div>
+            <h2>Publicidad hecha a tu medida</h2>
+            <p>Tu emprendimiento no se pierde entre cientos de otros. Con publicidad personalizada, tus productos llegan a los clientes indicados.</p>
+            <a class="btn btn--suave" href="#planes">Ver planes</a>
+        </div>
+        <div class="arte">
+            <!-- FOTO SUGERIDA: cliente mirando productos o recibiendo un pedido (../Imagenes/cliente-feliz.jpg) -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 11v2a1 1 0 0 0 1 1h3l6 4V6L7 10H4a1 1 0 0 0-1 1z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/><path d="M19 6a8.500 8.500 0 0 1 0 12"/>
+            </svg>
+        </div>
+    </section>
+
+    <section class="beneficio">
+        <div>
+            <h2>Más clientes, más ventas</h2>
+            <p>Cuando más personas ven tu trabajo, tu negocio crece. Elegí cuánta visibilidad querés y ajustala a medida que avanzás.</p>
+            <a class="btn btn--suave" href="Registrarse.html">Empezar ahora</a>
+        </div>
+        <div class="arte">
+            <!-- FOTO SUGERIDA: paquetes listos para entregar (../Imagenes/pedidos.jpg) -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>
+            </svg>
+        </div>
+    </section>
+
+    <section class="beneficio">
+        <div>
+            <h2>Hecho para quienes recién empiezan</h2>
+            <p>No necesitás una tienda online propia ni conocimientos técnicos. Pagás una mensualidad simple y te ocupás de lo importante: tus productos.</p>
+            <a class="btn btn--suave" href="#planes">Elegir mi plan</a>
+        </div>
+        <div class="arte">
+            <!-- FOTO SUGERIDA: feria o emprendedores en su puesto (../Imagenes/feria.jpg) -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 21s-7-4.500-7-10a4 4 0 0 1 7-2.500A4 4 0 0 1 19 11c0 5.500-7 10-7 10z"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- ===== Planes ===== -->
+    <section class="planes" id="planes">
+        <h2>Elegí el plan que se ajusta a tu emprendimiento</h2>
+        <p class="intro">Cada plan te da distintos beneficios. Podés empezar con uno y cambiar cuando tu negocio lo necesite.</p>
+
+        <!-- Los nombres y beneficios son EJEMPLOS: cambialos por los reales de tu plataforma.
+             Para mostrar el precio, agregá debajo del <h3>: <p class="para">$ ___ por mes</p> -->
+        <div class="planes__grilla">
+            <article class="plan">
+                <h3>Básico</h3>
+                <p class="para">Para dar tus primeros pasos</p>
+                <ul>
+                    <li>Perfil de tu emprendimiento</li>
+                    <li>Publicá tus productos</li>
+                    <li>Aparecé en el listado general</li>
+                </ul>
+                <a class="btn btn--suave" href="Registrarse.html">Elegir Básico</a>
+            </article>
+
+            <article class="plan plan--destacado">
+                <span class="etiqueta">El más elegido</span>
+                <h3>Destacado</h3>
+                <p class="para">Para empezar a crecer</p>
+                <ul>
+                    <li>Todo lo del plan Básico</li>
+                    <li>Publicidad personalizada</li>
+                    <li>Más visibilidad en las búsquedas</li>
+                </ul>
+                <a class="btn btn--azul" href="Registrarse.html">Elegir Destacado</a>
+            </article>
+
+            <article class="plan">
+                <h3>Premium</h3>
+                <p class="para">Para llegar al máximo de clientes</p>
+                <ul>
+                    <li>Todo lo del plan Destacado</li>
+                    <li>Lugar privilegiado en la página principal</li>
+                    <li>Campañas de publicidad ampliadas</li>
+                </ul>
+                <a class="btn btn--suave" href="Registrarse.html">Elegir Premium</a>
+            </article>
+        </div>
+    </section>
+
+    <!-- ===== Cierre ===== -->
+    <section class="cierre">
+        <h2>Tu próximo cliente ya te está buscando</h2>
+        <p>Sumate a EmprendeUY y hacé que tu emprendimiento se vea.</p>
+        <a class="btn" href="Registrarse.html">Registrarme ahora</a>
+    </section>
+
+</main>
+
+<footer>
+    © 2026 EmprendeUY. Todos los derechos reservados.
+</footer>
 
 </body>
 </html>
