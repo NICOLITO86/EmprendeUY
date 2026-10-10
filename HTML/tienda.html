@@ -5,148 +5,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#1b25af">
     <link rel="stylesheet" href="../CSS/Emprendeuy.css">
+    <link rel="stylesheet" href="../CSS/tienda.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
-    <title>Tienda - EmprendeUY</title>
+    <title>Tienda | EmprendeUY</title>
 </head>
-
 <body>
 
-<header>
-    <a class="marca" href="EmprendeUY.html" aria-label="EmprendeUY, inicio">
-        <svg viewBox="0 0 40 40" aria-hidden="true">
-            <defs>
-                <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0" stop-color="#1f8eb9"/><stop offset="1" stop-color="#1b25af"/>
-                </linearGradient>
-            </defs>
-            <rect width="40" height="40" rx="11" fill="url(#g)"/>
-            <path d="M12 26l6-6 4 4 7-9" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M24 15h5v5" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <span>EmprendeUY</span>
-    </a>
+    <header>
+        <a class="marca" href="EmprendeUY.html" aria-label="EmprendeUY, inicio">
+            <svg viewBox="0 0 40 40" aria-hidden="true">
+                <defs>
+                    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0" stop-color="#1f8eb9"/><stop offset="1" stop-color="#1b25af"/>
+                    </linearGradient>
+                </defs>
+                <rect width="40" height="40" rx="11" fill="url(#g)"/>
+                <path d="M12 26l6-6 4 4 7-9" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M24 15h5v5" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>EmprendeUY</span>
+        </a>
 
-    <nav class="menu-principal" aria-label="Principal">
-        <a href="EmprendeUY.html">Inicio</a>
-        <a href="Tienda.html">Tienda</a>
-    </nav>
+        <!-- Con sesión iniciada (tienda-visitante.js los cambia por los de visitante si no hay sesión) -->
+        <div class="acciones" id="acciones-usuario">
+            <a class="a2" href="carrito.html">Ver carrito</a>
+            <a class="a1" href="../PHP/logout.php">Cerrar sesión</a>
+        </div>
 
-    <div class="acciones">
-        <a class="a1" href="iniciar_sesion.html">Iniciar sesión</a>
-        <a class="a2" href="Registrarse.html">Registrarse</a>
-    </div>
-</header>
+        <div class="acciones" id="acciones-visitante" hidden>
+            <a class="a1" href="iniciar_sesion.html">Iniciar sesión</a>
+            <a class="a2" href="Registrarse.html">Registrarse</a>
+        </div>
+    </header>
 
-<main class="tienda">
+    <main>
 
-    <!-- Solo se muestra si NO hay sesión iniciada -->
-    <div class="aviso-visitante" id="aviso">
-        <p>Estás mirando la tienda como visitante. Para comprar, iniciá sesión o registrate.</p>
-        <a class="a1" href="iniciar_sesion.html">Iniciar sesión</a>
-    </div>
+        <!-- Solo se muestra a los visitantes (lo activa tienda-visitante.js) -->
+        <div class="aviso-visitante" id="aviso" hidden>
+            <p>Estás mirando la tienda como visitante. Para comprar, iniciá sesión o registrate.</p>
+            <a class="a1" href="iniciar_sesion.html">Iniciar sesión</a>
+        </div>
 
-    <h1 id="titulo">Tienda</h1>
-    <nav class="filtros" id="filtros" aria-label="Categorías"></nav>
-    <section class="productos" id="productos" aria-live="polite"></section>
+        <div class="tienda-intro">
+            <h2>Descubrí productos de emprendedores uruguayos</h2>
+            <p>Cada compra apoya directamente a un pequeño negocio local.</p>
+        </div>
 
-</main>
+        <div class="tienda-filtros">
+            <input type="text" id="buscador" placeholder="Buscar productos...">
+            <select id="filtro-categoria">
+                <option value="todas">Todas las categorías</option>
+            </select>
+        </div>
 
-<script>
-    // ---- Estado de sesión ----
-    // Por ahora es un valor fijo. Cuando tengas el login, cambialo por el dato real.
-    // IMPORTANTE: ocultar el botón de comprar solo es visual. La compra tiene que
-    // validarse también en el servidor, para que un visitante no pueda comprar igual.
-    const sesionIniciada = false;
+        <h2 id="titulo" hidden>Todos los productos</h2>
 
-    // ---- Categorías (los slugs coinciden con los enlaces de la portada) ----
-    const categorias = [
-        { slug: 'ropa',        nombre: 'Ropa' },
-        { slug: 'carpinteria', nombre: 'Carpintería' },
-        { slug: 'herreria',    nombre: 'Herrería' },
-        { slug: 'higiene',     nombre: 'Higiene' },
-        { slug: 'hogar',       nombre: 'Hogar' },
-        { slug: 'tecnologia',  nombre: 'Tecnología' },
-        { slug: 'deportes',    nombre: 'Deportes' }
-    ];
+        <div id="productos"></div>
 
-    // ---- Productos de EJEMPLO: reemplazalos por los de tu base de datos ----
-    const productos = [
-        { nombre: 'Producto de ejemplo 1', vende: 'Emprendimiento de ejemplo', precio: 990,  categoria: 'ropa',        imagen: '' },
-        { nombre: 'Producto de ejemplo 2', vende: 'Emprendimiento de ejemplo', precio: 1500, categoria: 'carpinteria', imagen: '' },
-        { nombre: 'Producto de ejemplo 3', vende: 'Emprendimiento de ejemplo', precio: 2300, categoria: 'herreria',    imagen: '' },
-        { nombre: 'Producto de ejemplo 4', vende: 'Emprendimiento de ejemplo', precio: 450,  categoria: 'higiene',     imagen: '' },
-        { nombre: 'Producto de ejemplo 5', vende: 'Emprendimiento de ejemplo', precio: 1200, categoria: 'hogar',       imagen: '' },
-        { nombre: 'Producto de ejemplo 6', vende: 'Emprendimiento de ejemplo', precio: 3100, categoria: 'tecnologia',  imagen: '' },
-        { nombre: 'Producto de ejemplo 7', vende: 'Emprendimiento de ejemplo', precio: 800,  categoria: 'deportes',    imagen: '' }
-    ];
+    </main>
 
-    // ---- Lectura de la categoría desde la dirección: Tienda.html?categoria=ropa ----
-    const slugActual = new URLSearchParams(location.search).get('categoria') || '';
-    const categoriaActual = categorias.find(c => c.slug === slugActual);
 
-    document.getElementById('aviso').hidden = sesionIniciada;
-    document.getElementById('titulo').textContent = categoriaActual ? categoriaActual.nombre : 'Todos los productos';
-    document.title = (categoriaActual ? categoriaActual.nombre : 'Tienda') + ' - EmprendeUY';
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../JS/tienda.js"></script>
 
-    // ---- Filtros ----
-    const filtros = document.getElementById('filtros');
-    const enlaces = [{ slug: '', nombre: 'Todas' }, ...categorias];
-    enlaces.forEach(c => {
-        const a = document.createElement('a');
-        a.textContent = c.nombre;
-        a.href = c.slug ? 'Tienda.html?categoria=' + c.slug : 'Tienda.html';
-        if (c.slug === (categoriaActual ? categoriaActual.slug : '')) a.setAttribute('aria-current', 'page');
-        filtros.appendChild(a);
-    });
-
-    // ---- Productos ----
-    const contenedor = document.getElementById('productos');
-    const lista = categoriaActual ? productos.filter(p => p.categoria === categoriaActual.slug) : productos;
-
-    if (lista.length === 0) {
-        const vacio = document.createElement('p');
-        vacio.className = 'vacio';
-        vacio.textContent = 'Todavía no hay productos en esta categoría.';
-        contenedor.appendChild(vacio);
-    }
-
-    lista.forEach(p => {
-        const art = document.createElement('article');
-        art.className = 'producto';
-
-        const img = document.createElement('div');
-        img.className = 'producto__img';
-        if (p.imagen) {
-            const i = document.createElement('img');
-            i.src = p.imagen; i.alt = p.nombre; i.loading = 'lazy';
-            img.appendChild(i);
-        } else {
-            img.textContent = 'Sin foto';
-        }
-
-        const datos = document.createElement('div');
-        datos.className = 'producto__datos';
-
-        const h3 = document.createElement('h3'); h3.textContent = p.nombre;
-        const vende = document.createElement('span'); vende.className = 'vende'; vende.textContent = p.vende;
-        const precio = document.createElement('span'); precio.className = 'precio'; precio.textContent = '$ ' + p.precio.toLocaleString('es-UY');
-
-        const boton = document.createElement('a');
-        if (sesionIniciada) {
-            boton.className = 'a1'; boton.href = '#'; boton.textContent = 'Comprar';
-        } else {
-            boton.className = 'a2'; boton.href = 'iniciar_sesion.html'; boton.textContent = 'Iniciá sesión para comprar';
-        }
-
-        datos.append(h3, vende, precio, boton);
-        art.append(img, datos);
-        contenedor.appendChild(art);
-    });
-</script>
+    <!-- Complemento opcional: modo visitante y categoria desde la portada. No modifica tienda.js -->
+    <script src="../JS/tienda-visitante.js"></script>
 
 </body>
 </html>

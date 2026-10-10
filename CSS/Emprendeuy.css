@@ -27,6 +27,7 @@ body {
 }
 
 a { color: inherit; text-decoration: none; }
+[hidden] { display: none !important; }
 :focus-visible { outline: 3px solid var(--celeste); outline-offset: 3px; border-radius: 8px; }
 
 /* ---------- Cabecera fija ---------- */
@@ -179,23 +180,6 @@ header {
 
 footer { padding: 28px clamp(20px, 8vw, 140px); font-size: .88rem; color: var(--gris); text-align: center; }
 
-/* ---------- Celulares y tablets ---------- */
-@media (max-width: 860px) {
-    .menu-principal { display: none; }
-    .beneficio { grid-template-columns: 1fr; text-align: center; min-height: auto; }
-    .beneficio p { margin-inline: auto; }
-    .beneficio:nth-of-type(even) .arte { order: 0; }
-    .arte { max-width: 440px; width: 100%; margin: 0 auto; }
-}
-@media (max-width: 480px) {
-    .marca span { display: none; }
-    .a1, .a2 { padding: 9px 16px; font-size: 13px; }
-}
-@media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    .btn, .a1, .a2 { transition: none; }
-}
-
 /* ==========================================================
    Categorías de la portada
    ========================================================== */
@@ -222,32 +206,86 @@ footer { padding: 28px clamp(20px, 8vw, 140px); font-size: .88rem; color: var(--
 .cat:hover h3 { color: var(--azul); }
 
 /* ==========================================================
-   Tienda (Tienda.html)
+   ADAPTACIÓN A PANTALLAS (media queries)
+   Puntos de corte, de mayor a menor (los mismos en tienda.css):
+     1600px  pantallas grandes
+     1024px  tablets horizontales y notebooks chicas
+      860px  tablets verticales
+      600px  celulares grandes
+      480px  celulares
+      400px  celulares chicos
+   Además: celular en horizontal, pantallas táctiles y movimiento reducido
    ========================================================== */
-.tienda { padding: calc(var(--alto-header) + 32px) clamp(20px, 6vw, 100px) 80px; min-height: 100vh; background: var(--fondo-alt); }
-.aviso-visitante {
-    max-width: 1100px; margin: 0 auto 28px; padding: 14px 20px; border-radius: 14px;
-    background: #fff; border: 2px solid rgba(27, 37, 175, .25);
-    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;
-}
-.aviso-visitante p { color: var(--tinta); font-size: .95rem; }
-.tienda h1 { max-width: 1100px; margin: 0 auto 18px; font-size: clamp(1.8rem, 4vw, 2.6rem); }
-.filtros { max-width: 1100px; margin: 0 auto 32px; display: flex; flex-wrap: wrap; gap: 10px; }
-.filtros a {
-    padding: 8px 20px; border-radius: 999px; background: #fff; color: var(--azul);
-    font-weight: 600; font-size: .92rem; border: 2px solid rgba(27, 37, 175, .2);
-    transition: background .2s, color .2s;
-}
-.filtros a:hover { background: var(--suave); }
-.filtros a[aria-current="page"] { background: var(--degradado); color: #fff; border-color: transparent; }
 
-.productos { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 22px; }
-.producto { background: #fff; border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 6px 20px rgba(27, 37, 175, .08); }
-.producto__img { aspect-ratio: 4 / 3; background: var(--degradado); display: grid; place-items: center; color: rgba(255, 255, 255, .85); font-weight: 600; }
-.producto__img img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.producto__datos { padding: 16px 18px 20px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
-.producto__datos h3 { font-size: 1.05rem; }
-.producto__datos .vende { color: var(--gris); font-size: .88rem; }
-.producto__datos .precio { font-weight: 700; font-size: 1.15rem; color: var(--azul); margin: 6px 0 12px; }
-.producto__datos .a1, .producto__datos .a2 { margin-top: auto; text-align: center; }
-.vacio { grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--gris); }
+/* ---------- Pantallas grandes ---------- */
+@media (min-width: 1600px) {
+    .beneficio, .categorias, .planes { padding-inline: calc((100vw - 1320px) / 2); }
+    .portada .bajada { font-size: 1.4rem; }
+}
+
+/* ---------- Tablets horizontales y notebooks chicas ---------- */
+@media (max-width: 1024px) {
+    .menu-principal { gap: 18px; font-size: .88rem; }
+    .beneficio { gap: 40px; padding: 64px clamp(20px, 6vw, 80px); }
+    .categorias, .planes { padding: 72px clamp(20px, 6vw, 80px); }
+    .cierre { padding: 90px 24px; }
+}
+
+/* ---------- Tablets verticales ---------- */
+@media (max-width: 860px) {
+    .menu-principal { display: none; }
+    .beneficio { grid-template-columns: 1fr; text-align: center; min-height: auto; padding: 56px 24px; gap: 28px; }
+    .beneficio p { margin-inline: auto; }
+    .beneficio:nth-of-type(even) .arte { order: 0; }
+    .arte { max-width: 440px; width: 100%; margin: 0 auto; }
+    .categorias, .planes { padding: 64px 24px; }
+}
+
+/* ---------- Celulares grandes ---------- */
+@media (max-width: 600px) {
+    .portada { padding: calc(var(--alto-header) + 32px) 20px 64px; }
+    .portada > div { min-width: 0; width: 100%; }
+    .portada h1 { font-size: clamp(1.9rem, 9vw, 2.6rem); overflow-wrap: break-word; }
+    .portada .botones { flex-direction: column; align-items: stretch; margin-bottom: 0; }
+    .btn { padding: 14px 28px; font-size: 1rem; }
+    .beneficio { padding: 48px 20px; }
+    .categorias, .planes { padding: 56px 20px; }
+    .categorias__grilla { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .cat { padding: 10px 10px 16px; border-radius: 18px; }
+    .cat h3 { font-size: 1rem; }
+    .planes__grilla { grid-template-columns: 1fr; }
+    .plan { padding: 28px 22px; }
+    .cierre { padding: 72px 20px; }
+    footer { padding: 24px 20px; }
+}
+
+/* ---------- Celulares ---------- */
+@media (max-width: 480px) {
+    header { padding: 0 14px; }
+    .acciones { gap: 8px; }
+    .a1, .a2 { padding: 9px 16px; font-size: 13px; }
+}
+
+/* ---------- Celulares chicos ---------- */
+@media (max-width: 400px) {
+    .marca span { display: none; }
+    .a1, .a2 { padding: 8px 13px; font-size: 12.5px; }
+}
+
+/* ---------- Celular en horizontal (poca altura) ---------- */
+@media (max-height: 520px) and (orientation: landscape) {
+    :root { --alto-header: 56px; }
+    .portada { min-height: auto; padding-top: calc(var(--alto-header) + 24px); padding-bottom: 48px; }
+    .beneficio { min-height: auto; }
+}
+
+/* ---------- Pantallas táctiles: sin efectos al pasar el dedo ---------- */
+@media (hover: none) {
+    .btn:hover, .a1:hover, .a2:hover, .cat:hover { transform: none; }
+}
+
+/* ---------- Quienes prefieren menos movimiento ---------- */
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; animation: none !important; }
+}
