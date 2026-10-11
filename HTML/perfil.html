@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1b25af">
+    <title>Mi perfil - EmprendeUY</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Primero el CSS común (cabecera, botones, colores) y después el de esta página -->
+    <link rel="stylesheet" href="../CSS/Emprendeuy.css">
+    <link rel="stylesheet" href="../CSS/perfil.css">
+</head>
+<body>
+
+<!-- Misma cabecera que el resto del sitio -->
+<header>
+    <a class="marca" href="EmprendeUY.html" aria-label="EmprendeUY, inicio">
+        <img src="../Imagenes/EmprendeUy.png" alt="EmprendeUY">
+        <span>EmprendeUY</span>
+    </a>
+
+    <div class="acciones">
+        <a class="a1" href="tienda.html">Ir a la tienda</a>
+        <a class="a2" href="../PHP/logout.php">Cerrar sesión</a>
+    </div>
+</header>
+
+<main class="perfil-pagina">
+
+    <div class="perfil-pagina__titulo">
+        <h1>Mi perfil</h1>
+        <p>Tus datos y tus direcciones, en un solo lugar.</p>
+    </div>
+
+    <div class="perfil">
+
+        <!-- ===== Columna izquierda: foto y resumen ===== -->
+        <aside class="tarjeta perfil__lateral">
+            <div class="perfil__banda" aria-hidden="true"></div>
+
+            <!-- Foto de perfil.
+                 La sube el usuario con el formulario de abajo y el servidor la guarda en la carpeta de imágenes.
+                 Al cargar la página, se le pone al <img> el src con la ruta guardada
+                 (ej.: ../Imagenes/perfiles/12345678.jpg). Mientras no tenga src, el <img> queda
+                 oculto y se ve la silueta, así que no hay que tocar este HTML. -->
+            <div class="avatar" id="avatar" role="img" aria-label="Foto de perfil">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <circle cx="12" cy="8" r="4.2"/>
+                    <path d="M3.5 21c0-4.7 3.8-7.6 8.5-7.6s8.5 2.9 8.5 7.6z"/>
+                </svg>
+                <img id="foto-perfil" alt="">
+            </div>
+
+            <!-- Se completan con los datos de la cuenta -->
+            <h2 class="perfil__nombre" id="nombre-completo">Nombre Apellido</h2>
+            <span class="perfil__rol" id="rol-usuario">Cliente</span>
+
+            <form id="form-foto" class="perfil__foto" enctype="multipart/form-data">
+                <label for="foto">Cambiar foto de perfil</label>
+                <input type="file" id="foto" name="foto" accept="image/jpeg,image/png,image/webp">
+                <p class="ayuda">Mejor si es cuadrada. Formatos JPG, PNG o WEBP.</p>
+                <button type="submit" class="boton boton--suave">Guardar foto</button>
+            </form>
+        </aside>
+
+        <!-- ===== Columna derecha: datos y direcciones ===== -->
+        <div class="perfil__contenido">
+
+            <!-- Datos personales -->
+            <section class="tarjeta">
+                <h2>Datos personales</h2>
+
+                <form id="form-datos" class="formulario">
+
+                    <div class="campo">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" id="nombre" name="nombre" autocomplete="given-name" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="apellido">Apellido</label>
+                        <input type="text" id="apellido" name="apellido" autocomplete="family-name" required>
+                    </div>
+
+                    <div class="campo campo--completo">
+                        <label for="correo">Correo electrónico</label>
+                        <input type="email" id="correo" name="correo" autocomplete="email" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="Fecha_Nacimiento">Fecha de nacimiento</label>
+                        <input type="date" id="Fecha_Nacimiento" name="Fecha_Nacimiento" autocomplete="bday" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="genero">Género</label>
+                        <select id="genero" name="genero" required>
+                            <option value="">Seleccioná...</option>
+                            <option value="femenino">Femenino</option>
+                            <option value="masculino">Masculino</option>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <label for="cedula">Cédula</label>
+                        <input type="text" id="cedula" name="cedula" inputmode="numeric" maxlength="8" readonly aria-describedby="ayuda-cedula">
+                        <p class="ayuda" id="ayuda-cedula">La cédula no se puede cambiar.</p>
+                    </div>
+
+                    <div class="campo">
+                        <label for="Num_Telefono">Número de teléfono</label>
+                        <input type="tel" id="Num_Telefono" name="Num_Telefono" inputmode="numeric" maxlength="9"
+                               autocomplete="tel-national" placeholder="9 dígitos" required>
+                    </div>
+
+                    <div class="campo campo--completo">
+                        <label for="sobre_mi">Sobre mí <span class="opcional">(opcional)</span></label>
+                        <textarea id="sobre_mi" name="sobre_mi" rows="3" maxlength="300"
+                                  placeholder="Contá algo breve sobre vos"></textarea>
+                    </div>
+
+                    <button type="submit" class="boton campo--completo">Guardar cambios</button>
+                </form>
+            </section>
+
+            <!-- Direcciones -->
+            <section class="tarjeta">
+                <h2>Mis direcciones</h2>
+                <p class="tarjeta__sub">Guardá las direcciones donde querés recibir tus compras.</p>
+
+                <!-- Acá van las direcciones guardadas, una tarjeta por cada una.
+                     Mientras no haya ninguna se muestra el mensaje de abajo.
+                     Modelo de cada tarjeta:
+
+                <article class="direccion direccion--principal">
+                    <div class="direccion__cabecera">
+                        <h3>Casa</h3>
+                        <span class="direccion__etiqueta">Principal</span>
+                    </div>
+                    <p>Av. 18 de Julio 1234, apto 5 (esquina Río Negro)</p>
+                    <p>Centro, Montevideo, Montevideo · CP 11100</p>
+                    <div class="direccion__acciones">
+                        <button type="button" class="boton boton--chico boton--suave">Editar</button>
+                        <button type="button" class="boton boton--chico boton--peligro">Eliminar</button>
+                    </div>
+                </article>
+                -->
+                <div id="lista-direcciones" class="direcciones">
+                    <p class="vacio">Todavía no agregaste ninguna dirección.</p>
+                </div>
+
+                <!-- Formulario desplegable (funciona solo con HTML, sin JavaScript) -->
+                <details class="nueva-direccion">
+                    <summary class="boton boton--suave">
+                        <span class="cerrado">+ Agregar dirección</span>
+                        <span class="abierto">Cerrar formulario</span>
+                    </summary>
+
+                    <form id="form-direccion" class="formulario">
+
+                        <div class="campo campo--completo">
+                            <label for="alias_direccion">Nombre de la dirección</label>
+                            <input type="text" id="alias_direccion" name="alias_direccion" placeholder="Ej.: Casa, Casa de mis padres" required>
+                        </div>
+
+                        <div class="campo">
+                            <label for="calle">Calle</label>
+                            <input type="text" id="calle" name="calle" autocomplete="address-line1" required>
+                        </div>
+
+                        <div class="campo">
+                            <label for="numero_puerta">Número de puerta</label>
+                            <input type="text" id="numero_puerta" name="numero_puerta" inputmode="numeric" required>
+                        </div>
+
+                        <div class="campo">
+                            <label for="apartamento">Apartamento <span class="opcional">(opcional)</span></label>
+                            <input type="text" id="apartamento" name="apartamento" autocomplete="address-line2">
+                        </div>
+
+                        <div class="campo">
+                            <label for="esquina">Esquina <span class="opcional">(opcional)</span></label>
+                            <input type="text" id="esquina" name="esquina">
+                        </div>
+
+                        <div class="campo">
+                            <label for="barrio">Barrio</label>
+                            <input type="text" id="barrio" name="barrio" required>
+                        </div>
+
+                        <div class="campo">
+                            <label for="ciudad">Ciudad o localidad</label>
+                            <input type="text" id="ciudad" name="ciudad" autocomplete="address-level2" required>
+                        </div>
+
+                        <div class="campo">
+                            <label for="departamento">Departamento</label>
+                            <select id="departamento" name="departamento" autocomplete="address-level1" required>
+                                <option value="">Seleccioná...</option>
+                                <option value="Artigas">Artigas</option>
+                                <option value="Canelones">Canelones</option>
+                                <option value="Cerro Largo">Cerro Largo</option>
+                                <option value="Colonia">Colonia</option>
+                                <option value="Durazno">Durazno</option>
+                                <option value="Flores">Flores</option>
+                                <option value="Florida">Florida</option>
+                                <option value="Lavalleja">Lavalleja</option>
+                                <option value="Maldonado">Maldonado</option>
+                                <option value="Montevideo">Montevideo</option>
+                                <option value="Paysandú">Paysandú</option>
+                                <option value="Río Negro">Río Negro</option>
+                                <option value="Rivera">Rivera</option>
+                                <option value="Rocha">Rocha</option>
+                                <option value="Salto">Salto</option>
+                                <option value="San José">San José</option>
+                                <option value="Soriano">Soriano</option>
+                                <option value="Tacuarembó">Tacuarembó</option>
+                                <option value="Treinta y Tres">Treinta y Tres</option>
+                            </select>
+                        </div>
+
+                        <div class="campo">
+                            <label for="codigo_postal">Código postal <span class="opcional">(opcional)</span></label>
+                            <input type="text" id="codigo_postal" name="codigo_postal" inputmode="numeric" maxlength="5" autocomplete="postal-code">
+                        </div>
+
+                        <div class="campo campo--completo">
+                            <label for="indicaciones">Indicaciones para la entrega <span class="opcional">(opcional)</span></label>
+                            <textarea id="indicaciones" name="indicaciones" rows="3" maxlength="200"
+                                      placeholder="Ej.: Portón negro, tocar timbre 2"></textarea>
+                        </div>
+
+                        <label class="check campo--completo" for="es_principal">
+                            <input type="checkbox" id="es_principal" name="es_principal" value="1">
+                            Usar como mi dirección principal
+                        </label>
+
+                        <button type="submit" class="boton campo--completo">Guardar dirección</button>
+                    </form>
+                </details>
+            </section>
+
+        </div>
+    </div>
+</main>
+
+</body>
+</html>

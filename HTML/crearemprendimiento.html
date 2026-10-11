@@ -1,36 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>crear emprendimiento</title>
+    <meta name="theme-color" content="#1b25af">
+    <title>Crear emprendimiento - EmprendeUY</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Primero el CSS común (cabecera, botones, colores) y después el de esta página -->
+    <link rel="stylesheet" href="../CSS/Emprendeuy.css">
     <link rel="stylesheet" href="../CSS/crearEmprendimiento.css">
 </head>
 <body style="display:none">
 <script src="../JS/auth-guard.js" data-roles="emprendedor"></script>
-<div id ="div1" class="creadoremprendimiento">
-      <form id="formulario">
-            <label for="nombre">Nombre de tu emprendimiento</label>
-            <input type="text" id="nombre" name="nombre" required>
 
-<br>
-            <label for="descripcion"> cuentanos de que trata tu emprendimiento</label>
-            <input type="text" id="descripcion" name="descripcion" required>
+<!-- Misma cabecera que la portada; el cierre de sesión pasa a la cabecera -->
+<header>
+    <a class="marca" href="EmprendeUY.html" aria-label="EmprendeUY, inicio">
+        <img src="../Imagenes/EmprendeUy.png" alt="EmprendeUY">
+        <span>EmprendeUY</span>
+    </a>
 
-<br>
+    <div class="acciones">
+        <a class="a2" href="../PHP/logout.php">Cerrar sesión</a>
+    </div>
+</header>
 
-          <label for="img"> Agrega una imagen para tu emprendimiento</label>
-    <input type="file"  name="foto" id="foto">
+<main>
+    <section id="div1" class="creadoremprendimiento">
+        <h1>Creá tu emprendimiento</h1>
+        <p class="creadoremprendimiento__sub">Contanos cómo se llama y qué hacés para que los clientes te encuentren.</p>
 
-            <button type="submit">Crear</button>
+        <form id="formulario" class="formulario">
+            <div class="campo">
+                <label for="nombre">Nombre de tu emprendimiento</label>
+                <input type="text" id="nombre" name="nombre" required>
+            </div>
+
+            <div class="campo">
+                <label for="descripcion">Contanos de qué trata tu emprendimiento</label>
+                <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
+            </div>
+
+            <div class="campo">
+                <label for="foto">Agregá una imagen para tu emprendimiento</label>
+                <input type="file" id="foto" name="foto" accept="image/*">
+            </div>
+
+            <button type="submit" class="formulario__enviar">Crear emprendimiento</button>
         </form>
+    </section>
+</main>
 
-</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.26.25/dist/sweetalert2.all.min.js"></script>
+<script src="../JS/crearEmprendimiento.js"></script>
 
-        
-    
 </body>
-<a href="../PHP/logout.php">Cerrar sesión</a>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.26.25/dist/sweetalert2.all.min.js"></script>
-        <script src="../JS/crearEmprendimiento.js"></script>
 </html>

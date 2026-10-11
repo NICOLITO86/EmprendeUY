@@ -28,7 +28,11 @@ body {
 
 a { color: inherit; text-decoration: none; }
 [hidden] { display: none !important; }
-:focus-visible { outline: 3px solid var(--celeste); outline-offset: 3px; border-radius: 8px; }
+
+.marca :focus-visible { 
+    outline: 2px solid rgba(31, 142, 185, .5);
+    outline-offset: 4px;
+    border-radius: 10px;}
 
 /* ---------- Cabecera fija ---------- */
 header {
@@ -42,8 +46,17 @@ header {
     border-bottom: 1px solid rgba(15, 28, 51, 0.08);
 }
 
-.marca { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.3rem; color: var(--azul); }
-.marca svg { width: 34px; height: 34px; }
+.marca { display: flex;
+     align-items: center;
+      gap: 10px; font-weight: 700;
+       font-size: 1.3rem; 
+       color: var(--azul); }
+
+.marca img { 
+     width: 44px;
+    height: 44px;
+    object-fit: contain;
+    border-radius: 10px; /* suaviza el cuadrado blanco */ }
 
 .menu-principal { display: flex; gap: 28px; font-size: .93rem; color: var(--gris); }
 .menu-principal a:hover { color: var(--azul); }
@@ -125,6 +138,24 @@ header {
 .beneficio h2 { font-size: clamp(1.8rem, 4vw, 2.9rem); line-height: 1.15; margin-bottom: 16px; letter-spacing: -.01em; }
 .beneficio p { color: var(--gris); font-size: 1.1rem; max-width: 46ch; margin-bottom: 28px; }
 
+/* Estado inicial: oculto y desplazado (solo si JS está activo) */
+.js .revelar {
+    opacity: 0;
+    transform: translateY(40px) scale(.96);
+    transition: opacity .8s ease, transform .8s ease;
+}
+
+/* Cuando entra en pantalla */
+.js .revelar.visible {
+    opacity: 1;
+    transform: none;
+}
+
+/* Opcional: las imágenes entran desde el costado, alternando */
+.js .beneficio .arte.revelar { transform: translateX(60px) scale(.96); }
+.js .beneficio:nth-of-type(even) .arte.revelar { transform: translateX(-60px) scale(.96); }
+.js .beneficio .arte.revelar.visible { transform: none; }
+
 /* Caja de imagen: sirve para un ícono o para una foto tuya */
 .arte {
     aspect-ratio: 4 / 3; border-radius: 28px; overflow: hidden;
@@ -132,78 +163,154 @@ header {
     background: var(--degradado); color: #fff;
     box-shadow: 0 24px 48px rgba(27, 37, 175, .22);
 }
-.arte svg { width: 34%; height: auto; }
-.arte img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.arte img { width: 100%;
+     height: 100%; object-fit: cover; 
+    display: block; }
 
 /* ---------- Planes ---------- */
-.planes { padding: 100px clamp(20px, 8vw, 140px); text-align: center; }
-.planes h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: 12px; }
-.planes .intro { color: var(--gris); max-width: 52ch; margin: 0 auto 48px; font-size: 1.05rem; }
+.planes { padding: 100px clamp(20px, 8vw, 140px); 
+    text-align: center; }
+.planes h2 { font-size: clamp(1.8rem, 4vw, 2.8rem);
+     margin-bottom: 12px; }
+.planes .intro { color: var(--gris); max-width: 52ch;
+     margin: 0 auto 48px;
+      font-size: 1.05rem; }
 
 .planes__grilla {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 24px; max-width: 1060px; margin: 0 auto; align-items: stretch;
+    gap: 24px;
+    max-width: 1060px; 
+    margin: 0 auto;
+    align-items: stretch;
 }
 .plan {
-    background: var(--fondo-alt); border-radius: 22px; padding: 34px 26px;
-    text-align: left; display: flex; flex-direction: column;
+    background: var(--fondo-alt); 
+    border-radius: 22px;
+     padding: 34px 26px;
+    text-align: left;
+     display: flex; 
+     flex-direction: column;
     border: 2px solid transparent;
 }
 .plan h3 { font-size: 1.4rem; margin-bottom: 4px; }
-.plan .para { color: var(--gris); font-size: .95rem; margin-bottom: 20px; }
-.plan ul { list-style: none; margin-bottom: 28px; flex: 1; }
-.plan li { padding: 7px 0 7px 28px; position: relative; }
+
+.plan .para { color: var(--gris); 
+    font-size: .95rem; 
+    margin-bottom: 20px; }
+
+.plan ul { list-style: none; 
+    margin-bottom: 28px; 
+    flex: 1; }
+
+.plan li { padding: 7px 0 7px 28px; 
+    position: relative; }
+
 .plan li::before {
-    content: ""; position: absolute; left: 0; top: 13px; width: 16px; height: 16px; border-radius: 50%;
+    content: ""; 
+    position: absolute; 
+    left: 0; top: 13px; 
+    width: 16px; height: 16px; 
+    border-radius: 50%;
     background: var(--degradado);
 }
 .plan li::after {
-    content: ""; position: absolute; left: 5px; top: 17px; width: 4px; height: 7px;
-    border: solid #fff; border-width: 0 2px 2px 0; transform: rotate(45deg);
+    content: ""; 
+    position: absolute; 
+    left: 5px; top: 17px; 
+    width: 4px; height: 7px;
+    border: solid #fff;
+     border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
 }
 .plan--destacado {
-    background: #fff; border-color: var(--azul);
+    background: #fff;
+     border-color: var(--azul);
     box-shadow: 0 20px 44px rgba(27, 37, 175, .2);
 }
 .plan .etiqueta {
-    align-self: flex-start; margin-bottom: 12px; padding: 4px 14px; border-radius: 999px;
-    background: var(--degradado); color: #fff; font-size: .8rem; font-weight: 600;
+    align-self: flex-start;
+     margin-bottom: 12px; 
+     padding: 4px 14px; 
+     border-radius: 999px;
+    background: var(--degradado); 
+    color: #fff; 
+    font-size: .8rem; 
+    font-weight: 600;
 }
 
 /* ---------- Cierre ---------- */
 .cierre {
-    text-align: center; padding: 120px 24px; color: #fff;
+    text-align: center; 
+    padding: 120px 24px;
+     color: #fff;
     background: linear-gradient(160deg, var(--azul), var(--celeste));
 }
-.cierre h2 { font-size: clamp(1.8rem, 4vw, 3rem); margin-bottom: 14px; }
-.cierre p { max-width: 48ch; margin: 0 auto 32px; opacity: .95; font-size: 1.1rem; }
+.cierre h2 { font-size: clamp(1.8rem, 4vw, 3rem);
+     margin-bottom: 14px; }
 
-footer { padding: 28px clamp(20px, 8vw, 140px); font-size: .88rem; color: var(--gris); text-align: center; }
+.cierre p { max-width: 48ch;
+     margin: 0 auto 32px; 
+     opacity: .95;
+      font-size: 1.1rem; }
+
+footer { padding: 28px clamp(20px, 8vw, 140px); 
+    font-size: .88rem; 
+    color: var(--gris); 
+    text-align: center; }
 
 /* ==========================================================
    Categorías de la portada
    ========================================================== */
-.categorias { padding: 90px clamp(20px, 8vw, 140px); text-align: center; background: var(--fondo-alt); }
-.categorias h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: 12px; }
-.categorias .intro { color: var(--gris); max-width: 52ch; margin: 0 auto 44px; font-size: 1.05rem; }
+.categorias { padding: 90px clamp(20px, 8vw, 140px); 
+    text-align: center;
+     background: var(--fondo-alt); }
+
+.categorias h2 { font-size: clamp(1.8rem, 4vw, 2.8rem);
+     margin-bottom: 12px; }
+
+.categorias .intro { color: var(--gris); 
+    max-width: 52ch; 
+    margin: 0 auto 44px; 
+    font-size: 1.05rem; }
+
 .categorias__grilla {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-    gap: 22px; max-width: 1060px; margin: 0 auto;
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 22px; 
+    max-width: 1060px; 
+    margin: 0 auto;
 }
-.cat {
-    display: block; background: #fff; border-radius: 22px; padding: 14px 14px 20px;
+.categoria-card {
+    display: block; 
+    background: #fff;
+    border-radius: 22px; 
+    padding: 14px 14px 20px;
     box-shadow: 0 6px 20px rgba(27, 37, 175, .08);
     transition: transform .2s, box-shadow .2s;
 }
-.cat:hover { transform: translateY(-5px); box-shadow: 0 16px 34px rgba(27, 37, 175, .2); }
-.cat__img {
-    aspect-ratio: 1; border-radius: 16px; overflow: hidden; margin-bottom: 14px;
-    display: grid; place-items: center; background: var(--degradado); color: #fff;
+.categoria-card:hover { 
+    transform: translateY(-5px);
+     box-shadow: 0 16px 34px rgba(27, 37, 175, .2); }
+
+.categoria__img {
+    overflow: hidden;
+  border-radius: 20px;
+  aspect-ratio: 1 / 1;
 }
-.cat__img svg { width: 42%; height: auto; }
-.cat__img img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.cat h3 { font-size: 1.1rem; color: var(--tinta); }
-.cat:hover h3 { color: var(--azul); }
+
+.categoria__img img { 
+    width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block; }
+
+.categoria-card h3 { 
+    font-size: 1.1rem;
+    color: var(--tinta);
+    margin-top: 14px; }
+
+.categoria-card:hover h3 { color: var(--azul); }
 
 /* ==========================================================
    ADAPTACIÓN A PANTALLAS (media queries)
@@ -251,28 +358,20 @@ footer { padding: 28px clamp(20px, 8vw, 140px); font-size: .88rem; color: var(--
     .beneficio { padding: 48px 20px; }
     .categorias, .planes { padding: 56px 20px; }
     .categorias__grilla { grid-template-columns: repeat(2, 1fr); gap: 14px; }
-    .cat { padding: 10px 10px 16px; border-radius: 18px; }
-    .cat h3 { font-size: 1rem; }
+    .categoria-card { padding: 10px 10px 16px; border-radius: 18px; }
+    .categoria-card h3 { font-size: 1rem; }
     .planes__grilla { grid-template-columns: 1fr; }
     .plan { padding: 28px 22px; }
     .cierre { padding: 72px 20px; }
     footer { padding: 24px 20px; }
 }
 
-/* ---------- Celulares ---------- */
-@media (max-width: 480px) {
-    header { padding: 0 14px; }
-    .acciones { gap: 8px; }
-    .a1, .a2 { padding: 9px 16px; font-size: 13px; }
-}
 
-/* ---------- Celulares chicos ---------- */
-@media (max-width: 400px) {
+@media (max-width: 483px) {
     .marca span { display: none; }
     .a1, .a2 { padding: 8px 13px; font-size: 12.5px; }
 }
-
-/* ---------- Celular en horizontal (poca altura) ---------- */
+/* ---------- Celular en horizontal (poca altura) ----------*/
 @media (max-height: 520px) and (orientation: landscape) {
     :root { --alto-header: 56px; }
     .portada { min-height: auto; padding-top: calc(var(--alto-header) + 24px); padding-bottom: 48px; }
@@ -281,11 +380,11 @@ footer { padding: 28px clamp(20px, 8vw, 140px); font-size: .88rem; color: var(--
 
 /* ---------- Pantallas táctiles: sin efectos al pasar el dedo ---------- */
 @media (hover: none) {
-    .btn:hover, .a1:hover, .a2:hover, .cat:hover { transform: none; }
+    .btn:hover, .a1:hover, .a2:hover, .categoria-card:hover { transform: none; }
 }
 
-/* ---------- Quienes prefieren menos movimiento ---------- */
+/* ---------- Quienes prefieren menos movimiento ---------- 
 @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     * { transition: none !important; animation: none !important; }
-}
+}*/

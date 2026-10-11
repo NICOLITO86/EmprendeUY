@@ -1,0 +1,323 @@
+/* ==========================================================
+   perfil.css
+   Se carga DESPUÉS de Emprendeuy.css: usa sus variables
+   (--azul, --celeste, --degradado, --tinta, --gris, --suave,
+   --fondo-alt...) y su cabecera, así que acá solo va lo propio
+   de esta página.
+   ========================================================== */
+
+body { background: var(--fondo-alt); min-height: 100vh; }
+
+.perfil-pagina {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: calc(var(--alto-header) + 32px) clamp(16px, 4vw, 32px) 80px;
+}
+
+.perfil-pagina__titulo { margin-bottom: 26px; }
+
+.perfil-pagina__titulo h1 {
+    font-size: clamp(1.7rem, 4vw, 2.4rem);
+    line-height: 1.15;
+    letter-spacing: -.01em;
+    margin-bottom: 4px;
+}
+
+.perfil-pagina__titulo p { color: var(--gris); }
+
+/* ---------- Distribución: lateral + contenido ---------- */
+.perfil {
+    display: grid;
+    grid-template-columns: 320px minmax(0, 1fr);
+    gap: 24px;
+    align-items: start;
+}
+
+.perfil__contenido { display: grid; gap: 24px; min-width: 0; }
+
+/* ---------- Tarjetas ---------- */
+.tarjeta {
+    background: #fff;
+    border-radius: 22px;
+    padding: 28px clamp(20px, 3vw, 30px) 30px;
+    box-shadow: 0 6px 20px rgba(27, 37, 175, .08);
+}
+
+.tarjeta h2 { font-size: 1.2rem; line-height: 1.25; margin-bottom: 18px; }
+
+.tarjeta__sub { color: var(--gris); font-size: .95rem; margin: -10px 0 18px; }
+
+/* ---------- Lateral: foto y resumen ---------- */
+.perfil__lateral {
+    position: sticky;
+    top: calc(var(--alto-header) + 24px);
+    padding: 0 24px 28px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.perfil__banda {
+    height: 96px;
+    margin: 0 -24px;
+    background: var(--degradado);
+}
+
+.avatar {
+    width: 128px;
+    height: 128px;
+    margin: -64px auto 14px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: grid;
+    place-items: end center;
+    background: var(--suave);
+    color: rgba(27, 37, 175, .35);
+    border: 5px solid #fff;
+    box-shadow: 0 8px 22px rgba(27, 37, 175, .2);
+}
+
+.avatar svg { width: 100%; height: 100%; fill: currentColor; }
+
+/* La foto subida se pone encima de la silueta; sin src (usuario sin foto) queda oculta */
+.avatar { position: relative; }
+
+.avatar img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    background: var(--suave);
+}
+
+.avatar img:not([src]),
+.avatar img[src=""] { display: none; }
+
+.perfil__nombre { font-size: 1.3rem; margin-bottom: 8px; overflow-wrap: anywhere; }
+
+.perfil__rol {
+    display: inline-block;
+    padding: 4px 16px;
+    border-radius: 999px;
+    background: var(--suave);
+    color: var(--azul);
+    font-size: .85rem;
+    font-weight: 600;
+}
+
+.perfil__foto {
+    margin-top: 24px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(15, 28, 51, .1);
+    display: grid;
+    gap: 10px;
+    text-align: left;
+}
+
+.perfil__foto label { font-size: .9rem; font-weight: 600; }
+
+.perfil__foto .boton { justify-self: stretch; }
+
+/* ---------- Formularios ---------- */
+.formulario {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 14px;
+}
+
+.campo { min-width: 0; }
+.campo--completo { grid-column: 1 / -1; }
+
+.campo label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: .88rem;
+    font-weight: 600;
+    color: var(--tinta);
+}
+
+.opcional { font-weight: 400; color: var(--gris); }
+
+.ayuda { margin-top: 5px; font-size: .8rem; color: var(--gris); line-height: 1.4; }
+
+.campo input,
+.campo select,
+.campo textarea {
+    width: 100%;
+    padding: 12px 14px;
+    font: inherit;
+    font-size: .95rem;
+    color: var(--tinta);
+    background-color: var(--fondo-alt);
+    border: 2px solid rgba(27, 37, 175, .18);
+    border-radius: 14px;
+    transition: border-color .2s, box-shadow .2s, background-color .2s;
+}
+
+.campo select { cursor: pointer; }
+.campo textarea { resize: vertical; min-height: 84px; }
+.campo input::placeholder,
+.campo textarea::placeholder { color: #8d9ab3; font-size: .9rem; }
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+    outline: none;
+    background-color: #fff;
+    border-color: var(--azul);
+    box-shadow: 0 0 0 4px rgba(27, 37, 175, .12);
+}
+
+/* Campo que no se puede editar (la cédula) */
+.campo input[readonly] {
+    background-color: #eceff5;
+    color: var(--gris);
+    border-style: dashed;
+    cursor: not-allowed;
+}
+
+/* Selector de archivo de la foto */
+.perfil__foto input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    font: inherit;
+    font-size: .85rem;
+    color: var(--gris);
+    background: var(--fondo-alt);
+    border: 2px dashed rgba(27, 37, 175, .3);
+    border-radius: 14px;
+    cursor: pointer;
+    transition: border-color .2s, background .2s;
+}
+
+.perfil__foto input[type="file"]:hover { border-color: var(--azul); background: #fff; }
+
+.perfil__foto input[type="file"]::file-selector-button {
+    margin-right: 10px;
+    padding: 7px 16px;
+    font: inherit;
+    font-weight: 600;
+    font-size: .85rem;
+    color: var(--azul);
+    background: var(--suave);
+    border: 0;
+    border-radius: 999px;
+    cursor: pointer;
+}
+
+/* Casilla "dirección principal" */
+.check {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: .92rem;
+    cursor: pointer;
+}
+
+.check input { width: 20px; height: 20px; accent-color: var(--azul); cursor: pointer; }
+
+/* ---------- Botones ---------- */
+.boton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 13px 24px;
+    font: inherit;
+    font-weight: 600;
+    font-size: .98rem;
+    color: #fff;
+    background: var(--degradado);
+    border: 0;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 8px 22px rgba(27, 37, 175, .28);
+    transition: transform .2s, box-shadow .2s, background .2s, color .2s;
+}
+
+.boton:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(27, 37, 175, .35); }
+
+.boton--suave { background: var(--suave); color: var(--azul); box-shadow: none; }
+.boton--suave:hover { background: var(--azul); color: #fff; box-shadow: none; }
+
+.boton--peligro { background: #fdecee; color: #c62f3a; box-shadow: none; }
+.boton--peligro:hover { background: #c62f3a; color: #fff; box-shadow: none; }
+
+.boton--chico { padding: 7px 18px; font-size: .86rem; }
+
+/* ---------- Direcciones ---------- */
+.direcciones { display: grid; gap: 14px; margin-bottom: 20px; }
+
+.vacio {
+    padding: 26px 20px;
+    text-align: center;
+    color: var(--gris);
+    border: 2px dashed rgba(27, 37, 175, .22);
+    border-radius: 16px;
+}
+
+.direccion {
+    padding: 18px 20px;
+    border: 2px solid rgba(27, 37, 175, .14);
+    border-radius: 16px;
+    background: var(--fondo-alt);
+}
+
+.direccion--principal { border-color: var(--azul); background: #fff; }
+
+.direccion__cabecera {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 6px;
+}
+
+.direccion__cabecera h3 { font-size: 1.05rem; }
+
+.direccion__etiqueta {
+    padding: 2px 12px;
+    border-radius: 999px;
+    background: var(--degradado);
+    color: #fff;
+    font-size: .75rem;
+    font-weight: 600;
+}
+
+.direccion p { color: var(--gris); font-size: .93rem; }
+
+.direccion__acciones { display: flex; gap: 10px; margin-top: 14px; }
+
+/* Formulario desplegable de nueva dirección */
+.nueva-direccion summary { list-style: none; width: fit-content; }
+.nueva-direccion summary::-webkit-details-marker { display: none; }
+
+.nueva-direccion .abierto { display: none; }
+.nueva-direccion[open] .abierto { display: inline; }
+.nueva-direccion[open] .cerrado { display: none; }
+
+.nueva-direccion .formulario {
+    margin-top: 20px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(15, 28, 51, .1);
+}
+
+/* ---------- Tablets verticales: una sola columna ---------- */
+@media (max-width: 900px) {
+    .perfil { grid-template-columns: minmax(0, 1fr); }
+    .perfil__lateral { position: static; }
+    .perfil__foto { max-width: 420px; margin-inline: auto; }
+}
+
+/* ---------- Celulares ---------- */
+@media (max-width: 600px) {
+    .perfil-pagina { padding-top: calc(var(--alto-header) + 20px); }
+    .tarjeta { border-radius: 18px; }
+    .formulario { grid-template-columns: minmax(0, 1fr); }
+    .perfil__nombre { font-size: 1.2rem; }
+}
+
+/* ---------- Pantallas táctiles: sin efecto al pasar el dedo ---------- */
+@media (hover: none) {
+    .boton:hover { transform: none; }
+}

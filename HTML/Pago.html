@@ -1,26 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pasarela de pago</title>
+    <meta name="theme-color" content="#1b25af">
+    <title>Pago - EmprendeUY</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Primero el CSS común (cabecera, botones, colores) y después el de esta página -->
+    <link rel="stylesheet" href="../CSS/Emprendeuy.css">
+    <link rel="stylesheet" href="../CSS/Pago.css">
 </head>
 <body>
-    <h1>Pasarela de pago</h1>
-    <form id="formulario" class="formulario" >
-            <label for="nombre">Nombre del titular de la tarjeta</label>
-            <input type="text" id="nombre" name="nombre" required>
 
-            <label for="numero">Numero de tarjeta</label>
-            <input type="text" id="numeroT" name="numeroT" required>
+<!-- Misma cabecera que el resto del sitio -->
+<header>
+    <a class="marca" href="EmprendeUY.html" aria-label="EmprendeUY, inicio">
+        <img src="../Imagenes/EmprendeUy.png" alt="EmprendeUY">
+        <span>EmprendeUY</span>
+    </a>
 
-            <label for="fecha">Fecha de vencimiento</label>
-            <input type="date" id="fecha" name="fecha" required>
+    <div class="acciones">
+        <a class="a2" href="EmprendeUY.html">Volver al inicio</a>
+    </div>
+</header>
 
-            <label for="cvv">CVV</label>
-            <input type="text" id="cvv" name="cvv" required>
+<main>
+    <section class="pago">
+        <h1>Pasarela de pago</h1>
+        <p class="pago__sub">Completá los datos de tu tarjeta para finalizar.</p>
 
-            <button type="submit">Realizar pago</button>
-    </form>
+        <!-- Detalle del pago: se completa con los datos reales del pedido o del plan elegido -->
+        <div class="pago__resumen">
+            <div>
+                <span class="pago__etiqueta">Concepto</span>
+                <strong id="concepto">Concepto del pago</strong>
+            </div>
+            <div class="pago__total">
+                <span class="pago__etiqueta">Total</span>
+                <strong id="monto">Monto</strong>
+            </div>
+        </div>
+
+        <form id="formulario" class="formulario">
+
+            <div class="campo campo--completo">
+                <label for="nombre">Nombre del titular de la tarjeta</label>
+                <input type="text" id="nombre" name="nombre" autocomplete="cc-name"
+                       placeholder="Como figura en la tarjeta" required>
+            </div>
+
+            <div class="campo campo--completo">
+                <label for="numeroT">Número de tarjeta</label>
+                <input type="text" id="numeroT" name="numeroT" inputmode="numeric" autocomplete="cc-number"
+                       maxlength="23" pattern="[0-9 ]{13,23}" title="Entre 13 y 19 números"
+                       placeholder="0000 0000 0000 0000" required>
+            </div>
+
+            <div class="campo">
+                <label for="fecha">Vencimiento</label>
+                <input type="text" id="fecha" name="fecha" inputmode="numeric" autocomplete="cc-exp"
+                       maxlength="5" pattern="(0[1-9]|1[0-2])\/[0-9]{2}" title="Formato MM/AA, por ejemplo 08/29"
+                       placeholder="MM/AA" required>
+            </div>
+
+            <div class="campo">
+                <label for="cvv">Código de seguridad (CVV)</label>
+                <input type="text" id="cvv" name="cvv" inputmode="numeric" autocomplete="cc-csc"
+                       maxlength="4" pattern="[0-9]{3,4}" title="3 o 4 números, están en el dorso de la tarjeta"
+                       placeholder="123" required>
+            </div>
+
+            <button type="submit" class="pago__enviar">Realizar pago</button>
+        </form>
+    </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.26.25/dist/sweetalert2.all.min.js"></script>
+<script src="../JS/pago.js"></script>
+
 </body>
 </html>

@@ -1,26 +1,171 @@
+/* ==========================================================
+   Paneladm.css
+   Se carga DESPUÉS de Emprendeuy.css: usa sus variables
+   (--azul, --celeste, --degradado, --tinta, --gris...) y su
+   cabecera, así que acá solo va lo propio de esta página.
+   ========================================================== */
 
-body{
-    display: flex;
-    
-    background-image: url(../Imagenes/FondoAdmins.png);
+body {
+    min-height: 100vh;
+    padding: calc(var(--alto-header) + 32px) clamp(16px, 4vw, 48px) 48px;
+    background-color: var(--azul);
+    background-image:
+        linear-gradient(rgba(20, 25, 130, .6), rgba(31, 142, 185, .45)),
+        url(../Imagenes/FondoAdmins.png);
     background-size: cover;
+    background-position: center;
     background-repeat: no-repeat;
-
-    justify-content: center;
-    align-items: flex-end;
+    background-attachment: fixed;
 }
 
+/* El ancho lo da <main>, así no depende del display que le ponga admin.js al body */
 .admin {
-    display: flex;
-    gap: 10px; /*Genera un espacio entre los botones y el texto*/
-    flex-direction: column;
-    align-items: center;
-    text-align: center; 
-    background-color: rgba(58, 16, 75, 0.76);
-    color: white;
-    width: 500px;
-    padding: 40px;
-    border-radius: 20px;
-    border: 3px dotted rgb(16, 12, 54); /*Borde punteado*/
+    width: 100%;
+    max-width: 1120px;
+    margin: 0 auto;
 }
 
+.admin__titulo {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 28px;
+}
+
+.admin__titulo h1 {
+    font-size: clamp(1.7rem, 4vw, 2.5rem);
+    line-height: 1.15;
+    letter-spacing: -.01em;
+    margin-bottom: 8px;
+}
+
+.admin__titulo p { opacity: .95; font-size: 1.05rem; }
+
+/* ---------- Distribución en tarjetas ---------- */
+.panel {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+    align-items: start;
+}
+
+.tarjeta {
+    background: #fff;
+    border-radius: 22px;
+    padding: 26px 26px 28px;
+    box-shadow: 0 18px 44px rgba(10, 14, 80, .3);
+}
+
+.tarjeta--ancha { grid-column: 1 / -1; }
+
+/* Las tarjetas de borrar llevan una franja roja: son acciones que no se pueden deshacer */
+.tarjeta--peligro { border-top: 5px solid #c62f3a; }
+
+.tarjeta h2 {
+    font-size: 1.2rem;
+    line-height: 1.2;
+    color: var(--tinta);
+    margin-bottom: 16px;
+}
+
+/* ---------- Formularios ---------- */
+.tarjeta form { display: grid; gap: 14px; }
+
+.campo label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: .9rem;
+    font-weight: 600;
+    color: var(--tinta);
+}
+
+.campo input[type="text"] {
+    width: 100%;
+    padding: 12px 16px;
+    font: inherit;
+    color: var(--tinta);
+    background: var(--fondo-alt);
+    border: 2px solid rgba(27, 37, 175, .18);
+    border-radius: 14px;
+    transition: border-color .2s, box-shadow .2s, background .2s;
+}
+
+.campo input[type="text"]::placeholder { color: #8d9ab3; font-size: .9rem; }
+
+.campo input[type="text"]:focus {
+    outline: none;
+    background: #fff;
+    border-color: var(--azul);
+    box-shadow: 0 0 0 4px rgba(27, 37, 175, .12);
+}
+
+/* ---------- Botones de acción ---------- */
+.accion {
+    padding: 12px 20px;
+    font: inherit;
+    font-weight: 600;
+    font-size: .98rem;
+    color: #fff;
+    background: var(--degradado);
+    border: 0;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 8px 22px rgba(27, 37, 175, .28);
+    transition: transform .2s, box-shadow .2s, background .2s;
+}
+
+.accion:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(27, 37, 175, .35);
+}
+
+.accion--peligro {
+    background: #c62f3a;
+    box-shadow: 0 8px 22px rgba(198, 47, 58, .3);
+}
+
+.accion--peligro:hover {
+    background: #a8222c;
+    box-shadow: 0 12px 28px rgba(198, 47, 58, .4);
+}
+
+/* ---------- Resultados que dibuja admin.js ---------- */
+.resultado {
+    margin-top: 16px;
+    font-size: .92rem;
+    color: var(--tinta);
+    overflow-x: auto;
+    overflow-wrap: anywhere;
+}
+
+/* Si está vacío no ocupa espacio */
+.resultado:empty { display: none; }
+
+.resultado p { margin-bottom: 6px; }
+
+.resultado table { width: 100%; border-collapse: collapse; }
+
+.resultado th,
+.resultado td {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid rgba(27, 37, 175, .12);
+}
+
+.resultado th { color: var(--azul); font-weight: 600; }
+
+/* El listado completo puede ser largo: scroll propio en vez de alargar la página */
+.resultado--lista { max-height: 60vh; overflow: auto; }
+
+/* ---------- Tablets verticales y celulares: una columna ---------- */
+@media (max-width: 860px) {
+    .panel { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 480px) {
+    .tarjeta { padding: 22px 18px 24px; border-radius: 18px; }
+}
+
+/* ---------- Pantallas táctiles: sin efecto al pasar el dedo ---------- */
+@media (hover: none) {
+    .accion:hover { transform: none; }
+}

@@ -24,7 +24,7 @@ if (!$emprendimiento) {
 
 $idEmprendimiento = $emprendimiento['ID'];
 
-$categoriasPermitidas = ['Ropa', 'Hogar', 'Tecnologia', 'Carpinteria', 'Herreria', 'Higiene', 'Deportes'];
+$categoriasPermitidas = ['Ropa', 'Hogar', 'Cocina', 'Tecnologia', 'Carpinteria', 'Herreria', 'Higiene', 'Deportes'];
 
 $titulo = trim(filter_var($_POST['titulo'] ?? '', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
 $descripcion = trim(filter_var($_POST['descripcion'] ?? '', FILTER_SANITIZE_FULL_SPECIAL_CHARS));

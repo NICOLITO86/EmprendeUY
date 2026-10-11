@@ -1,49 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1b25af">
+    <title>Iniciar sesión - EmprendeUY</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Primero el CSS común (cabecera, botones, colores) y después el de esta página -->
     <link rel="stylesheet" href="../CSS/Emprendeuy.css">
-     <link rel="stylesheet" href="../CSS/iniciar_sesion.css">
-    <title>Iniciar Sesión</title>
+    <link rel="stylesheet" href="../CSS/iniciar_sesion.css">
 </head>
-<body> 
-    
-<header class="barra-superior">
+<body>
 
-    <div class="logo">
-            Emprende<span>Uy</span>
+<!-- Misma cabecera que la portada -->
+<header>
+    <a class="marca" href="EmprendeUY.html" aria-label="EmprendeUY, inicio">
+        <img src="../Imagenes/EmprendeUy.png" alt="EmprendeUY">
+        <span>EmprendeUY</span>
+    </a>
+
+    <div class="acciones">
+        <a class="a1" href="Registrarse.html">Registrarse</a>
+        <a class="a2" href="EmprendeUY.html">Volver al inicio</a>
     </div>
-        <nav>
-            <a class="a1" href="Registrarse.html">Registrarse</a>
-            <a class="a2" href="EmprendeUY.html">Volver al Inicio</a>
-        </nav>
 </header>
 
-    <div id="contenedor">
-        <h1>Iniciar Sesión</h1>
-        
-        <form id="formulario2"> 
-        <div>
-                <label>Cédula</label>
-                <input type="text" id="Cedula" name="cedula" inputmode="numeric" maxlength="8" required>
-        </div>
-        <br>
-        <div class="contraseña">
-                <label for="contraseña">Contraseña</label>
-                <input type="password" id="contraseña" name="contraseña" required>
-        </div>
-        <button type="submit">Iniciar Sesión</button>
-            
-        </form>
-            
-           
-        
-    </div>
+<main>
+    <section id="contenedor" class="login">
+        <h1>Iniciar sesión</h1>
+        <p class="login__sub">Entrá con tu cédula y tu contraseña.</p>
 
-    <script src="../JS/validaciones.js"></script>
-    <script src="../JS/login.js"></script>
+        <form id="formulario2">
+            <div class="campo">
+                <label for="Cedula">Cédula</label>
+                <input type="text" id="Cedula" name="cedula"
+                       inputmode="numeric" maxlength="8"
+                       autocomplete="username"
+                       placeholder="Sin puntos ni guión" required>
+            </div>
+
+            <div class="campo contraseña">
+                <label for="contraseña">Contraseña</label>
+                <input type="password" id="contraseña" name="contraseña"
+                       autocomplete="current-password" required>
+            </div>
+
+            <button type="submit" class="login__enviar">Iniciar sesión</button>
+        </form>
+
+        <p class="login__alt">¿Todavía no tenés cuenta? <a href="Registrarse.html">Registrate</a></p>
+    </section>
+</main>
+
+<script src="../JS/validaciones.js"></script>
+<script src="../JS/login.js"></script>
 
 </body>
 </html>

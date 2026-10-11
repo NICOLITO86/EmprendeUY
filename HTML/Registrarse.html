@@ -3,96 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="
-https://cdn.jsdelivr.net/npm/sweetalert2@11.26.25/dist/sweetalert2.min.css
-" rel="stylesheet">
+    <meta name="theme-color" content="#1b25af">
+    <title>Registrarse - EmprendeUY</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.26.25/dist/sweetalert2.min.css" rel="stylesheet">
+
+    <!-- Primero el CSS común (cabecera, botones, colores) y después el de esta página -->
     <link rel="stylesheet" href="../CSS/Emprendeuy.css">
     <link rel="stylesheet" href="../CSS/registrarse.css">
-    <title>Registrarse</title>
 </head>
 <body>
-<header class="barra-superior">
-    
-            <div class="logo">
-            Emprende<span>Uy</span>
-            </div>
 
-            <nav>
-            <a class="a1" href="iniciar_sesion.html">Iniciar sesion</a>
-            <a class="a2" href="EmprendeUY.html">Volver al Inicio</a>
-            </nav>
+<!-- Misma cabecera que la portada -->
+<header>
+    <a class="marca" href="EmprendeUY.html" aria-label="EmprendeUY, inicio">
+        <img src="../Imagenes/EmprendeUy.png" alt="EmprendeUY">
+        <span>EmprendeUY</span>
+    </a>
 
-
+    <div class="acciones">
+        <a class="a1" href="iniciar_sesion.html">Iniciar sesión</a>
+        <a class="a2" href="EmprendeUY.html">Volver al inicio</a>
+    </div>
 </header>
 
+<main class="registro">
 
-<div class="main">
-
-    <div class="contenedor">
-
+    <section class="tarjeta">
         <h1>Registro</h1>
+        <p class="tarjeta__sub">Completá tus datos para crear tu cuenta.</p>
 
-            <form id="formulario" class="formulario" >
-            <label for="nombre">Nombre</label>
-            <input type="text" id="nombre" name="nombre" required>
+        <form id="formulario" class="formulario">
 
-            <label for="apellido">Apellido</label>
-            <input type="text" id="apellido" name="apellido" required>
+            <div class="campo">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre" autocomplete="given-name" required>
+            </div>
 
-            <label for="correo">Correo Electrónico</label>
-            <input type="email" id="correo" name="correo" required>
+            <div class="campo">
+                <label for="apellido">Apellido</label>
+                <input type="text" id="apellido" name="apellido" autocomplete="family-name" required>
+            </div>
 
-            <label for="Fecha_Nacimiento">Fecha de Nacimiento</label>
-            <input type="date" id="Fecha_Nacimiento" name="Fecha_Nacimiento" required>
+            <div class="campo campo--completo">
+                <label for="correo">Correo electrónico</label>
+                <input type="email" id="correo" name="correo" autocomplete="email" required>
+            </div>
 
-            <label for="cedula">Cédula</label>
-            <input type="text" id="cedula" name="cedula" inputmode="numeric" maxlength="8" placeholder="8 dígitos, sin puntos ni guiones" required>
+            <div class="campo">
+                <label for="Fecha_Nacimiento">Fecha de nacimiento</label>
+                <input type="date" id="Fecha_Nacimiento" name="Fecha_Nacimiento" autocomplete="bday" required>
+            </div>
 
-            <label for="Num_Telefono">Número de Teléfono</label>
-            <input type="tel" id="Num_Telefono" name="Num_Telefono" inputmode="numeric" maxlength="9" placeholder="9 dígitos" required>
+            <div class="campo">
+                <label for="cedula">Cédula</label>
+                <input type="text" id="cedula" name="cedula" inputmode="numeric" maxlength="8"
+                       placeholder="8 dígitos, sin puntos ni guiones" required>
+            </div>
 
-            <label for="genero">Género</label>
-            <select id="genero" name="genero" required>
-                <option value="">Seleccione...</option>
-                <option value="femenino">Femenino</option>
-                <option value="masculino">Masculino</option>
-            </select>
+            <div class="campo">
+                <label for="Num_Telefono">Número de teléfono</label>
+                <input type="tel" id="Num_Telefono" name="Num_Telefono" inputmode="numeric" maxlength="9"
+                       autocomplete="tel-national" placeholder="9 dígitos" required>
+            </div>
 
-            <label for="Rol">Rol</label>
-            <select id="Rol" name="Rol" required>
-        <option value="">Seleccione...</option>
-        <option value="cliente">Cliente</option>
-        <option value="emprendedor">Emprendedor</option>
+            <div class="campo">
+                <label for="genero">Género</label>
+                <select id="genero" name="genero" required>
+                    <option value="">Seleccioná...</option>
+                    <option value="femenino">Femenino</option>
+                    <option value="masculino">Masculino</option>
+                </select>
+            </div>
 
-        </select>
+            <div class="campo campo--completo">
+                <label for="Rol">Rol</label>
+                <select id="Rol" name="Rol" required>
+                    <option value="">Seleccioná...</option>
+                    <option value="cliente">Cliente</option>
+                    <option value="emprendedor">Emprendedor</option>
+                </select>
+            </div>
 
-            
-            <label for="contraseña" >Contraseña</label> 
-            <input type="password" id="contraseña" name="contraseña" required>
+            <div class="campo campo--completo">
+                <label for="contraseña">Contraseña</label>
+                <input type="password" id="contraseña" name="contraseña" autocomplete="new-password" required>
+            </div>
 
-            <button type="submit">Registrarse</button>
-            
+            <button type="submit" class="registro__enviar">Crear mi cuenta</button>
         </form>
-        
-            
-       
-    </div>
 
-</div>
-    
+        <p class="tarjeta__alt">¿Ya tenés cuenta? <a href="iniciar_sesion.html">Iniciá sesión</a></p>
+    </section>
 
-<div class="mensaje">
+    <aside class="mensaje">
+        <h2>Creá tu cuenta y empezá a ser parte de EmprendeUy</h2>
+        <p>Registrate de forma rápida y sencilla para acceder a todas las oportunidades que EmprendeUy tiene para vos. Con tu cuenta podrás conectar con otros emprendedores, descubrir nuevos productos y hacer crecer tus ideas en un espacio pensado para impulsar los emprendimientos uruguayos.</p>
+        <p class="mensaje__cierre">¡Sumate a EmprendeUy y empezá a hacer crecer tu proyecto!</p>
+    </aside>
 
-            <h3>Creá tu cuenta y empezá a ser parte de EmprendeUy</h3>
-<p>Registrate de forma rápida y sencilla para acceder a todas las oportunidades que EmprendeUy tiene para vos. Con tu cuenta podrás conectar con otros emprendedores, descubrir nuevos productos y hacer crecer tus ideas en un espacio pensado para impulsar los emprendimientos uruguayos.</p>
-            <h4>¡Sumate a EmprendeUy y empezá a hacer crecer tu proyecto!</h4>
-</div>
+</main>
 
-
-<script src="
-https://cdn.jsdelivr.net/npm/sweetalert2@11.26.25/dist/sweetalert2.all.min.js
-"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.26.25/dist/sweetalert2.all.min.js"></script>
 
 <script src="../JS/validaciones.js"></script>
 <script src="../JS/registrarse.js"></script>

@@ -1,61 +1,108 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Panel Administrador</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1b25af">
+    <title>Panel de administración - EmprendeUY</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Primero el CSS común (cabecera, botones, colores) y después el de esta página -->
+    <link rel="stylesheet" href="../CSS/Emprendeuy.css">
     <link rel="stylesheet" href="../CSS/Paneladm.css">
 </head>
-
-</body>
 <body style="display:none">
-<div class="admin">
-<h1>Bienvenido Administrador</h1>
 
-<h3>Borrar Usuario</h3>
-<form id="from_borrar">
-<label> Cedula </label>
-<input type="text" name= "cedula" inputmode="numeric" maxlength="8">
-<input type="submit">
-</form>
-<div id="admin"></div>
-<div id="div"></div>
+<!-- Misma cabecera que la portada; el cierre de sesión pasa a la cabecera -->
+<header>
+    <a class="marca" href="EmprendeUY.html" aria-label="EmprendeUY, inicio">
+        <img src="../Imagenes/EmprendeUy.png" alt="EmprendeUY">
+        <span>EmprendeUY</span>
+    </a>
 
-<h3>Borrar Emprendimiento</h3>
-<form id="from_borrar1">
-<label> ID del Emprendimiento </label>
-<input type="text" name= "ID">
-<input type="submit">
-</form>
-<div id="admin1"></div>
-<div id="div1"></div>
+    <div class="acciones">
+        <a class="a2" href="../PHP/logout.php">Cerrar sesión</a>
+    </div>
+</header>
 
-<h3>Buscar usuario</h3>
-<form id="from_buscar">
-<label> cedula </label>
-<input type="text" name= "cedula" inputmode="numeric" maxlength="8">
-<input type="submit">
-</form>
-<div id="div_buscar"></div>
+<main class="admin">
 
-<h3>Buscar emprendimiento</h3>
-<form id="from_buscar1">
-<label> ID del Emprendimiento </label>
-<input type="text" name= "ID">
-<input type="submit">
-</form>
-<div id="div_buscar1"></div>
+    <div class="admin__titulo">
+        <h1>Bienvenido, administrador</h1>
+        <p>Desde acá podés buscar y borrar usuarios y emprendimientos.</p>
+    </div>
 
-<h3>Mostrar todo</h3>
-<form id="from_buscar2">
-<input type="submit">
-</form>
-<div id="lista"></div>
+    <div class="panel">
 
+        <!-- ===== Buscar ===== -->
+        <section class="tarjeta">
+            <h2>Buscar usuario</h2>
+            <form id="from_buscar">
+                <div class="campo">
+                    <label for="cedula-buscar">Cédula</label>
+                    <input type="text" id="cedula-buscar" name="cedula" inputmode="numeric" maxlength="8" placeholder="8 dígitos, sin puntos ni guiones">
+                </div>
+                <input type="submit" class="accion" value="Buscar usuario">
+            </form>
+            <div id="div_buscar" class="resultado"></div>
+        </section>
 
-<a href="../PHP/logout.php">Cerrar sesion</a>
-</div>
+        <section class="tarjeta">
+            <h2>Buscar emprendimiento</h2>
+            <form id="from_buscar1">
+                <div class="campo">
+                    <label for="id-buscar">ID del emprendimiento</label>
+                    <input type="text" id="id-buscar" name="ID">
+                </div>
+                <input type="submit" class="accion" value="Buscar emprendimiento">
+            </form>
+            <div id="div_buscar1" class="resultado"></div>
+        </section>
+
+        <!-- ===== Borrar (acciones que no se pueden deshacer) ===== -->
+        <section class="tarjeta tarjeta--peligro">
+            <h2>Borrar usuario</h2>
+            <form id="from_borrar">
+                <div class="campo">
+                    <label for="cedula-borrar">Cédula</label>
+                    <input type="text" id="cedula-borrar" name="cedula" inputmode="numeric" maxlength="8" placeholder="8 dígitos, sin puntos ni guiones">
+                </div>
+                <input type="submit" class="accion accion--peligro" value="Borrar usuario">
+            </form>
+            <div id="admin" class="resultado"></div>
+            <div id="div" class="resultado"></div>
+        </section>
+
+        <section class="tarjeta tarjeta--peligro">
+            <h2>Borrar emprendimiento</h2>
+            <form id="from_borrar1">
+                <div class="campo">
+                    <label for="id-borrar">ID del emprendimiento</label>
+                    <input type="text" id="id-borrar" name="ID">
+                </div>
+                <input type="submit" class="accion accion--peligro" value="Borrar emprendimiento">
+            </form>
+            <div id="admin1" class="resultado"></div>
+            <div id="div1" class="resultado"></div>
+        </section>
+
+        <!-- ===== Listado completo ===== -->
+        <section class="tarjeta tarjeta--ancha">
+            <h2>Mostrar todo</h2>
+            <form id="from_buscar2">
+                <input type="submit" class="accion" value="Mostrar todo">
+            </form>
+            <div id="lista" class="resultado resultado--lista"></div>
+        </section>
+
+    </div>
+</main>
+
 <script src="../JS/validaciones.js"></script>
 <script src="../JS/admin.js"></script>
-</body>
 
+</body>
 </html>
