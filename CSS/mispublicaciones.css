@@ -92,9 +92,10 @@ body {
 
 .publicacion img {
     width: 100%;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    background: var(--linea);
+    height: 350px;
+    
+    object-fit: contain;
+    background: var(--blanco);
 }
 
 .publicacion h3 {

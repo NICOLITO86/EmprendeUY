@@ -74,8 +74,11 @@ main { padding: calc(var(--alto-header) + 32px) clamp(20px, 6vw, 100px) 80px;
 #productos > div:hover { transform: translateY(-4px);
      box-shadow: 0 14px 30px rgba(27, 37, 175, .18); }
 
-#productos > div > img { width: 100%; aspect-ratio: 4 / 3;
+#productos > div > img { 
+    width: 100%; 
+    aspect-ratio: 2 / 3;
      object-fit: cover;
+     object-position: center;
       display: block;
       background: var(--suave); }
 
