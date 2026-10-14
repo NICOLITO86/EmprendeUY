@@ -96,16 +96,14 @@ header {
 /* ---------- Portada ---------- */
 .portada {
     min-height: 100vh;
-    display: grid; place-items: center; text-align: center;
+    display: grid; place-items: center; 
+    text-align: center;
     padding: calc(var(--alto-header) + 48px) 24px 96px;
     color: #fff;
-    background:
-        radial-gradient(50% 40% at 85% 10%, rgba(255, 255, 255, .18), transparent 70%),
-        radial-gradient(40% 40% at 10% 90%, rgba(31, 142, 185, .55), transparent 70%),
-        linear-gradient(160deg, var(--azul), var(--celeste));
-    /* Si querés usar tu foto de fondo, descomentá esto:
-       background-image: linear-gradient(rgba(20,25,130,.75), rgba(31,142,185,.65)), url(../Imagenes/f..png);
-       background-size: cover; background-position: center; */
+    
+       background-image: linear-gradient(rgba(23, 28, 126, 0.75), rgba(38, 117, 148, 0.65)), url(../Imagenes/Intro.jpeg);
+       background-size: cover;
+       background-position: center; 
 }
 .portada h1 {
     font-size: clamp(2.3rem, 6.5vw, 4.4rem);
