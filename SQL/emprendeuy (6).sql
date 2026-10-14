@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-09-2026 a las 21:59:54
+-- Tiempo de generación: 14-10-2026 a las 13:17:19
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -75,9 +75,10 @@ CREATE TABLE `carrito` (
 -- Volcado de datos para la tabla `carrito`
 --
 
-INSERT INTO `carrito` (`id_carrito`, `ci`, `id`, `fecha_agregado`) VALUES
-(3, 2, 17, '2026-08-27 12:39:20'),
-(4, 2, 20, '2026-08-30 00:36:36');
+INSERT INTO `carrito` (`id_carrito`, `ci`, `id`, `cantidad`, `fecha_agregado`) VALUES
+(3, 2, 17, 1, '2026-08-27 12:39:20'),
+(4, 2, 20, 1, '2026-08-30 00:36:36'),
+(5, 23456789, 22, 1, '2026-10-13 19:44:46');
 
 -- --------------------------------------------------------
 
@@ -99,7 +100,36 @@ CREATE TABLE `cliente` (
 
 INSERT INTO `cliente` (`Nombre`, `Apellido`, `Correo`, `Genero`, `Cedula`) VALUES
 ('2', '2@2', '2', 'Femenino', 2),
-('asd', 'asd', 'asd@asd.com', 'Femenino', 56);
+('asd', 'asd', 'asd@asd.com', 'Femenino', 56),
+('asd1', 'asd1', 'nicocalixto26@gmail.com', 'Masculino', 23456789);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `codigo_verificacion`
+--
+
+CREATE TABLE `codigo_verificacion` (
+  `idCodigo` int(11) NOT NULL,
+  `Cedula` int(11) NOT NULL,
+  `Tipo` enum('verificacion_correo','recuperacion_contrasena') NOT NULL,
+  `CodigoHash` varchar(255) NOT NULL,
+  `Intentos` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `Usado` tinyint(1) NOT NULL DEFAULT 0,
+  `Expira` datetime NOT NULL,
+  `IP` varchar(45) NOT NULL,
+  `FechaCreacion` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `codigo_verificacion`
+--
+
+INSERT INTO `codigo_verificacion` (`idCodigo`, `Cedula`, `Tipo`, `CodigoHash`, `Intentos`, `Usado`, `Expira`, `IP`, `FechaCreacion`) VALUES
+(1, 23456789, 'verificacion_correo', '$2y$10$eC86rixjGcb/sTHHk/HFFevsg7JlAvL2rAIbsSg2qxiWHyjhdZ5hG', 0, 1, '2026-10-13 18:41:11', '::1', '2026-10-13 18:31:11'),
+(2, 23456789, 'verificacion_correo', '$2y$10$kd8cXEG3Dzijxo8iHBUgAO7wnejP3KqVAOV85Am9I58vQ/hjt2uW6', 0, 1, '2026-10-13 18:43:40', '::1', '2026-10-13 18:33:40'),
+(3, 23456789, 'verificacion_correo', '$2y$10$VCymjJbZTDpjs4MEX2cB2OuAfJKuOi5ncsrLH94ym/r5l0S9MmGTO', 0, 1, '2026-10-13 18:48:57', '::1', '2026-10-13 18:38:57'),
+(4, 23456789, 'verificacion_correo', '$2y$10$GLDissRE9b3uoNN5TmyL.eyCUWlwqxfgQIb74vHiimhe5FZMMOboy', 0, 1, '2026-10-13 19:12:18', '::1', '2026-10-13 19:02:18');
 
 -- --------------------------------------------------------
 
@@ -217,7 +247,12 @@ INSERT INTO `intento_login` (`idIntento`, `Cedula`, `IP`, `Exitoso`, `FechaInten
 (35, 1, '::1', 1, '2026-09-11 09:13:43'),
 (36, 1, '::1', 1, '2026-09-11 19:57:53'),
 (37, 2, '::1', 1, '2026-09-11 19:58:31'),
-(38, 57683215, '::1', 1, '2026-09-11 19:58:47');
+(38, 57683215, '::1', 1, '2026-09-11 19:58:47'),
+(39, 87654321, '::1', 0, '2026-10-13 19:41:57'),
+(40, 23456789, '::1', 1, '2026-10-13 19:43:09'),
+(41, 12345678, '::1', 0, '2026-10-13 19:44:17'),
+(42, 12345678, '::1', 0, '2026-10-13 19:44:25'),
+(43, 23456789, '::1', 1, '2026-10-13 19:44:42');
 
 -- --------------------------------------------------------
 
@@ -316,6 +351,7 @@ CREATE TABLE `usuario` (
   `Fecha_Nacimiento` date NOT NULL,
   `Edad` int(2) NOT NULL,
   `Correo` varchar(60) NOT NULL,
+  `CorreoVerificado` tinyint(1) NOT NULL DEFAULT 0,
   `Contraseña` varchar(100) NOT NULL,
   `Num_Telefono` varchar(20) NOT NULL,
   `Domicilio` varchar(60) NOT NULL,
@@ -331,13 +367,14 @@ CREATE TABLE `usuario` (
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`Cedula`, `Nombre`, `Apellido`, `Fecha_Nacimiento`, `Edad`, `Correo`, `Contraseña`, `Num_Telefono`, `Domicilio`, `Calle`, `Manzana`, `Solar`, `Genero`, `Rol`) VALUES
-(1, '1', '1', '2026-07-27', 0, '1@1', '$2y$10$KqhnlryC.4IL6m29L2cKgOAe4m0e41l6i..AWOZOg8lKQ3iEVbwaK', '1', '', '', '', '', 'Masculino', 'emprendedor'),
-(2, '2', '2', '2026-07-29', 0, '2@2', '$2y$10$AB0mezcFWvCda20Gwrmp9.fxzOYOsoysZvRvNo/YEayG6WVwhHtCO', '2', '', '', '', '', 'Femenino', 'cliente'),
-(56, 'asd', 'asd', '2026-09-18', 0, 'asd@asd.com', '$2y$10$N2ejuJKjMEvS4MwvoFJGO.i6SMUlkvWLh5EuBxB4GExOilOUuh6hK', '67', '', '', '', '', 'Femenino', 'cliente'),
-(565, 'asd5', 'asd5', '2026-09-18', 0, 'asd@asd5.com', '$2y$10$u47fhbhIxmdxCxUsHv7XpuStgFocbsBAP0j6PrOZ17FQuy4kwLbxq', '675', '', '', '', '', 'Femenino', 'emprendedor'),
-(5655, 'asd56', 'asd56', '2026-09-18', 0, 'asd@asd56.com', '$2y$10$uPFJ.z5HvAhEoP8kGKW4tesK0AYJ9D.vUbYqYk28E/m1Za6Wvkxm6', '6756', '', '', '', '', 'Femenino', 'emprendedor'),
-(57683215, 'nicolas', 'calixto', '2026-06-19', 0, 'nicolito3215@gmail.com', '$2y$10$7B/yrGYGEYmGOW/ABrClbuiqXMhPOh.KxFwBCTRhbJCUNIt7SoqNC', '094197336', '', '', '', '', 'Masculino', 'administrador');
+INSERT INTO `usuario` (`Cedula`, `Nombre`, `Apellido`, `Fecha_Nacimiento`, `Edad`, `Correo`, `CorreoVerificado`, `Contraseña`, `Num_Telefono`, `Domicilio`, `Calle`, `Manzana`, `Solar`, `Genero`, `Rol`, `Activo`) VALUES
+(1, '1', '1', '2026-07-27', 0, '1@1', 1, '$2y$10$KqhnlryC.4IL6m29L2cKgOAe4m0e41l6i..AWOZOg8lKQ3iEVbwaK', '1', '', '', '', '', 'Masculino', 'emprendedor', 1),
+(2, '2', '2', '2026-07-29', 0, '2@2', 1, '$2y$10$AB0mezcFWvCda20Gwrmp9.fxzOYOsoysZvRvNo/YEayG6WVwhHtCO', '2', '', '', '', '', 'Femenino', 'cliente', 1),
+(56, 'asd', 'asd', '2026-09-18', 0, 'asd@asd.com', 1, '$2y$10$N2ejuJKjMEvS4MwvoFJGO.i6SMUlkvWLh5EuBxB4GExOilOUuh6hK', '67', '', '', '', '', 'Femenino', 'cliente', 1),
+(565, 'asd5', 'asd5', '2026-09-18', 0, 'asd@asd5.com', 1, '$2y$10$u47fhbhIxmdxCxUsHv7XpuStgFocbsBAP0j6PrOZ17FQuy4kwLbxq', '675', '', '', '', '', 'Femenino', 'emprendedor', 1),
+(5655, 'asd56', 'asd56', '2026-09-18', 0, 'asd@asd56.com', 1, '$2y$10$uPFJ.z5HvAhEoP8kGKW4tesK0AYJ9D.vUbYqYk28E/m1Za6Wvkxm6', '6756', '', '', '', '', 'Femenino', 'emprendedor', 1),
+(23456789, 'asd1', 'asd1', '1999-02-02', 27, 'nicocalixto26@gmail.com', 1, '$2y$10$AOwqqOcOayZSaOCWACsj1OazM8KU21IcsuOjZTqPSqRot992LQKPa', '123456789', '', '', '', '', 'Masculino', 'cliente', 1),
+(57683215, 'nicolas', 'calixto', '2026-06-19', 0, 'nicolito3215@gmail.com', 1, '$2y$10$7B/yrGYGEYmGOW/ABrClbuiqXMhPOh.KxFwBCTRhbJCUNIt7SoqNC', '094197336', '', '', '', '', 'Masculino', 'administrador', 1);
 
 --
 -- Índices para tablas volcadas
@@ -362,7 +399,8 @@ ALTER TABLE `bloqueo_temporal`
 --
 ALTER TABLE `carrito`
   ADD PRIMARY KEY (`id_carrito`),
-  ADD UNIQUE KEY `uniq_carrito_usuario_producto` (`ci`,`id`);
+  ADD UNIQUE KEY `uniq_carrito_usuario_producto` (`ci`,`id`),
+  ADD KEY `carrito_ibfk_1` (`id`);
 
 --
 -- Indices de la tabla `cliente`
@@ -370,6 +408,13 @@ ALTER TABLE `carrito`
 ALTER TABLE `cliente`
   ADD PRIMARY KEY (`Cedula`),
   ADD UNIQUE KEY `Correo` (`Correo`);
+
+--
+-- Indices de la tabla `codigo_verificacion`
+--
+ALTER TABLE `codigo_verificacion`
+  ADD PRIMARY KEY (`idCodigo`),
+  ADD KEY `idx_codigo_cedula_tipo` (`Cedula`,`Tipo`,`Usado`);
 
 --
 -- Indices de la tabla `compra`
@@ -439,7 +484,13 @@ ALTER TABLE `bloqueo_temporal`
 -- AUTO_INCREMENT de la tabla `carrito`
 --
 ALTER TABLE `carrito`
-  MODIFY `id_carrito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_carrito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de la tabla `codigo_verificacion`
+--
+ALTER TABLE `codigo_verificacion`
+  MODIFY `idCodigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `compra`
@@ -457,7 +508,7 @@ ALTER TABLE `emprendimiento`
 -- AUTO_INCREMENT de la tabla `intento_login`
 --
 ALTER TABLE `intento_login`
-  MODIFY `idIntento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `idIntento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT de la tabla `log_acceso_admin`
@@ -498,6 +549,12 @@ ALTER TABLE `carrito`
 --
 ALTER TABLE `cliente`
   ADD CONSTRAINT `FK_Cliente_Usuario` FOREIGN KEY (`Cedula`) REFERENCES `usuario` (`Cedula`);
+
+--
+-- Filtros para la tabla `codigo_verificacion`
+--
+ALTER TABLE `codigo_verificacion`
+  ADD CONSTRAINT `fk_codigo_usuario` FOREIGN KEY (`Cedula`) REFERENCES `usuario` (`Cedula`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `compra`

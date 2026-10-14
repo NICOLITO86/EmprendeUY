@@ -3,6 +3,7 @@ const carritoVacio = document.getElementById("carrito-vacio");
 const carritoResumen = document.getElementById("carrito-resumen");
 const totalCarritoEl = document.getElementById("total-carrito");
 const btnVaciar = document.getElementById("vaciar-carrito");
+const btnComprar = document.getElementById("btn-comprar");
 
 // Pide el token a csrf_token.php y lo cachea para no pedirlo en cada request.
 let csrfTokenCache = null;
@@ -41,11 +42,13 @@ function renderizarCarrito(datos) {
     if (!Array.isArray(datos) || datos.length === 0) {
         carritoVacio.hidden = false;
         carritoResumen.hidden = true;
+        if (btnComprar) btnComprar.style.display = "none";
         return;
     }
 
     carritoVacio.hidden = true;
     carritoResumen.hidden = false;
+    if (btnComprar) btnComprar.style.display = "";
 
     datos.forEach(p => {
         productos.innerHTML += `
@@ -106,7 +109,7 @@ function vaciarCarrito() {
             const formData = new FormData();
             formData.append("csrf_token", token);
 
-            return fetch("../PHP/VaciarCarrito.php", {
+            return fetch("../PHP/vaciarcarrito.php", {
                 method: "POST",
                 body: formData
             });

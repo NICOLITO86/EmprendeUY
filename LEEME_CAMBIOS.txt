@@ -1,0 +1,32 @@
+EmprendeUY - cambios incluidos en esta versión
+===============================================
+
+1) Verificación de correo por código (6 dígitos, vence en 10 min)
+2) Recuperación de contraseña por correo
+3) Control de acceso por rol (se borraron 7 endpoints sin autenticación;
+   el carrito y "mis publicaciones" ahora exigen rol)
+
+PARA PONERLO A FUNCIONAR (3 pasos)
+---------------------------------
+1. Base de datos: en phpMyAdmin > Importar, subí SQL/emprendeuy_completo.sql
+   (crea la base `emprendeuy` con todo incluido: CorreoVerificado y codigo_verificacion).
+   Si ya tenías la base cargada, NO la importes: ejecutá solo
+   SQL/migracion_verificacion_recuperacion.sql una vez.
+
+2. Correo: abrí PHP/config_correo.php y pegá en 'clave' la contraseña de aplicación
+   de Gmail (https://myaccount.google.com/apppasswords, requiere verificación en 2 pasos).
+   Para probar sin Gmail: 'modo' => 'log' (el código sale en xampp/apache/logs/error.log).
+   Variables de entorno SMTP_HOST, SMTP_PORT, SMTP_CIFRADO, SMTP_USUARIO, SMTP_CLAVE
+   tienen prioridad sobre el archivo (útil en Docker).
+
+3. Copiá la carpeta a xampp/htdocs/EmprendeUY y abrí
+   http://localhost/EmprendeUY/HTML/EmprendeUY.html
+
+Si no llega el correo, mirá xampp/apache/logs/error.log: los errores empiezan con [EmprendeUY].
+PHPMailer ya viene en PHP/lib/PHPMailer (no hace falta Composer).
+PHP/config_correo.php está en .gitignore: no lo subas a GitHub.
+
+PÁGINAS NUEVAS
+--------------
+HTML/verificar_correo.html y HTML/recuperar_contrasena.html
+(enlace "¿Olvidaste tu contraseña?" en iniciar_sesion.html)

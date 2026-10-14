@@ -76,11 +76,25 @@ inputCvv.addEventListener("input", () => {
 
 /* ---------- Envío ---------- */
 
-function iniciar() {
-    document.getElementById("concepto").textContent = `${plan.nombre} (mensual)`;
-    document.getElementById("monto").textContent = `${plan.precio} USD`;
+const modoCompra = new URLSearchParams(location.search).get("compra") === "carrito";
 
-    formulario.addEventListener("submit", (e) => {
+function obtenerToken() {
+    return fetch("../PHP/csrf_token.php", { credentials: "same-origin" })
+        .then((res) => res.json())
+        .then((d) => d.token);
+}
+
+function formatearPrecio(valor) {
+    return `$${Number(valor).toLocaleString("es-UY")}`;
+}
+
+// Arma el formulario para un tipo de pago.
+// config: { concepto, monto, url, campos, exitoTitulo, exitoTexto, destino }
+function configurarFormulario(config) {
+    document.getElementById("concepto").textContent = config.concepto;
+    document.getElementById("monto").textContent = config.monto;
+
+    formulario.addEventListener("submit", async (e) => {
         e.preventDefault();
 
         if (!numeroTarjetaValido(inputNumero.value.replace(/\s/g, ""))) {
@@ -101,39 +115,70 @@ function iniciar() {
         const boton = formulario.querySelector('button[type="submit"]');
         boton.disabled = true; // evita que se apriete dos veces y se pague doble
 
-        // Solo viaja el plan: los datos de la tarjeta NO se mandan al servidor.
-        // El servidor calcula el monto a partir del plan.
-        const datos = new FormData();
-        datos.append("plan", planId);
+        // Los datos de la tarjeta NO se mandan al servidor. Solo viaja lo mínimo
+        // (el plan, o nada para el carrito) y el token de seguridad.
+        try {
+            const token = await obtenerToken();
+            const datos = new FormData();
+            Object.entries(config.campos).forEach(([k, v]) => datos.append(k, v));
+            datos.append("csrf_token", token);
 
-        fetch("../PHP/pago.php", { method: "post", body: datos })
-            .then((res) => res.json())
-            .then((respuesta) => {
-                if (respuesta.exito) {
-                    Swal.fire({
-                        title: "Pago realizado!",
-                        text: "Ahora creá tu emprendimiento.",
-                        icon: "success",
-                        timer: 1800,
-                        showConfirmButton: false
-                    }).then(() => {
-                        window.location.href = "crearemprendimiento.html";
-                    });
-                } else {
-                    mostrarError("No se pudo realizar el pago", respuesta.msg);
-                    boton.disabled = false;
-                }
-            })
-            .catch(() => {
-                mostrarError("Algo salió mal", "No pudimos procesar el pago. Probá de nuevo en unos minutos.");
+            const res = await fetch(config.url, { method: "post", body: datos, credentials: "same-origin" });
+            const respuesta = await res.json();
+
+            if (respuesta.exito) {
+                await Swal.fire({
+                    title: config.exitoTitulo,
+                    text: config.exitoTexto,
+                    icon: "success",
+                    timer: 1800,
+                    showConfirmButton: false
+                });
+                window.location.href = config.destino;
+            } else {
+                mostrarError("No se pudo realizar el pago", respuesta.msg || respuesta.mensaje || "Intentá de nuevo.");
                 boton.disabled = false;
-            });
+            }
+        } catch (err) {
+            mostrarError("Algo salió mal", "No pudimos procesar el pago. Probá de nuevo en unos minutos.");
+            boton.disabled = false;
+        }
     });
 }
 
-// Sin un plan válido en la dirección no hay nada que pagar: se vuelve a elegir
-if (plan) {
-    iniciar();
+if (modoCompra) {
+    // Compra del carrito: el total que se muestra sale del carrito real del usuario.
+    fetch("../PHP/mostrarcarrito.php", { credentials: "same-origin" })
+        .then((res) => res.json())
+        .then((items) => {
+            if (!Array.isArray(items) || items.length === 0) {
+                window.location.replace("carrito.html");
+                return;
+            }
+            const total = items.reduce((acc, p) => acc + Number(p.precio) * Number(p.cantidad), 0);
+            const unidades = items.reduce((acc, p) => acc + Number(p.cantidad), 0);
+            configurarFormulario({
+                concepto: `Compra de ${unidades} producto${unidades === 1 ? "" : "s"}`,
+                monto: formatearPrecio(total),
+                url: "../PHP/comprar.php",
+                campos: {},
+                exitoTitulo: "¡Compra realizada!",
+                exitoTexto: "Gracias por tu compra.",
+                destino: "tienda.html"
+            });
+        })
+        .catch(() => window.location.replace("carrito.html"));
+} else if (plan) {
+    configurarFormulario({
+        concepto: `${plan.nombre} (mensual)`,
+        monto: `${plan.precio} USD`,
+        url: "../PHP/pago.php",
+        campos: { plan: planId },
+        exitoTitulo: "Pago realizado!",
+        exitoTexto: "Ahora creá tu emprendimiento.",
+        destino: "crearemprendimiento.html"
+    });
 } else {
-    window.location.replace("EmprendeUY.html#planes");
+    // Ni carrito ni plan: no hay nada que pagar
+    window.location.replace("carrito.html");
 }

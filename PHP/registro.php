@@ -5,6 +5,11 @@ error_reporting(1);
 
 require_once __DIR__ . '/session_config.php';
 include "conexionBD.php";
+require_once __DIR__ . '/codigos.php';
+require_once __DIR__ . '/mailer.php';
+require_once __DIR__ . '/helpers_sesion.php';
+
+header('Content-Type: application/json; charset=utf-8');
 
 
 // Constante compartida con la validación del lado del cliente (JS/validaciones.js).
@@ -69,6 +74,8 @@ if ($edad < EDAD_MINIMA) {
 
 $pass=password_hash($pass, PASSWORD_DEFAULT); 
 
+$conexion->beginTransaction();
+
 $sen= $conexion->prepare("INSERT INTO usuario(Nombre,Apellido,correo,Fecha_Nacimiento,Edad,Cedula,Num_Telefono,Domicilio,Calle,Manzana,Solar,Genero,Contraseña,Rol)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 $sen->execute([$nombre,$apellido,$correo,$Fecha_Nacimiento,$edad,$cedula,$Num_Telefono,'','','','',$genero,$pass,$rol]);
 
@@ -80,21 +87,35 @@ if($rol === "emprendedor"){
     $sen->execute([$cedula,$nombre,$apellido,$correo,$genero]);
 }
 
-// Registro completo: dejamos al usuario logueado, igual que si hubiera
-// iniciado sesión manualmente, y le indicamos a dónde corresponde mandarlo
-// segun su rol (misma logica que login.php).
+$conexion->commit();
+
+// Verificación de correo: la cuenta queda creada pero SIN iniciar sesión.
+// El usuario debe ingresar el código que le llega por mail (ver verificar_correo.php).
+// Guardamos en la sesión quién está pendiente de verificar.
 session_regenerate_id(true);
-$_SESSION['Cedula'] = $cedula;
-$_SESSION['Nombre'] = $nombre;
-$_SESSION['Rol']    = $rol;
+$_SESSION['verificacion_cedula'] = $cedula;
 
-$redirect = ($rol === "emprendedor")
-    ? '../HTML/crearemprendimiento.html'
-    : '../HTML/tienda.html';
+$ip     = $_SERVER['REMOTE_ADDR'] ?? 'desconocida';
+$enviado = false;
+try {
+    $codigo  = emitirCodigo($conexion, (int) $cedula, TIPO_VERIFICACION, $ip);
+    $enviado = enviarCorreoVerificacion($correo, $nombre, $codigo, CODIGO_VIGENCIA_MIN);
+} catch (Throwable $e) {
+    error_log("Error emitiendo código de verificación (registro.php): " . $e->getMessage());
+}
 
-echo json_encode(["exito" => true, "rol" => $rol, "redirect" => $redirect]);
+echo json_encode([
+    "exito"          => true,
+    "verificacion"   => true,
+    "correo"         => enmascararCorreo($correo),
+    "correo_enviado" => $enviado,
+    "redirect"       => '../HTML/verificar_correo.html'
+]);
 
 }catch(PDOException $e){
+    if ($conexion->inTransaction()) {
+        $conexion->rollBack();
+    }
     error_log("Error en registro.php: " . $e->getMessage());
     echo json_encode(["exito"=>false, "mensaje"=>"No se pudo completar el registro. Intente nuevamente."]);
     exit;

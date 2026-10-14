@@ -28,3 +28,5 @@ Imagenes/subidas/
 *.tmp
 *.cache
 mklink /D C:\xampp\htdocs\emprendeuy "C:\Users\TuUsuario\Documents\EmprendeUY"
+# Credenciales de correo (SMTP)
+PHP/config_correo.php

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1b25af">
+    <title>Verificar correo - EmprendeUY</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS común, el de la tarjeta de login y el propio de estas pantallas -->
+    <link rel="stylesheet" href="../CSS/Emprendeuy.css">
+    <link rel="stylesheet" href="../CSS/iniciar_sesion.css">
+    <link rel="stylesheet" href="../CSS/verificacion.css">
+</head>
+<body>
+
+<!-- Misma cabecera que la portada -->
+<header>
+    <a class="marca" href="EmprendeUY.html" aria-label="EmprendeUY, inicio">
+        <img src="../Imagenes/EmprendeUy.png" alt="EmprendeUY">
+        <span>EmprendeUY</span>
+    </a>
+
+    <div class="acciones">
+        <a class="a1" href="iniciar_sesion.html">Iniciar sesión</a>
+        <a class="a2" href="EmprendeUY.html">Volver al inicio</a>
+    </div>
+</header>
+
+<main>
+    <section id="contenedor" class="login">
+        <h1>Verificá tu correo</h1>
+        <p class="login__sub" id="ayuda">Cargando…</p>
+
+        <form id="formVerificar" autocomplete="off">
+            <div class="campo">
+                <label for="codigo">Código de 6 dígitos</label>
+                <input type="text" id="codigo" name="codigo" class="codigo" inputmode="numeric"
+                       maxlength="6" autocomplete="one-time-code" placeholder="000000" required>
+            </div>
+            <button type="submit" class="login__enviar" id="btnVerificar">Verificar</button>
+        </form>
+
+        <button type="button" id="btnReenviar" class="login__secundario" disabled>Reenviar código</button>
+        <p id="mensaje" role="alert"></p>
+    </section>
+</main>
+
+<script src="../JS/verificar_correo.js"></script>
+
+</body>
+</html>

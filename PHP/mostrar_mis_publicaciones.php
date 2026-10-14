@@ -1,14 +1,12 @@
 <?php
 
 require_once __DIR__ . '/session_config.php';
+require_once __DIR__ . '/auth.php';
 include "conexionBD.php";
 
-$cedula = $_SESSION['Cedula'] ?? null;
+requireRole(['emprendedor'], false);
 
-if (!$cedula) {
-    echo json_encode(["exito" => false, "mensaje" => "Sesión no iniciada."]);
-    exit;
-}
+$cedula = $_SESSION['Cedula'];
 
 
 $consulta = $conexion->prepare("SELECT ID FROM emprendimiento WHERE cedula = ?");

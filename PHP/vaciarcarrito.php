@@ -1,15 +1,13 @@
 <?php
 require_once __DIR__ . '/session_config.php';
+require_once __DIR__ . '/auth.php';
 require_once __DIR__ . '/csrf.php';
 include "conexionBD.php";
 
 header('Content-Type: application/json');
 
-if (empty($_SESSION['Cedula'])) {
-    http_response_code(401);
-    echo json_encode(["exito" => false, "mensaje" => "Debe iniciar sesión."]);
-    exit;
-}
+// Solo cliente y emprendedor usan el carrito (el administrador no compra).
+requireRole(['cliente', 'emprendedor'], false);
 
 csrf_validar();
 

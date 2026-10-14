@@ -23,6 +23,9 @@ let form=new FormData(formulario2)
         window.location.href = datos.redirect;
     }else{
         alert(datos.mensaje);
+        if (datos.requiere_verificacion) {
+            window.location.href = datos.redirect;
+        }
     }
 
 });

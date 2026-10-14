@@ -3,7 +3,13 @@
 
 require_once __DIR__ . '/session_config.php';
 require 'conexionBD.php'; 
-function requireRole(array $rolesPermitidos): void
+/**
+ * Corta la ejecución (401/403 en JSON) si no hay sesión o el rol no está permitido.
+ * Todo acceso DENEGADO queda registrado en log_acceso_admin.
+ * $registrarPermitidos = false evita registrar también los accesos permitidos
+ * (para endpoints que se llaman muchas veces, como el carrito).
+ */
+function requireRole(array $rolesPermitidos, bool $registrarPermitidos = true): void
 {
     global $conexion;
 
@@ -26,16 +32,18 @@ function requireRole(array $rolesPermitidos): void
 
     $permitido = in_array($rolActual, $rolesPermitidos, true);
 
-    $stmt = $conexion->prepare(
-        "INSERT INTO log_acceso_admin (Cedula, Recurso, Resultado, IP)
-         VALUES (:cedula, :recurso, :resultado, :ip)"
-    );
-    $stmt->execute([
-        'cedula'    => $cedula,
-        'recurso'   => $recurso,
-        'resultado' => $permitido ? 'permitido' : 'denegado',
-        'ip'        => $ip
-    ]);
+    if (!$permitido || $registrarPermitidos) {
+        $stmt = $conexion->prepare(
+            "INSERT INTO log_acceso_admin (Cedula, Recurso, Resultado, IP)
+             VALUES (:cedula, :recurso, :resultado, :ip)"
+        );
+        $stmt->execute([
+            'cedula'    => $cedula,
+            'recurso'   => $recurso,
+            'resultado' => $permitido ? 'permitido' : 'denegado',
+            'ip'        => $ip
+        ]);
+    }
 
     if (!$permitido) {
         http_response_code(403);

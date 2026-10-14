@@ -19,6 +19,12 @@ if (plan) {
 function destinoFinal(redirect, rol) {
     if (!plan || rol !== "emprendedor") return redirect;
 
+    // Si el servidor lo manda a verificar el correo, el plan viaja con él
+    // (verificar_correo.js lo usa para seguir a Pago.html?plan=... al terminar)
+    if (/verificar_correo/i.test(redirect)) {
+        return `${redirect}${redirect.includes("?") ? "&" : "?"}plan=${plan}`;
+    }
+
     // Si el servidor lo manda a iniciar sesión, el plan viaja con él
     // (después de iniciar sesión hay que seguir a Pago.html?plan=...)
     if (/iniciar_sesion/i.test(redirect)) {
@@ -84,9 +90,12 @@ formulario.addEventListener("submit", (e) => {
         .then((datos) => {
             if (datos.exito) {
                 Swal.fire({
-                    title: "Registro exitoso!",
-                    icon: "success",
-                    timer: 1500,
+                    title: "¡Cuenta creada!",
+                    text: datos.correo_enviado
+                        ? "Te enviamos un código de verificación a " + datos.correo + "."
+                        : "No pudimos enviar el correo todavía. Podés pedir el código de nuevo en la siguiente pantalla.",
+                    icon: datos.correo_enviado ? "success" : "warning",
+                    timer: 2500,
                     showConfirmButton: false
                 }).then(() => {
                     window.location.href = destinoFinal(datos.redirect, rol);
@@ -95,7 +104,7 @@ formulario.addEventListener("submit", (e) => {
                 Swal.fire({
                     icon: "error",
                     title: "No fue agregado..",
-                    text: datos.msg
+                    text: datos.mensaje || datos.msg
                 });
             }
         })

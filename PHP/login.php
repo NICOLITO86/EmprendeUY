@@ -2,6 +2,9 @@
 
 require_once __DIR__ . '/session_config.php';
 require 'conexionBD.php'; 
+require_once __DIR__ . '/codigos.php';
+require_once __DIR__ . '/mailer.php';
+require_once __DIR__ . '/helpers_sesion.php';
 header('Content-Type: application/json');
 
 
@@ -85,40 +88,37 @@ if (!$loginExitoso) {
 }
 
 
-session_regenerate_id(true);
+// Contraseña correcta pero correo sin verificar: no se inicia sesión.
+// Se deja pendiente la verificación y se manda un código nuevo (si el límite de envíos lo permite).
+if ((int) $usuario['CorreoVerificado'] !== 1) {
+    session_regenerate_id(true);
+    $_SESSION['verificacion_cedula'] = (int) $usuario['Cedula'];
 
-$_SESSION['Cedula'] = $usuario['Cedula'];
-$_SESSION['Nombre'] = $usuario['Nombre'];
-$_SESSION['Rol']    = $usuario['Rol'];
-
-switch ($usuario['Rol']) {
-    case 'administrador':
-        $redirect = '../HTML/paneladm.html';
-        break;
-
-    case 'emprendedor':
-        try {
-            $stmt = $conexion->prepare("SELECT 1 FROM emprendimiento WHERE cedula = :cedula LIMIT 1");
-            $stmt->execute(['cedula' => $usuario['Cedula']]);
-            $tieneEmprendimiento = $stmt->fetch();
-
-            $redirect = $tieneEmprendimiento
-                ? '../HTML/mis_publicaciones.html'
-                : '../HTML/crearemprendimiento.html';
-        } catch (PDOException $e) {
-            error_log('Error verificando emprendimiento: ' . $e->getMessage());
-            echo json_encode(['success' => false, 'mensaje' => 'Error interno del servidor.']);
-            exit;
+    try {
+        $permiso = puedeEmitirCodigo($conexion, (int) $usuario['Cedula'], TIPO_VERIFICACION);
+        if ($permiso['ok']) {
+            $codigo = emitirCodigo($conexion, (int) $usuario['Cedula'], TIPO_VERIFICACION, $ip);
+            enviarCorreoVerificacion($usuario['Correo'], $usuario['Nombre'], $codigo, CODIGO_VIGENCIA_MIN);
         }
-        break;
+    } catch (Throwable $e) {
+        error_log('Error enviando código de verificación (login.php): ' . $e->getMessage());
+    }
 
-    case 'cliente':
-        $redirect = '../HTML/tienda.html';
-        break;
+    echo json_encode([
+        'success'              => false,
+        'requiere_verificacion' => true,
+        'mensaje'              => 'Tenés que verificar tu correo antes de iniciar sesión. Te enviamos un código.',
+        'redirect'             => '../HTML/verificar_correo.html'
+    ]);
+    exit;
+}
 
-    default:
-        $redirect = '../HTML/EmprendeUY.html';
-        break;
+try {
+    $redirect = iniciarSesionUsuario($conexion, $usuario);
+} catch (PDOException $e) {
+    error_log('Error verificando emprendimiento: ' . $e->getMessage());
+    echo json_encode(['success' => false, 'mensaje' => 'Error interno del servidor.']);
+    exit;
 }
 
 echo json_encode([

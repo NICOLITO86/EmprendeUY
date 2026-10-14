@@ -1,13 +1,11 @@
 <?php
 
 require_once __DIR__ . '/session_config.php';
+require_once __DIR__ . '/auth.php';
 include "conexionBD.php";
 
-if (empty($_SESSION['Cedula'])) {
-    http_response_code(401);
-    echo json_encode(["error" => "No hay sesion iniciada"]);
-    exit;
-}
+// Solo cliente y emprendedor usan el carrito (el administrador no compra).
+requireRole(['cliente', 'emprendedor'], false);
 
 $ci = $_SESSION['Cedula'];
 

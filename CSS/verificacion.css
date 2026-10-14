@@ -1,0 +1,52 @@
+/* ==========================================================
+   verificacion.css
+   Pantallas de verificar_correo.html y recuperar_contrasena.html.
+   Se carga DESPUÉS de Emprendeuy.css e iniciar_sesion.css:
+   reutiliza la tarjeta .login, los .campo y el botón .login__enviar.
+   ========================================================== */
+
+.oculto { display: none !important; }
+
+/* Código de 6 dígitos: grande y centrado */
+.campo input.codigo {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 600;
+    letter-spacing: .5em;
+    padding-left: calc(16px + .5em); /* compensa el espacio que deja el último dígito */
+}
+
+.login__enviar:disabled,
+.login__secundario:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Botón secundario (reenviar, "ya tengo un código") */
+.login__secundario {
+    width: 100%;
+    margin-top: 12px;
+    padding: 12px;
+    font: inherit;
+    font-weight: 600;
+    color: var(--azul);
+    background: transparent;
+    border: 2px solid var(--azul);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background .2s;
+}
+
+.login__secundario:hover:not(:disabled) { background: rgba(27, 37, 175, .08); }
+
+/* Mensajes de estado (reemplazan a los alert) */
+#mensaje {
+    margin-top: 16px;
+    font-size: .92rem;
+    text-align: center;
+    border-radius: 12px;
+}
+
+#mensaje.ok    { padding: 10px 12px; color: #0b3d1e; background: #d4f5df; }
+#mensaje.error { padding: 10px 12px; color: #5c0a0a; background: #fbd9d9; }
