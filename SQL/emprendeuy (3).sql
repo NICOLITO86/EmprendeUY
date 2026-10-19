@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 14-10-2026 a las 13:17:19
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Host: 127.0.0.1
+-- Tempo de geração: 19/10/2026 às 15:36
+-- Versão do servidor: 10.4.32-MariaDB
+-- Versão do PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `emprendeuy`
+-- Banco de dados: `emprendeuy`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `administrador`
+-- Estrutura para tabela `administrador`
 --
 
 CREATE TABLE `administrador` (
@@ -38,7 +38,7 @@ CREATE TABLE `administrador` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `bloqueo_temporal`
+-- Estrutura para tabela `bloqueo_temporal`
 --
 
 CREATE TABLE `bloqueo_temporal` (
@@ -50,7 +50,7 @@ CREATE TABLE `bloqueo_temporal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `bloqueo_temporal`
+-- Despejando dados para a tabela `bloqueo_temporal`
 --
 
 INSERT INTO `bloqueo_temporal` (`idBloqueo`, `Cedula`, `IP`, `BloqueadoHasta`, `FechaCreacion`) VALUES
@@ -60,7 +60,7 @@ INSERT INTO `bloqueo_temporal` (`idBloqueo`, `Cedula`, `IP`, `BloqueadoHasta`, `
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `carrito`
+-- Estrutura para tabela `carrito`
 --
 
 CREATE TABLE `carrito` (
@@ -72,7 +72,7 @@ CREATE TABLE `carrito` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `carrito`
+-- Despejando dados para a tabela `carrito`
 --
 
 INSERT INTO `carrito` (`id_carrito`, `ci`, `id`, `cantidad`, `fecha_agregado`) VALUES
@@ -83,7 +83,7 @@ INSERT INTO `carrito` (`id_carrito`, `ci`, `id`, `cantidad`, `fecha_agregado`) V
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `cliente`
+-- Estrutura para tabela `cliente`
 --
 
 CREATE TABLE `cliente` (
@@ -95,7 +95,7 @@ CREATE TABLE `cliente` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `cliente`
+-- Despejando dados para a tabela `cliente`
 --
 
 INSERT INTO `cliente` (`Nombre`, `Apellido`, `Correo`, `Genero`, `Cedula`) VALUES
@@ -106,7 +106,7 @@ INSERT INTO `cliente` (`Nombre`, `Apellido`, `Correo`, `Genero`, `Cedula`) VALUE
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `codigo_verificacion`
+-- Estrutura para tabela `codigo_verificacion`
 --
 
 CREATE TABLE `codigo_verificacion` (
@@ -122,19 +122,27 @@ CREATE TABLE `codigo_verificacion` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `codigo_verificacion`
+-- Despejando dados para a tabela `codigo_verificacion`
 --
 
 INSERT INTO `codigo_verificacion` (`idCodigo`, `Cedula`, `Tipo`, `CodigoHash`, `Intentos`, `Usado`, `Expira`, `IP`, `FechaCreacion`) VALUES
 (1, 23456789, 'verificacion_correo', '$2y$10$eC86rixjGcb/sTHHk/HFFevsg7JlAvL2rAIbsSg2qxiWHyjhdZ5hG', 0, 1, '2026-10-13 18:41:11', '::1', '2026-10-13 18:31:11'),
 (2, 23456789, 'verificacion_correo', '$2y$10$kd8cXEG3Dzijxo8iHBUgAO7wnejP3KqVAOV85Am9I58vQ/hjt2uW6', 0, 1, '2026-10-13 18:43:40', '::1', '2026-10-13 18:33:40'),
 (3, 23456789, 'verificacion_correo', '$2y$10$VCymjJbZTDpjs4MEX2cB2OuAfJKuOi5ncsrLH94ym/r5l0S9MmGTO', 0, 1, '2026-10-13 18:48:57', '::1', '2026-10-13 18:38:57'),
-(4, 23456789, 'verificacion_correo', '$2y$10$GLDissRE9b3uoNN5TmyL.eyCUWlwqxfgQIb74vHiimhe5FZMMOboy', 0, 1, '2026-10-13 19:12:18', '::1', '2026-10-13 19:02:18');
+(4, 23456789, 'verificacion_correo', '$2y$10$GLDissRE9b3uoNN5TmyL.eyCUWlwqxfgQIb74vHiimhe5FZMMOboy', 0, 1, '2026-10-13 19:12:18', '::1', '2026-10-13 19:02:18'),
+(7, 23456789, 'recuperacion_contrasena', '$2y$10$xPLXTO/pHQKsFCaEI9gw..UurRBrQvvAWd0qw3p/WbU3TC2sNLJV2', 0, 1, '2026-10-16 10:48:31', '::1', '2026-10-16 10:38:31'),
+(8, 23456789, 'recuperacion_contrasena', '$2y$10$XZdoQA0D4c1r9UBEg2y7Uu9cibDdN81cxaz2ijv4zFB71Lc7XVE/2', 0, 1, '2026-10-16 10:57:50', '::1', '2026-10-16 10:47:50'),
+(9, 57683215, 'recuperacion_contrasena', '$2y$10$byZWGOSkz9fTtomckUNGLuJVTnG8HIwIFdE1T/eddDZPLaztI9yzG', 0, 0, '2026-10-16 10:59:43', '::1', '2026-10-16 10:49:43'),
+(10, 23456789, 'recuperacion_contrasena', '$2y$10$NLDZu/MPYThUqCFM7KKdKe7R2NHNUxp6/NkttG5BYbsBI.ERGlcBi', 0, 1, '2026-10-16 11:04:02', '::1', '2026-10-16 10:54:02'),
+(11, 23456789, 'recuperacion_contrasena', '$2y$10$pxV8gG6kVBds12Zqt4uJP.4ZlNjrkpW56BL8eSWCGp45Z3Il7mRKS', 0, 1, '2026-10-16 11:06:10', '::1', '2026-10-16 10:56:10'),
+(12, 23456789, 'recuperacion_contrasena', '$2y$10$eoY7eHJSLD1upPeb94qj0.AMoucO36iJJ7YsXflc1bncmtwBRWx5e', 0, 0, '2026-10-16 11:09:27', '::1', '2026-10-16 10:59:27'),
+(13, 58756565, 'verificacion_correo', '$2y$10$JygmOV1n25BCI4LfpRBkzOTtH8SEeoqerGBaY0MgyOY30KjGJ5Zri', 0, 1, '2026-10-16 11:12:14', '::1', '2026-10-16 11:02:14'),
+(14, 57252305, 'verificacion_correo', '$2y$10$aC3H/pKD52wzbRzngg0iL.kKH0YQ.6ttyX0lDH0RSsieLOh2Xht3q', 0, 1, '2026-10-19 10:01:15', '::1', '2026-10-19 09:51:15');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `compra`
+-- Estrutura para tabela `compra`
 --
 
 CREATE TABLE `compra` (
@@ -147,7 +155,7 @@ CREATE TABLE `compra` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `emprendedor`
+-- Estrutura para tabela `emprendedor`
 --
 
 CREATE TABLE `emprendedor` (
@@ -159,18 +167,19 @@ CREATE TABLE `emprendedor` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `emprendedor`
+-- Despejando dados para a tabela `emprendedor`
 --
 
 INSERT INTO `emprendedor` (`Cedula`, `Nombre`, `Apellido`, `Correo`, `Genero`) VALUES
 (1, '1', '1@1', '1', 'Masculino'),
 (565, 'asd5', 'asd5', 'asd@asd5.com', 'Femenino'),
-(5655, 'asd56', 'asd56', 'asd@asd56.com', 'Femenino');
+(5655, 'asd56', 'asd56', 'asd@asd56.com', 'Femenino'),
+(57252305, 'Lucia', 'Camerota', 'cl528991@gmail.com', 'Femenino');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `emprendimiento`
+-- Estrutura para tabela `emprendimiento`
 --
 
 CREATE TABLE `emprendimiento` (
@@ -182,19 +191,20 @@ CREATE TABLE `emprendimiento` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `emprendimiento`
+-- Despejando dados para a tabela `emprendimiento`
 --
 
 INSERT INTO `emprendimiento` (`Nombre`, `Descripcion`, `Foto`, `ID`, `cedula`) VALUES
 ('emprendimiento1', 'de algo', '3.png', 3, 1),
 ('emprendimiento1', 'de algo', '4.png', 4, 6),
 ('87', '87', '5.png', 5, 565),
-('76', '76', '6.png', 6, 5655);
+('76', '76', '6.png', 6, 5655),
+('Swap', 'Trata de indumetaria especialmente para publicar outfits completos o una prenda que seguramente no encuentres en ningun otro lugar.', '7.jpg', 7, 57252305);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `intento_login`
+-- Estrutura para tabela `intento_login`
 --
 
 CREATE TABLE `intento_login` (
@@ -206,7 +216,7 @@ CREATE TABLE `intento_login` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `intento_login`
+-- Despejando dados para a tabela `intento_login`
 --
 
 INSERT INTO `intento_login` (`idIntento`, `Cedula`, `IP`, `Exitoso`, `FechaIntento`) VALUES
@@ -257,7 +267,7 @@ INSERT INTO `intento_login` (`idIntento`, `Cedula`, `IP`, `Exitoso`, `FechaInten
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `log_acceso_admin`
+-- Estrutura para tabela `log_acceso_admin`
 --
 
 CREATE TABLE `log_acceso_admin` (
@@ -270,7 +280,7 @@ CREATE TABLE `log_acceso_admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `log_acceso_admin`
+-- Despejando dados para a tabela `log_acceso_admin`
 --
 
 INSERT INTO `log_acceso_admin` (`idLog`, `Cedula`, `Recurso`, `Resultado`, `IP`, `FechaAcceso`) VALUES
@@ -290,12 +300,22 @@ INSERT INTO `log_acceso_admin` (`idLog`, `Cedula`, `Recurso`, `Resultado`, `IP`,
 (14, 57683215, '/EmprendeUY/PHP/admin.php:mostrar_todo', 'permitido', '::1', '2026-09-11 09:04:02'),
 (15, 57683215, '/EmprendeUY/PHP/admin.php:buscar_emprendimiento', 'permitido', '::1', '2026-09-11 09:05:31'),
 (17, 565, '/EmprendeUY/PHP/crear_Emprendimiento.php', 'permitido', '::1', '2026-09-12 15:24:20'),
-(18, 5655, '/EmprendeUY/PHP/crear_Emprendimiento.php', 'permitido', '::1', '2026-09-12 15:36:21');
+(18, 5655, '/EmprendeUY/PHP/crear_Emprendimiento.php', 'permitido', '::1', '2026-09-12 15:36:21'),
+(19, 57252305, '/EmprendeUY/PHP/crear_Emprendimiento.php', 'permitido', '::1', '2026-10-19 10:14:32'),
+(20, 57252305, '/EmprendeUY/PHP/crear_publicaciones.php', 'permitido', '::1', '2026-10-19 10:15:20'),
+(21, 57252305, '/EmprendeUY/PHP/crear_publicaciones.php', 'permitido', '::1', '2026-10-19 10:16:06'),
+(22, 57252305, '/EmprendeUY/PHP/cambiar_estado.php', 'permitido', '::1', '2026-10-19 10:16:13'),
+(23, 57252305, '/EmprendeUY/PHP/cambiar_estado.php', 'permitido', '::1', '2026-10-19 10:16:14'),
+(24, 57252305, '/EmprendeUY/PHP/crear_publicaciones.php', 'permitido', '::1', '2026-10-19 10:22:20'),
+(25, 57252305, '/EmprendeUY/PHP/crear_publicaciones.php', 'permitido', '::1', '2026-10-19 10:26:27'),
+(26, 57252305, '/EmprendeUY/PHP/cambiar_estado.php', 'permitido', '::1', '2026-10-19 10:26:37'),
+(27, 57252305, '/EmprendeUY/PHP/crear_publicaciones.php', 'permitido', '::1', '2026-10-19 10:32:56'),
+(28, 57252305, '/EmprendeUY/PHP/cambiar_estado.php', 'permitido', '::1', '2026-10-19 10:33:00');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `producto`
+-- Estrutura para tabela `producto`
 --
 
 CREATE TABLE `producto` (
@@ -310,7 +330,7 @@ CREATE TABLE `producto` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `publicaciones`
+-- Estrutura para tabela `publicaciones`
 --
 
 CREATE TABLE `publicaciones` (
@@ -326,7 +346,7 @@ CREATE TABLE `publicaciones` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `publicaciones`
+-- Despejando dados para a tabela `publicaciones`
 --
 
 INSERT INTO `publicaciones` (`id`, `Id_emprendimiento`, `status`, `titulo`, `descripcion`, `precio`, `fecha_publicacion`, `foto`, `categoria`) VALUES
@@ -336,12 +356,17 @@ INSERT INTO `publicaciones` (`id`, `Id_emprendimiento`, `status`, `titulo`, `des
 (20, 3, 'Activa', 'asd', '1', 1, '2026-08-29 18:30:27', '20.jpg', 'Tecnologia'),
 (21, 3, 'Pausada', 'asd', 'asd', 21, '2026-08-29 18:31:13', '21.jpg', 'Tecnologia'),
 (22, 3, 'Activa', 'prueba2', '1', 111, '2026-09-03 08:13:00', '22.png', ''),
-(23, 3, 'Pausada', 'we', 'we', 32, '2026-09-03 08:39:22', '23.png', 'Hogar');
+(23, 3, 'Pausada', 'we', 'we', 32, '2026-09-03 08:39:22', '23.png', 'Hogar'),
+(24, 7, 'Activa', 'Outfit completo', 'Top: M en blanco  Pollera short: S-M en marron y negro  Botas: 39-41 en marron,negro y blanco   Bolso: Marron, rojo y negro', 1300, '2026-10-19 10:15:20', '24.jpg', ''),
+(25, 7, 'Activa', 'Falda en V', 'Pollera short: S-M-L en gris,negro,blanco y rojo', 450, '2026-10-19 10:16:06', '25.jpg', ''),
+(26, 7, 'Pausada', 'Outfit tipo noche de invierno', 'Talle unico y en colores blanco,negro y marron, las medias vienen tipo piel, de color negro y beige', 1400, '2026-10-19 10:22:20', '26.jpg', ''),
+(27, 7, 'Activa', 'Outfit Noche de Invierno', 'Talle unico y en colores blanco,negro y marron, las medias vienen tipo piel, de color negro y beige, botas: del 37 al 41', 1400, '2026-10-19 10:26:27', '27.jpg', ''),
+(28, 7, 'Activa', 'Outfit Elegante', 'Talle unico dos piezas, botas del 37 al 41, medias polares de color beige, negro y marron claro', 1340, '2026-10-19 10:32:56', '28.jpg', '');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuario`
+-- Estrutura para tabela `usuario`
 --
 
 CREATE TABLE `usuario` (
@@ -364,7 +389,7 @@ CREATE TABLE `usuario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `usuario`
+-- Despejando dados para a tabela `usuario`
 --
 
 INSERT INTO `usuario` (`Cedula`, `Nombre`, `Apellido`, `Fecha_Nacimiento`, `Edad`, `Correo`, `CorreoVerificado`, `Contraseña`, `Num_Telefono`, `Domicilio`, `Calle`, `Manzana`, `Solar`, `Genero`, `Rol`, `Activo`) VALUES
@@ -374,28 +399,30 @@ INSERT INTO `usuario` (`Cedula`, `Nombre`, `Apellido`, `Fecha_Nacimiento`, `Edad
 (565, 'asd5', 'asd5', '2026-09-18', 0, 'asd@asd5.com', 1, '$2y$10$u47fhbhIxmdxCxUsHv7XpuStgFocbsBAP0j6PrOZ17FQuy4kwLbxq', '675', '', '', '', '', 'Femenino', 'emprendedor', 1),
 (5655, 'asd56', 'asd56', '2026-09-18', 0, 'asd@asd56.com', 1, '$2y$10$uPFJ.z5HvAhEoP8kGKW4tesK0AYJ9D.vUbYqYk28E/m1Za6Wvkxm6', '6756', '', '', '', '', 'Femenino', 'emprendedor', 1),
 (23456789, 'asd1', 'asd1', '1999-02-02', 27, 'nicocalixto26@gmail.com', 1, '$2y$10$AOwqqOcOayZSaOCWACsj1OazM8KU21IcsuOjZTqPSqRot992LQKPa', '123456789', '', '', '', '', 'Masculino', 'cliente', 1),
-(57683215, 'nicolas', 'calixto', '2026-06-19', 0, 'nicolito3215@gmail.com', 1, '$2y$10$7B/yrGYGEYmGOW/ABrClbuiqXMhPOh.KxFwBCTRhbJCUNIt7SoqNC', '094197336', '', '', '', '', 'Masculino', 'administrador', 1);
+(57252305, 'Lucia', 'Camerota', '2008-04-24', 18, 'cl528991@gmail.com', 1, '$2y$10$u32mBSmq97ihH2APYUjCiOe3LpUa/xAP2dPHyQS5wilppevjAMfL6', '094172302', '', '', '', '', 'Femenino', 'emprendedor', 1),
+(57683215, 'nicolas', 'calixto', '2026-06-19', 0, 'nicolito3215@gmail.com', 1, '$2y$10$7B/yrGYGEYmGOW/ABrClbuiqXMhPOh.KxFwBCTRhbJCUNIt7SoqNC', '094197336', '', '', '', '', 'Masculino', 'administrador', 1),
+(58756565, 'Sofia', 'Lopez', '1999-11-19', 26, 'lulalopez1977h2r@gmail.com', 1, '$2y$10$EfIICHFJhkGiUNnzzl1WNO/3tNg9rbkyCZfLKKb.p5kiBBtgFQDpu', '098765434', '', '', '', '', 'Femenino', 'emprendedor', 1);
 
 --
--- Índices para tablas volcadas
+-- Índices para tabelas despejadas
 --
 
 --
--- Indices de la tabla `administrador`
+-- Índices de tabela `administrador`
 --
 ALTER TABLE `administrador`
   ADD PRIMARY KEY (`Cedula`),
   ADD UNIQUE KEY `Correo` (`Correo`);
 
 --
--- Indices de la tabla `bloqueo_temporal`
+-- Índices de tabela `bloqueo_temporal`
 --
 ALTER TABLE `bloqueo_temporal`
   ADD PRIMARY KEY (`idBloqueo`),
   ADD KEY `idx_cedula_hasta` (`Cedula`,`BloqueadoHasta`);
 
 --
--- Indices de la tabla `carrito`
+-- Índices de tabela `carrito`
 --
 ALTER TABLE `carrito`
   ADD PRIMARY KEY (`id_carrito`),
@@ -403,21 +430,21 @@ ALTER TABLE `carrito`
   ADD KEY `carrito_ibfk_1` (`id`);
 
 --
--- Indices de la tabla `cliente`
+-- Índices de tabela `cliente`
 --
 ALTER TABLE `cliente`
   ADD PRIMARY KEY (`Cedula`),
   ADD UNIQUE KEY `Correo` (`Correo`);
 
 --
--- Indices de la tabla `codigo_verificacion`
+-- Índices de tabela `codigo_verificacion`
 --
 ALTER TABLE `codigo_verificacion`
   ADD PRIMARY KEY (`idCodigo`),
   ADD KEY `idx_codigo_cedula_tipo` (`Cedula`,`Tipo`,`Usado`);
 
 --
--- Indices de la tabla `compra`
+-- Índices de tabela `compra`
 --
 ALTER TABLE `compra`
   ADD PRIMARY KEY (`id_compra`),
@@ -425,152 +452,152 @@ ALTER TABLE `compra`
   ADD KEY `Cedula` (`Cedula`);
 
 --
--- Indices de la tabla `emprendedor`
+-- Índices de tabela `emprendedor`
 --
 ALTER TABLE `emprendedor`
   ADD PRIMARY KEY (`Cedula`),
   ADD UNIQUE KEY `Correo` (`Correo`);
 
 --
--- Indices de la tabla `emprendimiento`
+-- Índices de tabela `emprendimiento`
 --
 ALTER TABLE `emprendimiento`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indices de la tabla `intento_login`
+-- Índices de tabela `intento_login`
 --
 ALTER TABLE `intento_login`
   ADD PRIMARY KEY (`idIntento`),
   ADD KEY `idx_cedula_fecha` (`Cedula`,`FechaIntento`);
 
 --
--- Indices de la tabla `log_acceso_admin`
+-- Índices de tabela `log_acceso_admin`
 --
 ALTER TABLE `log_acceso_admin`
   ADD PRIMARY KEY (`idLog`),
   ADD KEY `idx_cedula_fecha` (`Cedula`,`FechaAcceso`);
 
 --
--- Indices de la tabla `producto`
+-- Índices de tabela `producto`
 --
 ALTER TABLE `producto`
   ADD PRIMARY KEY (`id_producto`);
 
 --
--- Indices de la tabla `publicaciones`
+-- Índices de tabela `publicaciones`
 --
 ALTER TABLE `publicaciones`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `usuario`
+-- Índices de tabela `usuario`
 --
 ALTER TABLE `usuario`
   ADD PRIMARY KEY (`Cedula`),
   ADD UNIQUE KEY `Correo` (`Correo`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- AUTO_INCREMENT para tabelas despejadas
 --
 
 --
--- AUTO_INCREMENT de la tabla `bloqueo_temporal`
+-- AUTO_INCREMENT de tabela `bloqueo_temporal`
 --
 ALTER TABLE `bloqueo_temporal`
   MODIFY `idBloqueo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT de la tabla `carrito`
+-- AUTO_INCREMENT de tabela `carrito`
 --
 ALTER TABLE `carrito`
   MODIFY `id_carrito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT de la tabla `codigo_verificacion`
+-- AUTO_INCREMENT de tabela `codigo_verificacion`
 --
 ALTER TABLE `codigo_verificacion`
-  MODIFY `idCodigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idCodigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
--- AUTO_INCREMENT de la tabla `compra`
+-- AUTO_INCREMENT de tabela `compra`
 --
 ALTER TABLE `compra`
   MODIFY `id_compra` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `emprendimiento`
+-- AUTO_INCREMENT de tabela `emprendimiento`
 --
 ALTER TABLE `emprendimiento`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT de la tabla `intento_login`
+-- AUTO_INCREMENT de tabela `intento_login`
 --
 ALTER TABLE `intento_login`
   MODIFY `idIntento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
--- AUTO_INCREMENT de la tabla `log_acceso_admin`
+-- AUTO_INCREMENT de tabela `log_acceso_admin`
 --
 ALTER TABLE `log_acceso_admin`
-  MODIFY `idLog` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `idLog` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
--- AUTO_INCREMENT de la tabla `producto`
+-- AUTO_INCREMENT de tabela `producto`
 --
 ALTER TABLE `producto`
   MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `publicaciones`
+-- AUTO_INCREMENT de tabela `publicaciones`
 --
 ALTER TABLE `publicaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
--- Restricciones para tablas volcadas
+-- Restrições para tabelas despejadas
 --
 
 --
--- Filtros para la tabla `administrador`
+-- Restrições para tabelas `administrador`
 --
 ALTER TABLE `administrador`
   ADD CONSTRAINT `administrador_ibfk_1` FOREIGN KEY (`Cedula`) REFERENCES `usuario` (`Cedula`);
 
 --
--- Filtros para la tabla `carrito`
+-- Restrições para tabelas `carrito`
 --
 ALTER TABLE `carrito`
   ADD CONSTRAINT `carrito_ibfk_1` FOREIGN KEY (`id`) REFERENCES `publicaciones` (`id`) ON DELETE CASCADE;
 
 --
--- Filtros para la tabla `cliente`
+-- Restrições para tabelas `cliente`
 --
 ALTER TABLE `cliente`
   ADD CONSTRAINT `FK_Cliente_Usuario` FOREIGN KEY (`Cedula`) REFERENCES `usuario` (`Cedula`);
 
 --
--- Filtros para la tabla `codigo_verificacion`
+-- Restrições para tabelas `codigo_verificacion`
 --
 ALTER TABLE `codigo_verificacion`
   ADD CONSTRAINT `fk_codigo_usuario` FOREIGN KEY (`Cedula`) REFERENCES `usuario` (`Cedula`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `compra`
+-- Restrições para tabelas `compra`
 --
 ALTER TABLE `compra`
   ADD CONSTRAINT `compra_ibfk_1` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`),
   ADD CONSTRAINT `compra_ibfk_2` FOREIGN KEY (`Cedula`) REFERENCES `usuario` (`Cedula`);
 
 --
--- Filtros para la tabla `emprendedor`
+-- Restrições para tabelas `emprendedor`
 --
 ALTER TABLE `emprendedor`
   ADD CONSTRAINT `FK_Emprendedor_Usuario` FOREIGN KEY (`Cedula`) REFERENCES `usuario` (`Cedula`);
 
 --
--- Filtros para la tabla `log_acceso_admin`
+-- Restrições para tabelas `log_acceso_admin`
 --
 ALTER TABLE `log_acceso_admin`
   ADD CONSTRAINT `fk_log_usuario` FOREIGN KEY (`Cedula`) REFERENCES `usuario` (`Cedula`) ON DELETE CASCADE ON UPDATE CASCADE;
