@@ -14,6 +14,7 @@
 
         <div class="header-acciones">
             <a class="btn-nueva" href="creadorpublicaciones.html">+ Nueva publicación</a>
+            <a class="btn-nueva" href="perfil.html">Mi perfil</a>
             <a class="btn-salir" href="../PHP/logout.php">Cerrar sesión</a>
         </div>
     </header>
@@ -21,6 +22,51 @@
     <main>
         <div id="publicaciones"></div>
     </main>
+
+    <dialog id="dialogoEditar">
+        <form id="formEditar" enctype="multipart/form-data">
+            <h2>Editar publicación</h2>
+
+            <input type="hidden" name="id" id="editId">
+
+            <label for="editTitulo">Título</label>
+            <input type="text" name="titulo" id="editTitulo" maxlength="100" required>
+
+            <label for="editDescripcion">Descripción</label>
+            <textarea name="descripcion" id="editDescripcion" rows="3"></textarea>
+
+            <label for="editCategoria">Categoría</label>
+            <select name="categoria" id="editCategoria" required>
+                <option value="">Seleccione...</option>
+                <option value="Indumentaria">Indumentaria</option>
+                <option value="Higiene personal">Higiene personal</option>
+                <option value="Higiene">Higiene</option>
+                <option value="Higiene para el hogar">Higiene para el hogar</option>
+                <option value="Hogar">Hogar</option>
+                <option value="Cocina">Cocina</option>
+                <option value="Alimentos">Alimentos</option>
+                <option value="Tecnologia">Tecnologia</option>
+                <option value="Deportes">Deportes</option>
+                <option value="Botánica">Botánica</option>
+                <option value="Carpinteria">Carpinteria</option>
+                <option value="Herreria">Herreria</option>
+            </select>
+
+            <label for="editPrecio">Precio</label>
+            <input type="number" name="precio" id="editPrecio" min="1" step="1" required>
+
+            <label for="editFoto">Imagen (opcional: dejala vacía para conservar la actual)</label>
+            <img id="editImagenActual" alt="Imagen actual de la publicación">
+            <input type="file" name="foto" id="editFoto" accept="image/jpeg,image/png,image/gif,image/webp">
+
+            <p id="errorEditar" class="error-editar" role="alert"></p>
+
+            <div class="botones-dialogo">
+                <button type="button" id="btnCancelarEdicion" class="btn-cancelar">Cancelar</button>
+                <button type="submit" id="btnGuardarEdicion" class="btn-guardar">Guardar cambios</button>
+            </div>
+        </form>
+    </dialog>
 
     <script src="../JS/mispublicaciones.js"></script>
 </body>
