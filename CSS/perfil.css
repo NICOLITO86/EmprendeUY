@@ -321,3 +321,32 @@ body { background: var(--fondo-alt); min-height: 100vh; }
 @media (hover: none) {
     .boton:hover { transform: none; }
 }
+
+/* ---------- Añadidos para perfil.js ---------- */
+
+/* Botón mientras se guarda o se sube algo */
+.boton:disabled { opacity: .6; cursor: wait; transform: none; box-shadow: none; }
+
+/* Casilla deshabilitada (la dirección principal actual no se puede destildar) */
+.check input:disabled { cursor: not-allowed; }
+
+/* Indicaciones de entrega dentro de la tarjeta de dirección */
+.direccion .direccion__indicaciones {
+    margin-top: 6px;
+    padding-left: 10px;
+    border-left: 3px solid rgba(31, 142, 185, .5);
+    font-style: italic;
+    overflow-wrap: anywhere;
+}
+
+/* Con "Hacer principal", Editar y Eliminar los botones pueden pasar a otra línea */
+.direccion__acciones { flex-wrap: wrap; }
+
+/* Los textos largos escritos por el usuario no deben romper la tarjeta */
+.direccion h3,
+.direccion p { overflow-wrap: anywhere; }
+
+/* Menos movimiento si el usuario lo prefiere */
+@media (prefers-reduced-motion: reduce) {
+    .boton, .campo input, .campo select, .campo textarea { transition: none; }
+}

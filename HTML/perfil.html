@@ -14,7 +14,9 @@
     <link rel="stylesheet" href="../CSS/Emprendeuy.css">
     <link rel="stylesheet" href="../CSS/perfil.css">
 </head>
-<body>
+<body style="display:none">
+<!-- Verifica la sesión antes de mostrar la página (cualquier rol logueado puede ver su perfil) -->
+<script src="../JS/auth-guard.js" data-roles="cliente,emprendedor,administrador,usuario"></script>
 
 <!-- Misma cabecera que el resto del sitio -->
 <header>
@@ -102,6 +104,7 @@
                             <option value="">Seleccioná...</option>
                             <option value="femenino">Femenino</option>
                             <option value="masculino">Masculino</option>
+                            <option value="otro">Otro</option>
                         </select>
                     </div>
 
@@ -248,5 +251,8 @@
     </div>
 </main>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="../JS/validaciones.js"></script>
+<script src="../JS/perfil.js"></script>
 </body>
 </html>
