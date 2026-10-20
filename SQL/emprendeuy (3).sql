@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 19/10/2026 às 15:36
+-- Tempo de geração: 21/10/2026 às 00:30
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -262,7 +262,9 @@ INSERT INTO `intento_login` (`idIntento`, `Cedula`, `IP`, `Exitoso`, `FechaInten
 (40, 23456789, '::1', 1, '2026-10-13 19:43:09'),
 (41, 12345678, '::1', 0, '2026-10-13 19:44:17'),
 (42, 12345678, '::1', 0, '2026-10-13 19:44:25'),
-(43, 23456789, '::1', 1, '2026-10-13 19:44:42');
+(43, 23456789, '::1', 1, '2026-10-13 19:44:42'),
+(44, 57252305, '::1', 1, '2026-10-19 12:47:56'),
+(45, 57252305, '::1', 1, '2026-10-20 19:17:16');
 
 -- --------------------------------------------------------
 
@@ -310,7 +312,23 @@ INSERT INTO `log_acceso_admin` (`idLog`, `Cedula`, `Recurso`, `Resultado`, `IP`,
 (25, 57252305, '/EmprendeUY/PHP/crear_publicaciones.php', 'permitido', '::1', '2026-10-19 10:26:27'),
 (26, 57252305, '/EmprendeUY/PHP/cambiar_estado.php', 'permitido', '::1', '2026-10-19 10:26:37'),
 (27, 57252305, '/EmprendeUY/PHP/crear_publicaciones.php', 'permitido', '::1', '2026-10-19 10:32:56'),
-(28, 57252305, '/EmprendeUY/PHP/cambiar_estado.php', 'permitido', '::1', '2026-10-19 10:33:00');
+(28, 57252305, '/EmprendeUY/PHP/cambiar_estado.php', 'permitido', '::1', '2026-10-19 10:33:00'),
+(29, 57252305, '/EmprendeUY/PHP/crear_publicaciones.php', 'permitido', '::1', '2026-10-19 12:48:19'),
+(30, 57252305, '/EmprendeUY/PHP/crear_publicaciones.php', 'permitido', '::1', '2026-10-19 12:51:34'),
+(31, 57252305, '/EmprendeUY/PHP/cambiar_estado.php', 'permitido', '::1', '2026-10-19 12:51:40'),
+(32, 57252305, '/EmprendeUY/PHP/cambiar_estado.php', 'permitido', '::1', '2026-10-20 19:17:19'),
+(33, 57252305, '/EmprendeUY/PHP/cambiar_estado.php', 'permitido', '::1', '2026-10-20 19:17:22'),
+(34, 57252305, '/EmprendeUY/PHP/cambiar_estado.php', 'permitido', '::1', '2026-10-20 19:17:25'),
+(35, 57252305, '/EmprendeUY/PHP/cambiar_estado.php', 'permitido', '::1', '2026-10-20 19:17:29'),
+(36, 57252305, '/EmprendeUY/PHP/cambiar_estado.php', 'permitido', '::1', '2026-10-20 19:17:33'),
+(37, 57252305, '/EmprendeUY/PHP/crear_publicaciones.php', 'permitido', '::1', '2026-10-20 19:18:08'),
+(38, 57252305, '/EmprendeUY/PHP/crear_publicaciones.php', 'permitido', '::1', '2026-10-20 19:18:46'),
+(39, 57252305, '/EmprendeUY/PHP/crear_publicaciones.php', 'permitido', '::1', '2026-10-20 19:20:23'),
+(40, 57252305, '/EmprendeUY/PHP/cambiar_estado.php', 'permitido', '::1', '2026-10-20 19:20:28'),
+(41, 57252305, '/EmprendeUY/PHP/cambiar_estado.php', 'permitido', '::1', '2026-10-20 19:20:28'),
+(42, 57252305, '/EmprendeUY/PHP/cambiar_estado.php', 'permitido', '::1', '2026-10-20 19:20:30'),
+(43, 57252305, '/EmprendeUY/PHP/crear_publicaciones.php', 'permitido', '::1', '2026-10-20 19:21:08'),
+(44, 57252305, '/EmprendeUY/PHP/cambiar_estado.php', 'permitido', '::1', '2026-10-20 19:21:12');
 
 -- --------------------------------------------------------
 
@@ -342,7 +360,7 @@ CREATE TABLE `publicaciones` (
   `precio` decimal(20,0) NOT NULL,
   `fecha_publicacion` datetime NOT NULL DEFAULT current_timestamp(),
   `foto` varchar(255) DEFAULT NULL,
-  `categoria` enum('Ropa','Hogar','Tecnologia','Carpinteria','Herreria','Higiene','Deportes') NOT NULL
+  `categoria` enum('Indumentaria','Hogar','Tecnologia','Carpinteria','Herreria','Higiene','Deportes','Higiene para el hogar','Higiene personal','Alimentos','Botánica') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -350,18 +368,24 @@ CREATE TABLE `publicaciones` (
 --
 
 INSERT INTO `publicaciones` (`id`, `Id_emprendimiento`, `status`, `titulo`, `descripcion`, `precio`, `fecha_publicacion`, `foto`, `categoria`) VALUES
-(17, 3, 'Pausada', '1', '1', 1, '2026-08-26 00:37:01', '17.png', 'Ropa'),
+(17, 3, 'Pausada', '1', '1', 1, '2026-08-26 00:37:01', '17.png', ''),
 (18, 3, 'Activa', '1', '1', 1, '2026-08-29 18:30:04', '18.jpg', 'Tecnologia'),
 (19, 3, 'Activa', 'asd', '1', 1, '2026-08-29 18:30:26', '19.jpg', 'Tecnologia'),
 (20, 3, 'Activa', 'asd', '1', 1, '2026-08-29 18:30:27', '20.jpg', 'Tecnologia'),
 (21, 3, 'Pausada', 'asd', 'asd', 21, '2026-08-29 18:31:13', '21.jpg', 'Tecnologia'),
 (22, 3, 'Activa', 'prueba2', '1', 111, '2026-09-03 08:13:00', '22.png', ''),
 (23, 3, 'Pausada', 'we', 'we', 32, '2026-09-03 08:39:22', '23.png', 'Hogar'),
-(24, 7, 'Activa', 'Outfit completo', 'Top: M en blanco  Pollera short: S-M en marron y negro  Botas: 39-41 en marron,negro y blanco   Bolso: Marron, rojo y negro', 1300, '2026-10-19 10:15:20', '24.jpg', ''),
-(25, 7, 'Activa', 'Falda en V', 'Pollera short: S-M-L en gris,negro,blanco y rojo', 450, '2026-10-19 10:16:06', '25.jpg', ''),
+(24, 7, 'Pausada', 'Outfit completo', 'Top: M en blanco  Pollera short: S-M en marron y negro  Botas: 39-41 en marron,negro y blanco   Bolso: Marron, rojo y negro', 1300, '2026-10-19 10:15:20', '24.jpg', ''),
+(25, 7, 'Pausada', 'Falda en V', 'Pollera short: S-M-L en gris,negro,blanco y rojo', 450, '2026-10-19 10:16:06', '25.jpg', ''),
 (26, 7, 'Pausada', 'Outfit tipo noche de invierno', 'Talle unico y en colores blanco,negro y marron, las medias vienen tipo piel, de color negro y beige', 1400, '2026-10-19 10:22:20', '26.jpg', ''),
-(27, 7, 'Activa', 'Outfit Noche de Invierno', 'Talle unico y en colores blanco,negro y marron, las medias vienen tipo piel, de color negro y beige, botas: del 37 al 41', 1400, '2026-10-19 10:26:27', '27.jpg', ''),
-(28, 7, 'Activa', 'Outfit Elegante', 'Talle unico dos piezas, botas del 37 al 41, medias polares de color beige, negro y marron claro', 1340, '2026-10-19 10:32:56', '28.jpg', '');
+(27, 7, 'Pausada', 'Outfit Noche de Invierno', 'Talle unico y en colores blanco,negro y marron, las medias vienen tipo piel, de color negro y beige, botas: del 37 al 41', 1400, '2026-10-19 10:26:27', '27.jpg', ''),
+(28, 7, 'Pausada', 'Outfit Elegante', 'Talle unico dos piezas, botas del 37 al 41, medias polares de color beige, negro y marron claro', 1340, '2026-10-19 10:32:56', '28.jpg', ''),
+(29, 7, 'Pausada', 'gh', 'fg', 888, '2026-10-19 12:48:19', '29.jpg', ''),
+(30, 7, 'Pausada', 'dgh', 'fghj', 4567, '2026-10-19 12:51:34', '30.jpg', 'Indumentaria'),
+(31, 7, 'Activa', 'Outfit completo', 'Top: M en blanco Pollera short: S-M en marron y negro Botas: 39-41 en marron,negro y blanco Bolso: Marron, rojo y negro', 1300, '2026-10-20 19:18:08', '31.jpg', 'Indumentaria'),
+(32, 7, 'Activa', 'Falda en V', 'Pollera short: S-M-L en gris,negro,blanco y rojo', 400, '2026-10-20 19:18:46', '32.jpg', 'Indumentaria'),
+(33, 7, 'Activa', 'Outfit Elegante', 'Talle unico dos piezas, botas del 37 al 41, medias polares de color beige, negro y marron claro', 1350, '2026-10-20 19:20:23', '33.jpg', 'Indumentaria'),
+(34, 7, 'Activa', 'Outfit Noche de Invierno', 'Talle unico y en colores blanco,negro y marron, las medias vienen tipo piel, de color negro y beige, botas: del 37 al 41', 1400, '2026-10-20 19:21:08', '34.jpg', 'Indumentaria');
 
 -- --------------------------------------------------------
 
@@ -535,13 +559,13 @@ ALTER TABLE `emprendimiento`
 -- AUTO_INCREMENT de tabela `intento_login`
 --
 ALTER TABLE `intento_login`
-  MODIFY `idIntento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `idIntento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT de tabela `log_acceso_admin`
 --
 ALTER TABLE `log_acceso_admin`
-  MODIFY `idLog` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `idLog` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT de tabela `producto`
@@ -553,7 +577,7 @@ ALTER TABLE `producto`
 -- AUTO_INCREMENT de tabela `publicaciones`
 --
 ALTER TABLE `publicaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- Restrições para tabelas despejadas
