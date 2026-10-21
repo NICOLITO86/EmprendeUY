@@ -429,7 +429,7 @@ INSERT INTO `usuario` (`Cedula`, `Nombre`, `Apellido`, `Fecha_Nacimiento`, `Edad
 (23456789, 'asd1', 'asd1', '1997-06-05', 29, 'nicocalixto26@gmail.com', 1, '$2y$10$8nPxTymN5bHBo2HQwuQJN.oUMFY/ibd64tpOENyUUz1PPTIsIy3qi', '123456789', NULL, NULL, '', '', '', '', 'Femenino', 'cliente', 1),
 (57252305, 'Lucia', 'Camerota', '2008-04-24', 18, 'cl528991@gmail.com', 1, '$2y$10$0sWzmB9vsVfUqgrvauVkY.5BDk6aQy7MOl5mrXI3aTjtxS3uvoWju', '094172302', NULL, NULL, '', '', '', '', 'Femenino', 'emprendedor', 1),
 (57683215, 'nicolas', 'calixto', '2026-06-19', 0, 'nicolito3215@gmail.com', 1, '$2y$10$7B/yrGYGEYmGOW/ABrClbuiqXMhPOh.KxFwBCTRhbJCUNIt7SoqNC', '094197336', NULL, NULL, '', '', '', '', 'Masculino', 'administrador', 1),
-(87654321, 'Emprendedor', 'a', '1995-06-07', 31, 'emprendeuy2026@gmail.com', 1, '$2y$10$yK9VNo.cUAH2Oc0U7bgPj.lYey8LlB/4rz4cauRaaMeZtvO/Nzrr6', '123456778', NULL, NULL, '', '', '', '', 'Femenino', 'emprendedor', 1);
+(87654321, 'Emprendedor', 'a', '1995-06-07', 31, 'emprendeuy2026@gmail.com', 1, '$2y$10$yK9VNo.cUAH2Oc0U7bgPj.lYey8LlB/4rz4cauRaaMeZtvO/Nzrr6', '123456778', NULL, '87654321_1792463716.png', '', '', '', '', 'Femenino', 'emprendedor', 1);
 
 --
 -- Índices para tabelas despejadas
