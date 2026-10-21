@@ -166,8 +166,19 @@ from_buscar.addEventListener("submit", (e) => {
         if (datos.Nombre) {
 
             div_buscar.innerHTML = `
-                <h3>${escapeHtml(datos.Nombre)} ${escapeHtml(datos.Apellido)}</h3>
-                <p>Cedula: ${datos.Cedula}</p>
+ <p><strong>Cedula:</strong> ${escapeHtml(datos.Cedula)}</p>
+                    <p><strong>Nombre:</strong> ${escapeHtml(datos.Nombre)}</p>
+                    <p><strong>Apellido:</strong> ${escapeHtml(datos.Apellido)}</p>
+                    <p><strong>Fecha de nacimiento:</strong> ${datos.Fecha_Nacimiento}</p>
+                    <p><strong>Edad:</strong> ${datos.Edad}</p>
+                    <p><strong>Gmail:</strong> ${datos.Gmail}</p>
+                    <p><strong>Telefono:</strong> ${datos.Num_Telefono}</p>
+                    <p><strong>Domicilio:</strong> ${escapeHtml(datos.Domicilio)}</p>
+                    <p><strong>Calle:</strong> ${escapeHtml(datos.Calle)}</p>
+                    <p><strong>Manzana:</strong> ${datos.Manzana}</p>
+                    <p><strong>Solar:</strong> ${datos.Solar}</p>
+                    <p><strong>Genero:</strong> ${datos.Genero}</p>
+                    <p><strong>Rol:</strong> ${datos.Rol}</p>
             `;
 
         } else {
