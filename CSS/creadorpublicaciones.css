@@ -1,183 +1,268 @@
+/* ==========================================================
+   Crear publicación — se apoya en Emprendeuy.css
+   ORDEN EN EL HTML (importante):
+     <link rel="stylesheet" href="../CSS/Emprendeuy.css">
+     <link rel="stylesheet" href="../CSS/creadorpublicaciones.css">
 
+   Usa las variables globales: --azul, --celeste, --suave, --fondo-alt,
+   --tinta, --gris, --degradado, --alto-header.
+   Acá NO se vuelven a definir (así no se pisan entre archivos);
+   solo se agregan variables nuevas que no existen en el global.
+   La fuente (Poppins), el reset (* { margin:0; padding:0 }) y el
+   box-sizing vienen de Emprendeuy.css.
+   ========================================================== */
 :root {
-    --blanco: #ffffff;
-    --crema-carta: #c5cfeec4;
-    --tinta: #17245c;
-    --tinta-negra: #000000;
-    --linea: #17245c;
-
-    --celeste-pastel: #6381e6c4;
-    --azul-oscuro: #17245c;
-    --rojo: #78d5e6;
-    
-    
-
-    --fuente-titulo: "Fraunces", Georgia, serif;
-    --fuente-cuerpo: "Inter", system-ui, sans-serif;
+    --linea: rgba(15, 28, 51, .14);
+    --radio: 22px;
+    --sombra-carta: 0 6px 20px rgba(27, 37, 175, .08);
+    --rojo: #b23a3a;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+/* Fondo suave para que la tarjeta del formulario resalte */
+body:has(.creadorpublicaciones) { background: var(--fondo-alt); }
 
-body {
-    background: var(--blanco);
-    color: var(--tinta);
-    font-family: var(--fuente-cuerpo);
-    -webkit-font-smoothing: antialiased;
-}
-
+/* ---------- Cabecera de la página ---------- */
+/* Misma apariencia que la cabecera global, pero sticky y de alto libre
+   (la global es fixed con alto fijo y se rompía con este contenido) */
 .header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    height: auto;
+    min-height: var(--alto-header);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
     flex-wrap: wrap;
-    padding: 18px 32px;
-    background: var(--crema-carta);
-    border-bottom: 1px solid var(--linea);
+    gap: 12px 20px;
+    padding: 10px clamp(16px, 4vw, 48px);
+    background: rgba(255, 255, 255, .88);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(15, 28, 51, .08);
 }
 
 .header h1 {
-    font-family: var(--fuente-titulo);
-    font-size: 1.5rem;
+    font-size: clamp(1.15rem, 2.4vw, 1.5rem);
     font-weight: 700;
-    margin: 0;
+    line-height: 1.2;
+    color: var(--azul);
 }
 
 .header-acciones {
     display: flex;
     align-items: center;
-    gap: 16px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Mismos botones que .a1 y .a2 de la portada */
+.btn-nueva,
+.btn-salir {
+    display: inline-block;
+    padding: 10px 24px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: .3px;
+    transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
 }
 
 .btn-nueva {
-    display: inline-flex;
-    align-items: center;
-    padding: 10px 20px;
-    border-radius: 999px;
-    background: var(--celeste-pastel);
-    
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem;
-}
-
-.btn-nueva:hover {
-    background: var(--azul-oscuro);
+    background: var(--degradado);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(27, 37, 175, .3);
 }
 
 .btn-salir {
-    text-decoration: none;
-    color: var(--tinta-negra);
-    font-size: 0.88rem;
-    font-weight: 600;
+    background: #fff;
+    color: var(--azul);
+    border: 2px solid rgba(27, 37, 175, .45);
 }
 
-/*FORMULARIO */
+.btn-nueva:hover,
+.btn-salir:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(27, 37, 175, .3);
+}
+
+.btn-nueva:hover { background: linear-gradient(135deg, var(--azul), var(--celeste)); }
+
+/* ---------- Formulario ---------- */
 .contenedor-centrado {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: calc(100vh - 70px);
-    padding: 20px;
+    min-height: calc(100vh - var(--alto-header));
+    padding: 32px 20px 56px;
 }
 
 .creadorpublicaciones {
     display: flex;
     align-items: center;
     flex-direction: column;
-    
-    width: 420px;
+    width: 460px;
     max-width: 100%;
-    padding: 32px;
+    padding: 36px 32px;
+    background: #fff;
     border: 1px solid var(--linea);
     border-radius: var(--radio);
-    
+    box-shadow: var(--sombra-carta);
 }
 
 .creadorpublicaciones h1 {
-    font-family: var(--fuente-titulo);
+    margin-bottom: 20px;
     font-size: 1.6rem;
     font-weight: 700;
-    color: var(--tinta);
     text-align: center;
-    margin-bottom: 20px;
+    color: var(--azul);
 }
 
 .creadorpublicaciones label {
     display: block;
     width: 100%;
-    margin-top: 12px;
-    margin-bottom: 5px;
-    font-family: var(--fuente-cuerpo);
+    margin-top: 14px;
+    margin-bottom: 6px;
     font-weight: 600;
-    font-size: 0.88rem;
-    color: var(--tinta-negra);
+    font-size: .88rem;
+    color: var(--tinta);
 }
 
 .creadorpublicaciones input,
 .creadorpublicaciones textarea,
 .creadorpublicaciones select {
     width: 100%;
-    padding: 10px 12px;
+    padding: 11px 14px;
     border: 1px solid var(--linea);
-    border-radius: 8px;
-    font-family: var(--fuente-cuerpo);
-    font-size: 0.9rem;
-    background: var(--blanco);
+    border-radius: 10px;
+    font: inherit;
+    font-size: .92rem;
     color: var(--tinta);
+    background: #fff;
+    transition: border-color .2s, box-shadow .2s;
+}
+
+.creadorpublicaciones textarea {
+    resize: vertical;
+    min-height: 96px;
 }
 
 .creadorpublicaciones input:focus,
 .creadorpublicaciones textarea:focus,
 .creadorpublicaciones select:focus {
     outline: none;
-    border-color: var(--celeste-pastel);
+    border-color: var(--celeste);
+    box-shadow: 0 0 0 3px rgba(31, 142, 185, .2);
 }
 
-.creadorpublicaciones button {
-    width: 100%;
-    margin-top: 22px;
-    padding: 12px 20px;
+/* Botón "Elegir archivo" del input de la foto */
+.creadorpublicaciones input[type="file"] {
+    padding: 8px 10px;
+    color: var(--gris);
+}
+
+.creadorpublicaciones input[type="file"]::file-selector-button {
+    margin-right: 12px;
+    padding: 6px 16px;
     border: none;
     border-radius: 999px;
-    background: var(--celeste-pastel);
-    
-    font-family: var(--fuente-cuerpo);
+    background: var(--suave);
+    color: var(--azul);
+    font: inherit;
+    font-size: .85rem;
     font-weight: 600;
-    font-size: 0.95rem;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: background .2s, color .2s;
+}
+
+.creadorpublicaciones input[type="file"]::file-selector-button:hover {
+    background: var(--azul);
+    color: #fff;
+}
+
+/* Botón principal (publicar) */
+.creadorpublicaciones button {
+    width: 100%;
+    margin-top: 24px;
+    padding: 13px 20px;
+    border: none;
+    border-radius: 999px;
+    background: var(--degradado);
+    color: #fff;
+    font: inherit;
+    font-weight: 600;
+    font-size: .95rem;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(27, 37, 175, .3);
+    transition: transform .2s, box-shadow .2s, background .2s;
 }
 
 .creadorpublicaciones button:hover {
-    background: var(--azul-oscuro);
+    background: linear-gradient(135deg, var(--azul), var(--celeste));
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(27, 37, 175, .3);
 }
 
+.creadorpublicaciones button:disabled {
+    opacity: .6;
+    cursor: wait;
+    transform: none;
+}
+
+/* Botón secundario (enlace, por ejemplo "Ver mis publicaciones") */
 .boton-link {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 6px;
     width: 100%;
-    margin-top: 20px;
-    padding: 10px 20px;
+    margin-top: 16px;
+    padding: 12px 20px;
     border-radius: 999px;
-    background: var(--celeste-pastel);
-    color: var(--crema-carta);
-    text-decoration: none;
-    font-family: var(--fuente-cuerpo);
+    background: var(--suave);
+    color: var(--azul);
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: .92rem;
+    transition: background .2s, color .2s;
 }
 
 .boton-link:hover {
-    background: var(--azul-oscuro);
+    background: var(--azul);
+    color: #fff;
 }
 
+/* ---------- Foco visible (teclado) ---------- */
+.btn-nueva:focus-visible,
+.btn-salir:focus-visible,
+.boton-link:focus-visible,
+.creadorpublicaciones button:focus-visible {
+    outline: 2px solid rgba(31, 142, 185, .6);
+    outline-offset: 3px;
+}
+
+/* ==========================================================
+   ADAPTACIÓN A PANTALLAS
+   Mismos puntos de corte que Emprendeuy.css:
+   1024 / 860 / 600 / 483
+   ========================================================== */
 @media (max-width: 600px) {
-    .header { padding: 14px 18px; }
+    .contenedor-centrado { padding: 24px 16px 40px; align-items: flex-start; }
+    .creadorpublicaciones { padding: 28px 20px; }
+    .creadorpublicaciones h1 { font-size: 1.4rem; }
+}
+
+@media (max-width: 483px) {
+    .btn-nueva, .btn-salir { padding: 8px 13px; font-size: 12.5px; }
+}
+
+/* Celular en horizontal (poca altura): sin forzar el alto de pantalla */
+@media (max-height: 520px) and (orientation: landscape) {
+    .contenedor-centrado { min-height: auto; align-items: flex-start; }
+}
+
+/* Pantallas táctiles: sin efectos al pasar el dedo */
+@media (hover: none) {
+    .btn-nueva:hover,
+    .btn-salir:hover,
+    .creadorpublicaciones button:hover { transform: none; }
 }

@@ -120,7 +120,7 @@ from_buscar2.addEventListener("submit", (e) => {
                     <p><strong>Apellido:</strong> ${escapeHtml(a.Apellido)}</p>
                     <p><strong>Fecha de nacimiento:</strong> ${a.Fecha_Nacimiento}</p>
                     <p><strong>Edad:</strong> ${a.Edad}</p>
-                    <p><strong>Gmail:</strong> ${a.Gmail}</p>
+                    <p><strong>Gmail:</strong> ${a.Correo}</p>
                     <p><strong>Telefono:</strong> ${a.Num_Telefono}</p>
                     <p><strong>Domicilio:</strong> ${escapeHtml(a.Domicilio)}</p>
                     <p><strong>Calle:</strong> ${escapeHtml(a.Calle)}</p>
@@ -171,7 +171,7 @@ from_buscar.addEventListener("submit", (e) => {
                     <p><strong>Apellido:</strong> ${escapeHtml(datos.Apellido)}</p>
                     <p><strong>Fecha de nacimiento:</strong> ${datos.Fecha_Nacimiento}</p>
                     <p><strong>Edad:</strong> ${datos.Edad}</p>
-                    <p><strong>Gmail:</strong> ${datos.Gmail}</p>
+                    <p><strong>Gmail:</strong> ${datos.Correo}</p>
                     <p><strong>Telefono:</strong> ${datos.Num_Telefono}</p>
                     <p><strong>Domicilio:</strong> ${escapeHtml(datos.Domicilio)}</p>
                     <p><strong>Calle:</strong> ${escapeHtml(datos.Calle)}</p>

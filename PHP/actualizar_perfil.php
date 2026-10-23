@@ -9,6 +9,7 @@ require_once __DIR__ . '/mailer.php';
 require_once __DIR__ . '/helpers_sesion.php';
 
 header('Content-Type: application/json; charset=utf-8');
+include "conexionBD.php";
 
 requireRole(['cliente', 'emprendedor', 'administrador', 'usuario'], false);
 csrf_validar();
