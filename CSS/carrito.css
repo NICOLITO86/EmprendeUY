@@ -1,213 +1,309 @@
+/* ==========================================================
+   Carrito — se apoya en Emprendeuy.css
+   ORDEN EN EL HTML (importante):
+     <link rel="stylesheet" href="../CSS/Emprendeuy.css">
+     <link rel="stylesheet" href="../CSS/carrito.css">
+
+   Usa las variables globales: --azul, --celeste, --suave, --fondo-alt,
+   --tinta, --gris, --degradado, --alto-header.
+   Acá NO se vuelven a definir (así no se pisan entre archivos);
+   solo se agregan variables nuevas que no existen en el global.
+   La fuente (Poppins), el reset y el body vienen de Emprendeuy.css.
+   ========================================================== */
 :root {
-    --blanco: #ffffff;
-    --crema-carta: #c5cfeec4;
-    --tinta: #17245c;
-    --tinta-negra: #000000;
-    --linea: #17245c;
- 
-    --celeste-pastel: #6381e6c4;
-    --azul-oscuro: #17245c;
-    --rojo: #78d5e6;
-    
-    
- 
-    --fuente-titulo: "Fraunces", Georgia, serif;
-    --fuente-cuerpo: "Inter", system-ui, sans-serif;
+    --linea: rgba(15, 28, 51, .14);
+    --radio: 22px;
+    --sombra-carta: 0 6px 20px rgba(27, 37, 175, .08);
+    --rojo: #b23a3a;
+
+    /* Espacio que ocupan la cabecera y el resumen de abajo; se usa
+       para calcular el alto máximo de la lista de productos */
+    --reserva-carrito: 230px;
 }
- 
-body {
-    margin: 0;
-    background: var(--blanco);
-    color: var(--tinta);
-    font-family: var(--fuente-cuerpo);
-    -webkit-font-smoothing: antialiased;
-}
- 
+
+/* Fondo suave para que las tarjetas blancas resalten */
+body:has(#productos-carrito) { background: var(--fondo-alt); }
+
+/* ---------- Cabecera de la página ---------- */
+/* Misma apariencia que la cabecera global, pero sticky y de alto libre
+   (la global es fixed con alto fijo y se rompía con este contenido) */
 .header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    height: auto;
+    min-height: var(--alto-header);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 10px 32px;
+    flex-wrap: wrap;
+    gap: 12px 20px;
     margin-bottom: 24px;
-    background: var(--crema-carta);
-    border-bottom: 1px solid var(--linea);
+    padding: 10px clamp(16px, 4vw, 48px);
+    background: rgba(255, 255, 255, .88);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(15, 28, 51, .08);
 }
- 
+
 .header h1 {
-    font-family: var(--fuente-titulo);
-    font-size: 1.5rem;
-    margin: 0;
-    letter-spacing: -0.01em;
+    font-size: clamp(1.15rem, 2.4vw, 1.5rem);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--azul);
 }
- 
+
 .header-acciones {
     display: flex;
     align-items: center;
-    gap: 12px;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
-a{
-    display: inline-flex;
-    align-items: center;
-    padding: 10px 20px;
-    border-radius: 999px;
-    background: var(--tinta);
-    color: var(--crema-carta);
-    text-decoration: none;
+/* Antes la regla era "a { ... }" y convertía TODOS los enlaces de la
+   página en botones; ahora solo afecta a los de la cabecera.
+   Mismo estilo que .a1 de la portada. */
+.header-acciones a {
+    display: inline-block;
+    padding: 10px 24px;
+    border-radius: 30px;
+    background: var(--degradado);
+    color: #fff;
     font-weight: 600;
-    font-size: 0.92rem;
-    transition: background 0.15s ease, transform 0.15s ease;
+    font-size: 14px;
+    letter-spacing: .3px;
+    box-shadow: 0 4px 14px rgba(27, 37, 175, .3);
+    transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
 }
- 
- 
- 
+
+.header-acciones a:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, var(--azul), var(--celeste));
+    box-shadow: 0 8px 20px rgba(27, 37, 175, .3);
+}
+
+.header-acciones a:focus-visible {
+    outline: 2px solid rgba(31, 142, 185, .6);
+    outline-offset: 3px;
+}
+
+/* ---------- Lista de productos (con tope de altura) ---------- */
+/* La lista nunca crece más que la pantalla: cuando hay muchas
+   publicaciones aparece un scroll DENTRO de la lista, así el
+   resumen y la cabecera quedan siempre visibles y nada se tapa. */
 #productos-carrito {
     display: grid;
     grid-template-columns: 1fr;
-    max-width: 760px;
+    grid-auto-rows: max-content;   /* las filas no se aplastan */
+    align-content: start;
     gap: 14px;
+    max-width: 760px;
     margin: 0 auto;
+    padding: 6px 8px;              /* aire para que no se corte la sombra */
+
+    max-height: 70vh;              /* respaldo para navegadores viejos */
+    max-height: max(280px, calc(100dvh - var(--alto-header) - var(--reserva-carrito)));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(27, 37, 175, .35) transparent;
 }
- 
+
+#productos-carrito::-webkit-scrollbar { width: 8px; }
+#productos-carrito::-webkit-scrollbar-thumb {
+    background: rgba(27, 37, 175, .3);
+    border-radius: 999px;
+}
+
 .carrito-item {
     display: grid;
     grid-template-columns: 96px 1fr auto auto;
     align-items: center;
     gap: 16px;
-    background: var(--crema-carta);
-    border: 1px solid var(--linea);
-    border-radius: var(--radio);
-    box-shadow: var(--sombra-carta);
     padding: 12px 16px;
+    background: #fff;
+    border: 1px solid var(--linea);
+    border-radius: 18px;
+    box-shadow: var(--sombra-carta);
 }
- 
+
 .carrito-item img {
     width: 96px;
     height: 96px;
-    border-radius: 10px;
+    border-radius: 14px;
     object-fit: cover;
-    background: var(--linea);
+    background: var(--suave);
 }
- 
+
+.carrito-info { min-width: 0; }   /* deja que el texto largo se corte en vez de empujar la fila */
+
 .carrito-info h3 {
-    font-family: var(--fuente-titulo);
+    margin-bottom: 4px;
     font-size: 1.05rem;
     font-weight: 600;
-    margin: 0 0 4px;
+    color: var(--tinta);
+    overflow-wrap: anywhere;
 }
- 
+
 .carrito-info .carrito-categoria {
-    margin: 0 0 4px;
-    color: var(--salvia);
-    font-size: 0.72rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+    color: var(--celeste);
+    font-size: .78rem;
+    font-weight: 600;
 }
- 
+
 .carrito-info .carrito-descripcion {
-    margin: 0;
-    color: var(--salvia);
-    font-size: 0.85rem;
-    line-height: 1.3;
+    color: var(--gris);
+    font-size: .85rem;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;         /* descripciones largas: máximo 2 líneas */
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
- 
+
 .carrito-precio {
-    font-family: var(--fuente-titulo);
-    color: var(--terracota-oscuro);
+    color: var(--azul);
     font-size: 1.1rem;
     font-weight: 700;
     white-space: nowrap;
 }
- 
+
 .carrito-eliminar {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
     border: 1px solid var(--linea);
     border-radius: 50%;
     background: transparent;
-    color: var(--terracota-oscuro);
+    color: var(--rojo);
+    font: inherit;
     font-size: 1rem;
     line-height: 1;
     cursor: pointer;
-    transition: background 0.15s ease, color 0.15s ease;
+    transition: background .2s, color .2s, border-color .2s;
 }
- 
+
 .carrito-eliminar:hover {
-    background: var(--terracota-oscuro);
+    background: var(--rojo);
+    border-color: var(--rojo);
     color: #fff;
 }
- 
+
+.carrito-eliminar:focus-visible,
+.btn-vaciar:focus-visible {
+    outline: 2px solid rgba(31, 142, 185, .6);
+    outline-offset: 3px;
+}
+
+/* ---------- Carrito vacío ---------- */
 .carrito-vacio {
     max-width: 760px;
     margin: 24px auto;
+    padding: 0 20px;
     text-align: center;
-    color: var(--salvia);
+    color: var(--gris);
 }
- 
+
+/* ---------- Resumen (siempre visible abajo) ---------- */
 .carrito-resumen {
+    position: sticky;
+    bottom: 12px;
+    z-index: 10;
     max-width: 760px;
-    margin: 24px auto 0;
+    margin: 20px auto 24px;
+    padding: 16px 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 16px;
-    padding: 16px;
-    border-top: 1px solid var(--linea);
-}
- 
-.btn-vaciar {
+    background: #fff;
     border: 1px solid var(--linea);
-    color: var(--terracota-oscuro);
-    padding: 8px 16px;
     border-radius: var(--radio);
+    box-shadow: var(--sombra-carta);
+}
+
+.btn-vaciar {
+    padding: 9px 20px;
+    border: 2px solid rgba(178, 58, 58, .5);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--rojo);
+    font: inherit;
+    font-size: .9rem;
+    font-weight: 600;
     cursor: pointer;
-    font-size: 0.9rem;
-    transition: background 0.15s ease, color 0.15s ease;
+    transition: background .2s, color .2s, border-color .2s;
 }
- 
+
 .btn-vaciar:hover {
-    background: var(--terracota-oscuro);
-    color: #070847;
+    background: var(--rojo);
+    border-color: var(--rojo);
+    color: #fff;
 }
- 
+
 .carrito-total {
-    font-family: var(--fuente-titulo);
     font-size: 1.3rem;
     font-weight: 700;
-    color: var(--terracota-oscuro);
-    margin: 0;
+    color: var(--azul);
 }
- 
-@media (width <= 560px) {
-    .header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-    }
 
+/* ==========================================================
+   ADAPTACIÓN A PANTALLAS
+   Mismos puntos de corte que Emprendeuy.css:
+   1024 / 860 / 600 / 483
+   ========================================================== */
+@media (max-width: 860px) {
+    #productos-carrito,
+    .carrito-resumen { margin-inline: 16px; }
+}
+
+@media (max-width: 600px) {
+    /* la cabecera puede ocupar más alto en celular */
+    :root { --reserva-carrito: 300px; }
+
+    #productos-carrito { margin-inline: 12px; padding: 6px 4px; }
 
     .carrito-item {
         grid-template-columns: 64px 1fr auto;
+        gap: 6px 12px;
+        padding: 12px;
     }
- 
+
     .carrito-item img {
+        grid-column: 1;
+        grid-row: 1 / span 2;
         width: 64px;
         height: 64px;
     }
- 
-    .carrito-precio {
-        grid-column: 2;
-    }
- 
+
+    .carrito-info     { grid-column: 2; grid-row: 1; }
+    .carrito-eliminar { grid-column: 3; grid-row: 1; align-self: start; }
+    .carrito-precio   { grid-column: 2 / span 2; grid-row: 2; }
+
     .carrito-resumen {
+        margin-inline: 12px;
         flex-direction: column;
         align-items: stretch;
         text-align: center;
     }
+}
+
+@media (max-width: 483px) {
+    .header-acciones a { padding: 8px 13px; font-size: 12.5px; }
+}
+
+/* Celular en horizontal (poca altura): la lista usa casi toda la pantalla */
+@media (max-height: 520px) and (orientation: landscape) {
+    :root { --reserva-carrito: 150px; }
+    .carrito-resumen { position: static; }
+}
+
+/* Pantallas táctiles: sin efectos al pasar el dedo */
+@media (hover: none) {
+    .header-acciones a:hover { transform: none; }
 }

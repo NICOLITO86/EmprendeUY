@@ -27,7 +27,7 @@ try {
     $foto = null;
     if (!empty($u['Foto_Perfil'])) {
         $archivo = basename($u['Foto_Perfil']);
-        $ruta    = __DIR__ . '/../Imagenes/perfiles/' . $archivo;
+        $ruta    = __DIR__ . '/../Imagenes/Perfiles/' . $archivo;
         if (is_file($ruta)) {
             $foto = '../Imagenes/perfiles/' . rawurlencode($archivo);
         }

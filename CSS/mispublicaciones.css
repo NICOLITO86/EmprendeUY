@@ -1,263 +1,275 @@
+/* ==========================================================
+   Mis publicaciones — se apoya en Emprendeuy.css
+   ORDEN EN EL HTML (importante):
+     <link rel="stylesheet" href="../CSS/Emprendeuy.css">
+     <link rel="stylesheet" href="../CSS/mispublicaciones.css">
+
+   Usa las variables globales: --azul, --celeste, --azul-oscuro,
+   --suave, --fondo-alt, --tinta, --gris, --degradado, --alto-header.
+   Acá NO se vuelven a definir (así no se pisan entre archivos);
+   solo se agregan variables nuevas que no existen en el global.
+   La fuente (Poppins) y el fondo del body vienen de Emprendeuy.css.
+   ========================================================== */
 :root {
-    --blanco: #ffffff;
-    --crema-carta: #c5cfeec4;
-    --tinta: #17245c;
-    --tinta-negra: #000000;
-    --linea:#17245c;
-
-    --salvia: #62795f;
-    --celeste-pastel: #6381e6c4;
-    --azul-oscuro: #17245c;
+    --linea: rgba(15, 28, 51, .14);
+    --radio: 22px;
+    --sombra-carta: 0 6px 20px rgba(27, 37, 175, .08);
+    --sombra-carta-hover: 0 16px 34px rgba(27, 37, 175, .2);
     --rojo: #b23a3a;
-
-    
-
-    --fuente-titulo: "Fraunces", Georgia, serif;
-    --fuente-cuerpo: "Inter", system-ui, sans-serif;
+    --verde: #2f7a4d;
 }
 
-body {
-    margin: 0;
-    background: var(--blanco);
-    color: var(--tinta);
-    font-family: var(--fuente-cuerpo);
-    -webkit-font-smoothing: antialiased;
-}
+/* Fondo suave de la página para que las tarjetas blancas resalten */
+body:has(#publicaciones) { background: var(--fondo-alt); }
 
+/* Cabecera de la página */
+/* Misma apariencia que la cabecera global, pero sticky y de alto libre
+   (la global es fixed con alto fijo con 
+   68px y rompía el título y los botones.) */
 .header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    height: auto;
+    min-height: var(--alto-header);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
     flex-wrap: wrap;
-    padding: 18px 32px;
-    background: var(--crema-carta);
-    border-bottom: 1px solid var(--linea);
+    gap: 12px 20px;
+    padding: 10px clamp(16px, 4vw, 48px);
+    background: rgba(255, 255, 255, .88);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(15, 28, 51, .08);
 }
 
 .header h1 {
-    font-family: var(--fuente-titulo);
-    font-size: 1.5rem;
+    font-size: clamp(1.15rem, 2.4vw, 1.5rem);
     font-weight: 700;
-    margin: 0;
+    line-height: 1.2;
+    color: var(--azul);
 }
 
 .header-acciones {
     display: flex;
     align-items: center;
-    gap: 16px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Mismos botones que .a1 y .a2 de la portada */
+.btn-nueva,
+.btn-salir {
+    display: inline-block;
+    padding: 10px 24px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: .3px;
+    transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
 }
 
 .btn-nueva {
-    display: inline-flex;
-    align-items: center;
-    padding: 10px 20px;
-    border-radius: 999px;
-    background: var(--celeste-pastel);
-    color: var(--crema-carta);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem;
-}
-
-.btn-nueva:hover {
-    background: var(--azul-oscuro);
+    background: var(--degradado);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(27, 37, 175, .3);
 }
 
 .btn-salir {
-    text-decoration: none;
-    color: var(--tinta-negra);
-    font-size: 0.88rem;
-    font-weight: 600;
+    background: #fff;
+    color: var(--azul);
+    border: 2px solid rgba(27, 37, 175, .45);
 }
 
+.btn-nueva:hover,
+.btn-salir:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(27, 37, 175, .3);
+}
+
+.btn-nueva:hover { background: linear-gradient(135deg, var(--azul), var(--celeste)); }
+
+/* ---------- Grilla de publicaciones ---------- */
 #publicaciones {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 24px;
     max-width: 1180px;
     margin: 40px auto 80px;
-    padding: 0 32px;
+    padding: 0 clamp(16px, 4vw, 32px);
 }
 
 .publicacion {
     display: flex;
     flex-direction: column;
-    background: var(--crema-carta);
+    background: #fff;
     border: 1px solid var(--linea);
     border-radius: var(--radio);
     overflow: hidden;
     box-shadow: var(--sombra-carta);
+    transition: transform .2s, box-shadow .2s;
+}
+
+.publicacion:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--sombra-carta-hover);
 }
 
 .publicacion img {
     width: 100%;
-    height: 350px;
-    
+    height: 320px;
     object-fit: contain;
-    background: var(--blanco);
+    background: #fff;
+    border-bottom: 1px solid var(--linea);
 }
 
 .publicacion h3 {
-    margin: 14px 18px 0;
-    font-family: var(--fuente-titulo);
-    font-size: 1.05rem;
+    margin: 16px 20px 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--tinta);
 }
 
 .publicacion p {
-    margin: 6px 18px 0;
-    font-size: 0.88rem;
-    color: var(--tinta-negra);
+    margin: 6px 20px 0;
+    font-size: .92rem;
+    color: var(--gris);
 }
 
+/* ---------- Estados ---------- */
 .estado {
     display: inline-block;
-    margin: 12px 18px 0;
-    padding: 4px 12px;
-    border-radius: 999px;
-    font-size: 0.72rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
     width: fit-content;
+    margin: 14px 20px 0;
+    padding: 4px 14px;
+    border-radius: 999px;
+    font-size: .78rem;
+    font-weight: 600;
 }
 
-.estado-activa {
-    background: rgba(98, 121, 95, 0.15);
-    color: var(--salvia);
-}
-
-.estado-pausada {
-    background: rgba(46, 159, 224, 0.2);
-    color: #10033d;
-}
-
-.estado-bloqueada {
-    background: rgba(46, 159, 224, 0.2);
-    color: var(--rojo);
-}
+.estado-activa    { background: rgba(47, 122, 77, .14);  color: var(--verde); }
+.estado-pausada   { background: var(--suave);             color: var(--azul); }
+.estado-bloqueada { background: rgba(178, 58, 58, .12);   color: var(--rojo); }
 
 .selector-estado {
-    margin: 12px 18px 18px;
+    margin: 14px 20px 20px;
     padding: 8px 12px;
-    border-radius: 8px;
     border: 1px solid var(--linea);
-    font-family: var(--fuente-cuerpo);
-    font-size: 0.88rem;
-    background: var(--crema-carta);
+    border-radius: 10px;
+    font: inherit;
+    font-size: .88rem;
+    color: var(--tinta);
+    background: #fff;
 }
 
 .aviso-bloqueo {
-    margin: 12px 18px 18px;
-    font-size: 0.8rem;
-    color: var(--rojo);
+    margin: 14px 20px 20px;
+    font-size: .82rem;
     font-style: italic;
+    color: var(--rojo);
 }
 
-@media (max-width: 900px) {
-    #publicaciones { grid-template-columns: repeat(2, 1fr); }
-}
-
-@media (max-width: 600px) {
-    #publicaciones { grid-template-columns: 1fr; padding: 0 18px; }
-    .header { padding: 14px 18px; }
-}
-
-/* ---------- Edición de publicaciones ---------- */
-
-.acciones {
+/* ---------- Acciones de cada tarjeta ---------- */
+/* Se acota a .publicacion para no chocar con .acciones de la cabecera global */
+.publicacion .acciones {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     gap: 12px;
-    margin: 12px 18px 18px;
+    margin: 14px 20px 20px;
 }
 
-.acciones .selector-estado,
-.acciones .aviso-bloqueo {
+.publicacion .acciones .selector-estado,
+.publicacion .acciones .aviso-bloqueo {
     margin: 0;
 }
 
 .btn-editar {
-    padding: 8px 18px;
+    padding: 8px 20px;
     border: none;
     border-radius: 999px;
-    background: var(--celeste-pastel);
-    color: var(--blanco);
-    font-family: var(--fuente-cuerpo);
-    font-size: 0.88rem;
+    background: var(--suave);
+    color: var(--azul);
+    font: inherit;
+    font-size: .88rem;
     font-weight: 600;
     cursor: pointer;
+    transition: background .2s, color .2s;
 }
 
 .btn-editar:hover {
-    background: var(--azul-oscuro);
+    background: var(--azul);
+    color: #fff;
 }
 
+/* ---------- Diálogo de edición ---------- */
 #dialogoEditar {
+    /* Emprendeuy.css tiene "* { margin: 0 }", que deja el diálogo pegado
+       arriba a la izquierda; con auto vuelve a quedar centrado */
+    margin: auto;
     width: min(480px, 92vw);
     max-height: 90vh;
     padding: 0;
-    border: 1px solid var(--linea);
-    border-radius: 14px;
-    background: var(--blanco);
+    border: none;
+    border-radius: var(--radio);
+    background: #fff;
     color: var(--tinta);
-    font-family: var(--fuente-cuerpo);
+    box-shadow: 0 24px 48px rgba(27, 37, 175, .25);
 }
 
 #dialogoEditar::backdrop {
-    background: rgba(23, 36, 92, 0.45);
+    background: rgba(15, 28, 51, .5);
 }
 
 #formEditar {
     display: flex;
     flex-direction: column;
     gap: 6px;
-    padding: 24px 28px 28px;
+    padding: 26px 28px 28px;
 }
 
 #formEditar h2 {
-    margin: 0 0 8px;
-    font-family: var(--fuente-titulo);
+    margin-bottom: 8px;
     font-size: 1.3rem;
+    color: var(--azul);
 }
 
 #formEditar label {
     margin-top: 8px;
-    font-size: 0.85rem;
+    font-size: .85rem;
     font-weight: 600;
+    color: var(--tinta);
 }
 
 #formEditar input[type="text"],
 #formEditar input[type="number"],
 #formEditar select,
 #formEditar textarea {
-    padding: 9px 12px;
+    padding: 10px 14px;
     border: 1px solid var(--linea);
-    border-radius: 8px;
-    font-family: var(--fuente-cuerpo);
-    font-size: 0.92rem;
+    border-radius: 10px;
+    font: inherit;
+    font-size: .92rem;
     color: var(--tinta);
-    background: var(--blanco);
+    background: #fff;
 }
 
-#formEditar textarea {
-    resize: vertical;
-}
+#formEditar textarea { resize: vertical; }
 
 #editImagenActual {
     width: 100%;
     max-height: 160px;
     object-fit: contain;
     border: 1px solid var(--linea);
-    border-radius: 8px;
-    background: var(--blanco);
+    border-radius: 10px;
+    background: #fff;
 }
 
 .error-editar {
     min-height: 1.2em;
-    margin: 8px 0 0;
-    font-size: 0.85rem;
+    margin-top: 8px;
+    font-size: .85rem;
     color: var(--rojo);
 }
 
@@ -269,27 +281,76 @@ body {
 }
 
 .botones-dialogo button {
-    padding: 10px 22px;
+    padding: 10px 24px;
     border-radius: 999px;
-    font-family: var(--fuente-cuerpo);
-    font-size: 0.9rem;
+    font: inherit;
+    font-size: .9rem;
     font-weight: 600;
     cursor: pointer;
+    transition: transform .2s, box-shadow .2s, background .2s;
 }
 
 .btn-cancelar {
-    border: 1px solid var(--linea);
-    background: var(--blanco);
-    color: var(--tinta);
+    border: 2px solid rgba(27, 37, 175, .45);
+    background: #fff;
+    color: var(--azul);
 }
 
 .btn-guardar {
     border: none;
-    background: var(--azul-oscuro);
-    color: var(--blanco);
+    background: var(--degradado);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(27, 37, 175, .3);
 }
 
+.btn-guardar:hover { background: linear-gradient(135deg, var(--azul), var(--celeste)); }
+
 .btn-guardar:disabled {
-    opacity: 0.6;
+    opacity: .6;
     cursor: wait;
+}
+
+/* ---------- Foco visible (teclado) ---------- */
+.btn-nueva:focus-visible,
+.btn-salir:focus-visible,
+.btn-editar:focus-visible,
+.botones-dialogo button:focus-visible,
+.selector-estado:focus-visible,
+#formEditar input:focus-visible,
+#formEditar select:focus-visible,
+#formEditar textarea:focus-visible {
+    outline: 2px solid rgba(31, 142, 185, .6);
+    outline-offset: 3px;
+}
+
+/* ==========================================================
+   ADAPTACIÓN A PANTALLAS
+   Mismos puntos de corte que Emprendeuy.css:
+   1024 / 860 / 600 / 483
+   ========================================================== */
+@media (max-width: 1024px) {
+    #publicaciones { margin-top: 32px; }
+}
+
+@media (max-width: 860px) {
+    #publicaciones { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+    #publicaciones { grid-template-columns: 1fr; gap: 18px; margin: 24px auto 56px; }
+    .publicacion img { height: 260px; }
+    #formEditar { padding: 22px 20px 24px; }
+    .botones-dialogo { flex-direction: column-reverse; }
+    .botones-dialogo button { width: 100%; }
+}
+
+@media (max-width: 483px) {
+    .btn-nueva, .btn-salir { padding: 8px 13px; font-size: 12.5px; }
+}
+
+/* Pantallas táctiles: sin efectos al pasar el dedo */
+@media (hover: none) {
+    .publicacion:hover,
+    .btn-nueva:hover,
+    .btn-salir:hover { transform: none; }
 }
