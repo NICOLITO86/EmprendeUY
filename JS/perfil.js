@@ -173,12 +173,34 @@ formDatos.addEventListener("submit", async (evento) => {
         if (!seguir) return;
     }
 
+    // Si el usuario abrió el formulario de dirección y empezó a completarlo, "Guardar cambios" también la guarda.
+    // Se valida ANTES de tocar nada, para no dejar los datos a medias.
+    const quiereGuardarDireccion = direccionTieneDatos();
+    if (quiereGuardarDireccion && !formDireccion.checkValidity()) {
+        detalleNueva.open = true;
+        formDireccion.reportValidity();
+        return;
+    }
+
     bloquearBoton(boton, true, "Guardando...");
+    let guardoDireccion = false;
     try {
+        // La dirección se guarda primero: si cambió el correo, actualizar_perfil.php cierra la sesión.
+        if (quiereGuardarDireccion) {
+            const rd = await guardarDireccion();
+            if (!rd.exito) {
+                avisar(rd.mensaje, "error");
+                return;
+            }
+            guardoDireccion = true;
+            detalleNueva.open = false; // dispara salirDeEdicion() y limpia el formulario
+            await recargarDirecciones();
+        }
+
         const r = await enviar("../PHP/actualizar_perfil.php", datosForm);
 
         if (!r.exito) {
-            avisar(r.mensaje, "error");
+            avisar(guardoDireccion ? `La dirección se guardó, pero los datos personales no: ${r.mensaje}` : r.mensaje, "error");
             return;
         }
 
@@ -190,7 +212,7 @@ formDatos.addEventListener("submit", async (evento) => {
 
         document.getElementById("nombre-completo").textContent = `${r.nombre} ${r.apellido}`.trim();
         correoInput.defaultValue = correoInput.value;
-        avisar(r.mensaje, "success");
+        avisar(guardoDireccion ? "Datos y dirección guardados." : r.mensaje, "success");
 
     } catch (error) {
         if (error.message !== "Sesión vencida") {
@@ -373,13 +395,20 @@ detalleNueva.addEventListener("toggle", () => {
     }
 });
 
-formDireccion.addEventListener("submit", async (evento) => {
-    evento.preventDefault();
+// ¿Abrió el formulario de dirección y ya escribió algo? (si lo dejó cerrado se ignora, aunque el navegador autocomplete)
+function direccionTieneDatos() {
+    if (!detalleNueva.open) return false;
+    if (editandoId !== null) return true;
+    const campos = ["alias_direccion", "calle", "numero_puerta", "apartamento", "esquina", "barrio", "ciudad", "codigo_postal", "indicaciones"];
+    return campos.some((id) => document.getElementById(id).value.trim() !== "")
+        || document.getElementById("departamento").value !== "";
+}
 
+// Envía el formulario de dirección (crea o edita según corresponda) y devuelve el JSON del servidor.
+async function guardarDireccion() {
     const cp = document.getElementById("codigo_postal").value;
     if (cp !== "" && !/^\d{5}$/.test(cp)) {
-        avisar("El código postal debe tener 5 dígitos.", "warning");
-        return;
+        return { exito: false, mensaje: "El código postal debe tener 5 dígitos." };
     }
 
     const datosForm = new FormData(formDireccion);
@@ -388,10 +417,16 @@ formDireccion.addEventListener("submit", async (evento) => {
     // Un checkbox deshabilitado no se envía, así que lo mandamos a mano al editar la principal.
     if (document.getElementById("es_principal").checked) datosForm.set("es_principal", "1");
 
+    return enviar("../PHP/direcciones.php", datosForm);
+}
+
+formDireccion.addEventListener("submit", async (evento) => {
+    evento.preventDefault();
+
     const boton = textoBotonDireccion();
     bloquearBoton(boton, true, "Guardando...");
     try {
-        const r = await enviar("../PHP/direcciones.php", datosForm);
+        const r = await guardarDireccion();
 
         if (!r.exito) {
             avisar(r.mensaje, "error");

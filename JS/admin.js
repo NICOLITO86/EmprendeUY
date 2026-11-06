@@ -163,7 +163,7 @@ from_buscar.addEventListener("submit", (e) => {
 
         console.log(datos);
 
-        if (datos.Nombre) {
+        if (datos.Nombre) {``
 
             div_buscar.innerHTML = `
  <p><strong>Cedula:</strong> ${escapeHtml(datos.Cedula)}</p>

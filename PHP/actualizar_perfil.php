@@ -1,4 +1,4 @@
-<?php
+ <?php
 // POST -> guarda los datos personales del usuario con sesión iniciada.
 // La cédula nunca se modifica y siempre sale de la sesión (no del formulario).
 require_once __DIR__ . '/session_config.php';
