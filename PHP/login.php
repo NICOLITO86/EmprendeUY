@@ -38,7 +38,7 @@ if ($bloqueo) {
 }
 
 
-$stmt = $conexion->prepare("SELECT * FROM usuario WHERE Cedula = :cedula AND Activo = 1 LIMIT 1");
+$stmt = $conexion->prepare("SELECT * FROM usuario WHERE Cedula = :cedula LIMIT 1");
 $stmt->execute(['cedula' => $cedula]);
 $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -87,6 +87,16 @@ if (!$loginExitoso) {
     exit;
 }
 
+
+// Contraseña correcta pero cuenta suspendida por un administrador: no se inicia sesión.
+// (Se avisa recién después de validar la contraseña para no revelar qué cédulas existen.)
+if ((int) $usuario['Activo'] !== 1) {
+    echo json_encode([
+        'success' => false,
+        'mensaje' => 'Tu cuenta está suspendida. Contactá a un administrador.'
+    ]);
+    exit;
+}
 
 // Contraseña correcta pero correo sin verificar: no se inicia sesión.
 // Se deja pendiente la verificación y se manda un código nuevo (si el límite de envíos lo permite).

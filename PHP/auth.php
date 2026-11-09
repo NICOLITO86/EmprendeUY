@@ -4,6 +4,25 @@
 require_once __DIR__ . '/session_config.php';
 require 'conexionBD.php'; 
 /**
+ * Una cuenta suspendida (usuario.Activo = 0) no puede seguir usando el sistema aunque
+ * tenga la sesión abierta de antes: se consulta la base en cada petición protegida.
+ */
+function cuentaActiva($cedula): bool
+{
+    global $conexion;
+    $stmt = $conexion->prepare("SELECT Activo FROM usuario WHERE Cedula = ? LIMIT 1");
+    $stmt->execute([$cedula]);
+    return (int) $stmt->fetchColumn() === 1;
+}
+
+/** Cierra la sesión de una cuenta suspendida. */
+function cerrarSesionSuspendida(): void
+{
+    $_SESSION = [];
+    session_destroy();
+}
+
+/**
  * Corta la ejecución (401/403 en JSON) si no hay sesión o el rol no está permitido.
  * Todo acceso DENEGADO queda registrado en log_acceso_admin.
  * $registrarPermitidos = false evita registrar también los accesos permitidos
@@ -28,6 +47,14 @@ function requireRole(array $rolesPermitidos, bool $registrarPermitidos = true): 
         http_response_code(401);
         header('Content-Type: application/json');
         exit(json_encode(['success' => false, 'mensaje' => 'Debe iniciar sesión.']));
+    }
+
+    if (!cuentaActiva($cedula)) {
+        cerrarSesionSuspendida();
+        http_response_code(403);
+        header('Content-Type: application/json');
+        exit(json_encode(['success' => false, 'exito' => false, 'suspendida' => true,
+                          'mensaje' => 'Tu cuenta está suspendida. Contactá a un administrador.']));
     }
 
     $permitido = in_array($rolActual, $rolesPermitidos, true);
@@ -67,6 +94,12 @@ function requirePageRole(array $rolesPermitidos): void
 {
     $rolActual = $_SESSION['Rol'] ?? null;
 
+    if (isset($_SESSION['Cedula']) && !cuentaActiva($_SESSION['Cedula'])) {
+        cerrarSesionSuspendida();
+        header('Location: ../HTML/acceso-denegado.html');
+        exit;
+    }
+
     if ($rolActual === null || !in_array($rolActual, $rolesPermitidos, true)) {
         header('Location: ../HTML/acceso-denegado.html');
         exit;
@@ -81,6 +114,13 @@ if (basename($_SERVER['SCRIPT_NAME']) === 'auth.php') {
     if (!isset($_SESSION['Cedula'])) {
         http_response_code(401);
         echo json_encode(["autenticado" => false, "rol" => null]);
+        exit;
+    }
+
+    if (!cuentaActiva($_SESSION['Cedula'])) {
+        cerrarSesionSuspendida();
+        http_response_code(401);
+        echo json_encode(["autenticado" => false, "rol" => null, "suspendida" => true]);
         exit;
     }
 

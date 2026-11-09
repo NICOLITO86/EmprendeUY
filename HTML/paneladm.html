@@ -33,7 +33,7 @@
 
     <div class="admin__titulo">
         <h1>Bienvenido, administrador</h1>
-        <p>Desde acá podés buscar y borrar usuarios y emprendimientos.</p>
+        <p>Desde acá podés buscar usuarios, suspender o reactivar usuarios y emprendimientos.</p>
     </div>
 
     <div class="panel">
@@ -63,31 +63,58 @@
             <div id="div_buscar1" class="resultado"></div>
         </section>
 
-        <!-- ===== Borrar (acciones que no se pueden deshacer) ===== -->
+        <!-- ===== Suspender / reactivar usuarios (no se borran de la base de datos) ===== -->
         <section class="tarjeta tarjeta--peligro">
-            <h2>Borrar usuario</h2>
-            <form id="from_borrar">
+            <h2>Suspender usuario</h2>
+            <p>Si es emprendedor se suspende también su emprendimiento y todas sus publicaciones.
+               Si es cliente, no va a poder iniciar sesión ni comprar.</p>
+            <form id="from_suspender">
                 <div class="campo">
-                    <label for="cedula-borrar">Cédula</label>
-                    <input type="text" id="cedula-borrar" name="cedula" inputmode="numeric" maxlength="8" placeholder="8 dígitos, sin puntos ni guiones">
+                    <label for="cedula-suspender">Cédula</label>
+                    <input type="text" id="cedula-suspender" name="cedula" inputmode="numeric" maxlength="8" placeholder="8 dígitos, sin puntos ni guiones">
                 </div>
-                <input type="submit" class="accion accion--peligro" value="Borrar usuario">
+                <input type="submit" class="accion accion--peligro" value="Suspender usuario">
             </form>
-            <div id="admin" class="resultado"></div>
             <div id="div" class="resultado"></div>
         </section>
 
-        <section class="tarjeta tarjeta--peligro">
-            <h2>Borrar emprendimiento</h2>
-            <form id="from_borrar1">
+        <section class="tarjeta">
+            <h2>Reactivar usuario</h2>
+            <p>Devuelve el acceso al usuario y restaura su emprendimiento y publicaciones como estaban.</p>
+            <form id="from_reactivar">
                 <div class="campo">
-                    <label for="id-borrar">ID del emprendimiento</label>
-                    <input type="text" id="id-borrar" name="ID">
+                    <label for="cedula-reactivar">Cédula</label>
+                    <input type="text" id="cedula-reactivar" name="cedula" inputmode="numeric" maxlength="8" placeholder="8 dígitos, sin puntos ni guiones">
                 </div>
-                <input type="submit" class="accion accion--peligro" value="Borrar emprendimiento">
+                <input type="submit" class="accion" value="Reactivar usuario">
             </form>
-            <div id="admin1" class="resultado"></div>
+            <div id="div_reactivar" class="resultado"></div>
+        </section>
+
+        <section class="tarjeta tarjeta--peligro">
+            <h2>Suspender emprendimiento</h2>
+            <p>Se suspenden también todas sus publicaciones.</p>
+            <form id="from_suspender_emp">
+                <div class="campo">
+                    <label for="id-suspender">ID del emprendimiento</label>
+                    <input type="text" id="id-suspender" name="ID">
+                </div>
+                <input type="submit" class="accion accion--peligro" value="Suspender emprendimiento">
+            </form>
             <div id="div1" class="resultado"></div>
+        </section>
+
+        <section class="tarjeta">
+            <h2>Reactivar emprendimiento</h2>
+            <p>Restaura sus publicaciones como estaban.</p>
+            <form id="from_reactivar_emp">
+                <div class="campo">
+                    <label for="id-reactivar">ID del emprendimiento</label>
+                    <input type="text" id="id-reactivar" name="ID">
+                </div>
+                <input type="submit" class="accion" value="Reactivar emprendimiento">
+            </form>
+            <div id="div_reactivar_emp" class="resultado"></div>
         </section>
 
         <!-- ===== Listado completo ===== -->

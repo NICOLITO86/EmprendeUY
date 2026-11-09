@@ -50,7 +50,11 @@
     //1) Sesion / modo visitante
     fetch("../PHP/sesion.php")
         .then(res => res.json())
-        .then(datos => { logueado = !!datos.logueado; })
+        .then(datos => {
+            logueado = !!datos.logueado;
+            // El administrador no usa la tienda: vuelve a su panel.
+            if (datos.rol === "administrador") location.replace("paneladm.html");
+        })
         .catch(() => { logueado = null; })
         .finally(() => {
             if (logueado === false) {

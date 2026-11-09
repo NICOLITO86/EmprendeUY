@@ -37,58 +37,61 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
-const div = document.getElementById("div")
-const from_borrar = document.getElementById("from_borrar");
-from_borrar.addEventListener("submit", (x) => {
-    x.preventDefault()
+// Suspender / reactivar: mismo formulario con distinta acción. Nada se borra de la base de datos.
+function configurarSuspension(formId, divId, accion) {
+    const formulario = document.getElementById(formId);
+    const salida = document.getElementById(divId);
 
-    if (!validarCedula(from_borrar.cedula.value)) {
-        div.innerHTML = "<h3>La cédula debe tener exactamente 8 dígitos.</h3>";
-        return;
-    }
+    formulario.addEventListener("submit", (x) => {
+        x.preventDefault();
 
-    let form = new FormData(from_borrar)
-    form.append("accion", "borrar_usuario")
-    form.append("csrf_token", csrfToken)
-
-    fetch("../PHP/admin.php", {
-        method: "post",
-        body: form
-    })
-    .then(res => res.json())
-    .then(datos => {
-        console.log(datos)
-        if (datos.exito) {
-            div.innerHTML = '<h3> Borrado</h3>'
-        } else {
-            div.innerHTML = '<h3> No se pudo borrar</h3>'
+        if (!validarCedula(formulario.cedula.value)) {
+            salida.innerHTML = "<h3>La cédula debe tener exactamente 8 dígitos.</h3>";
+            return;
         }
-    })
-})
 
-const div1 = document.getElementById("div1")
-const from_borrar1 = document.getElementById("from_borrar1");
-from_borrar1.addEventListener("submit", (x) => {
-    x.preventDefault()
+        let form = new FormData(formulario);
+        form.append("accion", accion);
+        form.append("csrf_token", csrfToken);
 
-    let form = new FormData(from_borrar1)
-    form.append("accion", "borrar_emprendimiento")
-    form.append("csrf_token", csrfToken)
+        fetch("../PHP/admin.php", { method: "post", body: form })
+            .then(res => res.json())
+            .then(datos => {
+                salida.innerHTML = "<h3>" + escapeHtml(datos.mensaje || (datos.exito ? "Listo" : "No se pudo completar")) + "</h3>";
+            })
+            .catch(() => { salida.innerHTML = "<h3>Error de conexión</h3>"; });
+    });
+}
 
-    fetch("../PHP/admin.php", {
-        method: "post",
-        body: form
-    })
-    .then(res => res.json())
-    .then(datos => {
-        console.log(datos)
-        if (datos.exito) {
-            div1.innerHTML = '<h3> Borrado</h3>'
-        } else {
-            div1.innerHTML = '<h3> No se pudo borrar</h3>'
-        }
-    })
-})
+configurarSuspension("from_suspender", "div", "suspender_usuario");
+configurarSuspension("from_reactivar", "div_reactivar", "reactivar_usuario");
+
+function etiquetaEstado(activo) {
+    return Number(activo) === 1 ? "Activo" : "Suspendido";
+}
+
+function configurarSuspensionEmprendimiento(formId, divId, accion) {
+    const formulario = document.getElementById(formId);
+    const salida = document.getElementById(divId);
+
+    formulario.addEventListener("submit", (x) => {
+        x.preventDefault();
+
+        let form = new FormData(formulario);
+        form.append("accion", accion);
+        form.append("csrf_token", csrfToken);
+
+        fetch("../PHP/admin.php", { method: "post", body: form })
+            .then(res => res.json())
+            .then(datos => {
+                salida.innerHTML = "<h3>" + escapeHtml(datos.mensaje || (datos.exito ? "Listo" : "No se pudo completar")) + "</h3>";
+            })
+            .catch(() => { salida.innerHTML = "<h3>Error de conexión</h3>"; });
+    });
+}
+
+configurarSuspensionEmprendimiento("from_suspender_emp", "div1", "suspender_emprendimiento");
+configurarSuspensionEmprendimiento("from_reactivar_emp", "div_reactivar_emp", "reactivar_emprendimiento");
 
 const from_buscar2 = document.getElementById("from_buscar2");
 
@@ -128,6 +131,7 @@ from_buscar2.addEventListener("submit", (e) => {
                     <p><strong>Solar:</strong> ${a.Solar}</p>
                     <p><strong>Genero:</strong> ${a.Genero}</p>
                     <p><strong>Rol:</strong> ${a.Rol}</p>
+                    <p><strong>Estado:</strong> ${etiquetaEstado(a.Activo)}</p>
                     <hr>
                 </div>
             `;
@@ -179,6 +183,7 @@ from_buscar.addEventListener("submit", (e) => {
                     <p><strong>Solar:</strong> ${datos.Solar}</p>
                     <p><strong>Genero:</strong> ${datos.Genero}</p>
                     <p><strong>Rol:</strong> ${datos.Rol}</p>
+                    <p><strong>Estado:</strong> ${etiquetaEstado(datos.Activo)}</p>
             `;
 
         } else {
@@ -217,6 +222,7 @@ from_buscar1.addEventListener("submit", (e) => {
                 <h3>${escapeHtml(datos.Nombre)}</h3>
                 <p>ID: ${datos.ID}</p>
                 <p>Descripción: ${escapeHtml(datos.Descripcion)}</p>
+                <p>Estado: ${etiquetaEstado(datos.Activo)}</p>
             `;
 
         } else {

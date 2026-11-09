@@ -203,7 +203,8 @@ CREATE TABLE `emprendimiento` (
   `Descripcion` text NOT NULL,
   `Foto` varchar(255) DEFAULT NULL,
   `ID` int(11) NOT NULL,
-  `cedula` int(11) NOT NULL
+  `cedula` int(11) NOT NULL,
+  `Activo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -369,7 +370,8 @@ CREATE TABLE `publicaciones` (
   `precio` decimal(20,0) NOT NULL,
   `fecha_publicacion` datetime NOT NULL DEFAULT current_timestamp(),
   `foto` varchar(255) DEFAULT NULL,
-  `categoria` enum('Indumentaria','Hogar','Tecnologia','Carpinteria','Herreria','Higiene','Deportes','Higiene para el hogar','Higiene personal','Botánica') NOT NULL
+  `categoria` enum('Indumentaria','Hogar','Tecnologia','Carpinteria','Herreria','Higiene','Deportes','Higiene para el hogar','Higiene personal','Botánica') NOT NULL,
+  `status_previo` enum('Pausada','Activa') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --

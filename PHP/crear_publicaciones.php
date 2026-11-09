@@ -12,7 +12,7 @@ $cedula = $_SESSION['Cedula'];
 $consulta = $conexion->prepare(
     "SELECT ID
      FROM emprendimiento
-     WHERE cedula = ?"
+     WHERE cedula = ? AND Activo = 1"
 );
 $consulta->execute([$cedula]);
 $emprendimiento = $consulta->fetch(PDO::FETCH_ASSOC);

@@ -7,4 +7,17 @@ require_once __DIR__ . '/session_config.php';
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
 
-echo json_encode(['logueado' => !empty($_SESSION['Cedula'])]);
+require_once __DIR__ . '/conexionBD.php';
+
+$logueado = !empty($_SESSION['Cedula']);
+if ($logueado) {
+    $stmt = $conexion->prepare("SELECT Activo FROM usuario WHERE Cedula = ? LIMIT 1");
+    $stmt->execute([$_SESSION['Cedula']]);
+    $logueado = (int) $stmt->fetchColumn() === 1;
+}
+
+// 'rol' lo usa la tienda para sacar de ahí al administrador.
+echo json_encode([
+    'logueado' => $logueado,
+    'rol'      => $logueado ? ($_SESSION['Rol'] ?? null) : null,
+]);

@@ -98,7 +98,29 @@ function mostrarFoto(ruta) {
     }
 }
 
+// El botón de la cabecera depende del rol:
+//   administrador -> vuelve al panel de admin (no tiene acceso a la tienda)
+//   emprendedor   -> vuelve a su catálogo (o a crear su emprendimiento si todavía no tiene)
+//   cliente/otros -> tienda
+function configurarBotonVolver(u) {
+    const boton = document.getElementById("boton-volver");
+    if (!boton) return;
+
+    if (u.rol === "administrador") {
+        boton.textContent = "Volver al panel de administración";
+        boton.href = "paneladm.html";
+    } else if (u.rol === "emprendedor") {
+        boton.textContent = u.tiene_emprendimiento ? "Volver a mi catálogo" : "Crear mi emprendimiento";
+        boton.href = u.tiene_emprendimiento ? "mis_publicaciones.html" : "crearemprendimiento.html";
+    } else {
+        boton.textContent = "Ir a la tienda";
+        boton.href = "tienda.html";
+    }
+    boton.hidden = false;
+}
+
 function pintarUsuario(u) {
+    configurarBotonVolver(u);
     document.getElementById("nombre-completo").textContent = `${u.nombre} ${u.apellido}`.trim();
     document.getElementById("rol-usuario").textContent = ETIQUETAS_ROL[u.rol] || u.rol;
     mostrarFoto(u.foto);

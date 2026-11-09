@@ -24,6 +24,11 @@ try {
         exit;
     }
 
+    // Para que perfil.js sepa a dónde mandar al emprendedor (catálogo o crear su emprendimiento).
+    $stmt = $conexion->prepare("SELECT 1 FROM emprendimiento WHERE cedula = ? LIMIT 1");
+    $stmt->execute([$cedula]);
+    $tieneEmprendimiento = (bool) $stmt->fetchColumn();
+
     $foto = null;
     if (!empty($u['Foto_Perfil'])) {
         $archivo = basename($u['Foto_Perfil']);
@@ -60,6 +65,7 @@ try {
             'genero'           => strtolower($u['Genero']),
             'Num_Telefono'     => $u['Num_Telefono'],
             'rol'              => $u['Rol'],
+            'tiene_emprendimiento' => $tieneEmprendimiento,
             'sobre_mi'         => $u['Sobre_Mi'] ?? '',
             'foto'             => $foto,
         ],
