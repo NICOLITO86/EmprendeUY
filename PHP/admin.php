@@ -6,6 +6,29 @@ csrf_validar();
 
 include "conexionBD.php";
 
+
+/**
+ * La suspensión necesita dos columnas nuevas. Si todavía no se ejecutó SQL/migracion_suspension.sql,
+ * se crean acá (una sola vez). Debe llamarse ANTES de beginTransaction(): un ALTER cierra la transacción.
+ */
+function asegurarEsquemaSuspension(PDO $conexion): void
+{
+    $existe = $conexion->prepare(
+        "SELECT COUNT(*) FROM information_schema.COLUMNS
+         WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ? AND COLUMN_NAME = ?"
+    );
+
+    $existe->execute(['emprendimiento', 'Activo']);
+    if ((int) $existe->fetchColumn() === 0) {
+        $conexion->exec("ALTER TABLE emprendimiento ADD COLUMN Activo tinyint(1) NOT NULL DEFAULT 1");
+    }
+
+    $existe->execute(['publicaciones', 'status_previo']);
+    if ((int) $existe->fetchColumn() === 0) {
+        $conexion->exec("ALTER TABLE publicaciones ADD COLUMN status_previo enum('Pausada','Activa') DEFAULT NULL");
+    }
+}
+
 $accion = $_POST['accion'] ?? '';
 
 switch ($accion) {
@@ -40,6 +63,7 @@ switch ($accion) {
         }
 
         try {
+            asegurarEsquemaSuspension($conexion);
             $conexion->beginTransaction();
 
             // 1) El usuario (cliente o emprendedor): suspendido no puede iniciar sesión ni comprar.
@@ -79,7 +103,7 @@ switch ($accion) {
                 $conexion->rollBack();
             }
             error_log('Error en admin.php (' . $accion . '): ' . $e->getMessage());
-            echo json_encode(["exito" => false, "mensaje" => "No se pudo completar la operación."]);
+            echo json_encode(["exito" => false, "mensaje" => "No se pudo completar la operación: " . $e->getMessage()]);
         }
         break;
 
@@ -116,6 +140,7 @@ switch ($accion) {
         }
 
         try {
+            asegurarEsquemaSuspension($conexion);
             $conexion->beginTransaction();
             $conexion->prepare("UPDATE emprendimiento SET Activo = ? WHERE ID = ?")
                      ->execute([$suspender ? 0 : 1, $ID]);
@@ -142,7 +167,7 @@ switch ($accion) {
                 $conexion->rollBack();
             }
             error_log('Error en admin.php (' . $accion . '): ' . $e->getMessage());
-            echo json_encode(["exito" => false, "mensaje" => "No se pudo completar la operación."]);
+            echo json_encode(["exito" => false, "mensaje" => "No se pudo completar la operación: " . $e->getMessage()]);
         }
         break;
 
@@ -153,8 +178,9 @@ switch ($accion) {
             break;
         }
         $res = $conexion->prepare(
-            "SELECT Cedula, Nombre, Apellido, Fecha_Nacimiento, Edad, Correo,
-                    Num_Telefono, Domicilio, Calle, Manzana, Solar, Genero, Rol, Activo
+            "SELECT Cedula, Nombre, Apellido, Fecha_Nacimiento,
+                    TIMESTAMPDIFF(YEAR, Fecha_Nacimiento, CURDATE()) AS Edad,
+                    Correo, Num_Telefono, Genero, Rol, Activo
              FROM usuario WHERE cedula = ?"
         );
         $res->execute([$cedula]);
@@ -176,8 +202,9 @@ switch ($accion) {
 
     case 'mostrar_todo':
         $res = $conexion->prepare(
-            "SELECT Cedula, Nombre, Apellido, Fecha_Nacimiento, Edad, Correo,
-                    Num_Telefono, Domicilio, Calle, Manzana, Solar, Genero, Rol, Activo
+            "SELECT Cedula, Nombre, Apellido, Fecha_Nacimiento,
+                    TIMESTAMPDIFF(YEAR, Fecha_Nacimiento, CURDATE()) AS Edad,
+                    Correo, Num_Telefono, Genero, Rol, Activo
              FROM usuario"
         );
         $res->execute();

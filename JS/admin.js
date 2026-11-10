@@ -55,7 +55,10 @@ function configurarSuspension(formId, divId, accion) {
         form.append("csrf_token", csrfToken);
 
         fetch("../PHP/admin.php", { method: "post", body: form })
-            .then(res => res.json())
+            .then(res => res.text().then(texto => {
+                try { return JSON.parse(texto); }
+                catch (e) { return { exito: false, mensaje: "Respuesta inesperada del servidor: " + texto.replace(/<[^>]*>/g, " ").trim().slice(0, 300) }; }
+            }))
             .then(datos => {
                 salida.innerHTML = "<h3>" + escapeHtml(datos.mensaje || (datos.exito ? "Listo" : "No se pudo completar")) + "</h3>";
             })
@@ -70,6 +73,43 @@ function etiquetaEstado(activo) {
     return Number(activo) === 1 ? "Activo" : "Suspendido";
 }
 
+// Botón Activar / Suspender para cada usuario (en la búsqueda y en "Mostrar todo").
+// Los administradores no se pueden suspender, así que no llevan botón.
+function botonEstado(usuario) {
+    if (usuario.Rol === "administrador") return "";
+    const activo = Number(usuario.Activo) === 1;
+    return `<button type="button" class="accion ${activo ? "accion--peligro" : ""} btn-estado"
+                data-cedula="${escapeHtml(usuario.Cedula)}"
+                data-accion="${activo ? "suspender_usuario" : "reactivar_usuario"}">
+                ${activo ? "Suspender" : "Activar"} usuario</button>`;
+}
+
+document.addEventListener("click", (e) => {
+    const boton = e.target.closest(".btn-estado");
+    if (!boton) return;
+
+    boton.disabled = true;
+    let form = new FormData();
+    form.append("cedula", boton.dataset.cedula);
+    form.append("accion", boton.dataset.accion);
+    form.append("csrf_token", csrfToken);
+
+    // Después de cambiar el estado se vuelve a cargar la búsqueda o el listado donde estaba el botón.
+    const recargar = boton.closest("#lista") ? from_buscar2 : from_buscar;
+
+    fetch("../PHP/admin.php", { method: "post", body: form })
+        .then(res => res.json())
+        .then(datos => {
+            if (!datos.exito) {
+                alert(datos.mensaje || "No se pudo completar la operación.");
+                boton.disabled = false;
+                return;
+            }
+            recargar.dispatchEvent(new Event("submit", { cancelable: true }));
+        })
+        .catch(() => { alert("Error de conexión"); boton.disabled = false; });
+});
+
 function configurarSuspensionEmprendimiento(formId, divId, accion) {
     const formulario = document.getElementById(formId);
     const salida = document.getElementById(divId);
@@ -82,7 +122,10 @@ function configurarSuspensionEmprendimiento(formId, divId, accion) {
         form.append("csrf_token", csrfToken);
 
         fetch("../PHP/admin.php", { method: "post", body: form })
-            .then(res => res.json())
+            .then(res => res.text().then(texto => {
+                try { return JSON.parse(texto); }
+                catch (e) { return { exito: false, mensaje: "Respuesta inesperada del servidor: " + texto.replace(/<[^>]*>/g, " ").trim().slice(0, 300) }; }
+            }))
             .then(datos => {
                 salida.innerHTML = "<h3>" + escapeHtml(datos.mensaje || (datos.exito ? "Listo" : "No se pudo completar")) + "</h3>";
             })
@@ -125,13 +168,10 @@ from_buscar2.addEventListener("submit", (e) => {
                     <p><strong>Edad:</strong> ${a.Edad}</p>
                     <p><strong>Gmail:</strong> ${a.Correo}</p>
                     <p><strong>Telefono:</strong> ${a.Num_Telefono}</p>
-                    <p><strong>Domicilio:</strong> ${escapeHtml(a.Domicilio)}</p>
-                    <p><strong>Calle:</strong> ${escapeHtml(a.Calle)}</p>
-                    <p><strong>Manzana:</strong> ${a.Manzana}</p>
-                    <p><strong>Solar:</strong> ${a.Solar}</p>
                     <p><strong>Genero:</strong> ${a.Genero}</p>
                     <p><strong>Rol:</strong> ${a.Rol}</p>
                     <p><strong>Estado:</strong> ${etiquetaEstado(a.Activo)}</p>
+                    ${botonEstado(a)}
                     <hr>
                 </div>
             `;
@@ -177,13 +217,10 @@ from_buscar.addEventListener("submit", (e) => {
                     <p><strong>Edad:</strong> ${datos.Edad}</p>
                     <p><strong>Gmail:</strong> ${datos.Correo}</p>
                     <p><strong>Telefono:</strong> ${datos.Num_Telefono}</p>
-                    <p><strong>Domicilio:</strong> ${escapeHtml(datos.Domicilio)}</p>
-                    <p><strong>Calle:</strong> ${escapeHtml(datos.Calle)}</p>
-                    <p><strong>Manzana:</strong> ${datos.Manzana}</p>
-                    <p><strong>Solar:</strong> ${datos.Solar}</p>
                     <p><strong>Genero:</strong> ${datos.Genero}</p>
                     <p><strong>Rol:</strong> ${datos.Rol}</p>
                     <p><strong>Estado:</strong> ${etiquetaEstado(datos.Activo)}</p>
+                    ${botonEstado(datos)}
             `;
 
         } else {
